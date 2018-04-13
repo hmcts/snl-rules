@@ -1,0 +1,32 @@
+package com.sample
+
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Issue;
+
+rule "Session Time not Available"
+    when
+    	$s : Session()
+    	not Availability( judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
+    then
+        System.out.println(">>Session not available at specified time for this judge = " + $s.getId());
+        insertLogical(new Issue("is"+ $s.getId(), "Session not available at specified time for this judge = " + $s.getId()));
+end
+
+
+rule "We have no issues YUPII"
+	when
+		not Issue()
+	then
+		System.out.println(">>YUPI, no issue!");
+end
+
+rule "We have an issue"
+	when
+		Issue()
+	then
+		System.out.println(">>Oh no, there is a new issue :(");
+end
+
+
