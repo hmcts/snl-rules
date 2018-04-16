@@ -8,15 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessage;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory;
-import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class FactMessageController {
-
-    @Autowired
-    private DroolsService droolsService;
 
     @Autowired
     private FactMessageHandlerFactory factMessageHandlerFactory;
@@ -26,8 +22,6 @@ public class FactMessageController {
 
         factMessageHandlerFactory.create(factMessage.getType()).execute(factMessage.getData());
 
-        droolsService.getRulesSession().fireAllRules();
-
-        return ok("OK");
+        return ok("DONE");
     }
 }

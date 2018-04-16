@@ -15,5 +15,7 @@ public class InsertFactCommand extends FactCommand {
     @Override
     public void execute(String data) {
         droolsService.getRulesSession().insert(deserializeMessage(data, this.getFactType()));
+
+        droolsService.getRulesSession().fireAllRules();
     }
 }

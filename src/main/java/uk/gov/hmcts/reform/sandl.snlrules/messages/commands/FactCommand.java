@@ -14,13 +14,13 @@ import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_
 public abstract class FactCommand {
     private Class factType;
 
-    public abstract void execute(String data);
-
     private ObjectMapper objectMapper = new ObjectMapper()
             .findAndRegisterModules()
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .configure(FAIL_ON_EMPTY_BEANS, false)
             .configure(ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
+
+    public abstract void execute(String data);
 
     protected <T> T deserializeMessage(String message, Class<T> messageClass) {
         try {
