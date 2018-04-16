@@ -1,4 +1,4 @@
-package com.sample
+package uk.gov.hmcts.reform.sandl.snlrules.rules
 
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;

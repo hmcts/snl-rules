@@ -7,8 +7,8 @@ import org.kie.api.event.rule.ObjectUpdatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TrackingFactsChangedEventListener extends DefaultRuleRuntimeEventListener {
-    private static final Logger logger = LoggerFactory.getLogger(TrackingFactsChangedEventListener.class);
+public class FactsChangedEventListener extends DefaultRuleRuntimeEventListener {
+    private static final Logger logger = LoggerFactory.getLogger(FactsChangedEventListener.class);
 
     @Override
     public void objectInserted(final ObjectInsertedEvent event) {

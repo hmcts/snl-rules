@@ -17,7 +17,6 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 public class DataExportController {
-
     @Autowired
     private DroolsService droolsService;
 
@@ -40,7 +39,7 @@ public class DataExportController {
     private void listFacts(StringBuilder builder, Class filter, String name) {
         builder.append("<br><br>=== " + name + " ===");
         Collection<? extends Object> objs = droolsService.getRulesSession().getObjects(new ClassObjectFilter(filter));
-        for (Object obj: objs) {
+        for (Object obj : objs) {
             builder.append("<br>     " + obj.toString());
         }
     }

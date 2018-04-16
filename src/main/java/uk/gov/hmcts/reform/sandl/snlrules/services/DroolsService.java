@@ -3,42 +3,43 @@ package uk.gov.hmcts.reform.sandl.snlrules.services;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.TrackingFactsChangedEventListener;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.TrackingProcessStatusEventListener;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.TrackingRulesFiredEventListener;
+import uk.gov.hmcts.reform.sandl.snlrules.config.DroolsConfiguration;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
 
+import javax.annotation.PostConstruct;
 
 @Service
 @ApplicationScope
 public class DroolsService {
-    private final KieSession rulesSession;
-    private final TrackingRulesFiredEventListener trackingRulesFiredEventListener;
-    private final TrackingFactsChangedEventListener trackingFactsChangedEventListener;
-    private final TrackingProcessStatusEventListener trackingProcessStatusEventListener;
+    private static final Logger logger = LoggerFactory.getLogger(DroolsService.class);
 
-    public DroolsService() {
-        // load up the knowledge base
+    @Autowired
+    private DroolsConfiguration droolsConfiguration;
+
+    private KieSession rulesSession;
+
+    @PostConstruct
+    public void init() {
+        logger.info("Starting drools service, container and session for {}", droolsConfiguration.getRulesKSession());
         KieServices kieServices = KieServices.Factory.get();
         KieContainer kieContainer = kieServices.getKieClasspathContainer();
-        rulesSession = kieContainer.newKieSession("ksession-rules");
+        rulesSession = kieContainer.newKieSession(droolsConfiguration.getRulesKSession());
 
-        trackingRulesFiredEventListener = new TrackingRulesFiredEventListener();
-        trackingFactsChangedEventListener = new TrackingFactsChangedEventListener();
-        trackingProcessStatusEventListener = new TrackingProcessStatusEventListener();
-        rulesSession.addEventListener(trackingRulesFiredEventListener);
-        rulesSession.addEventListener(trackingFactsChangedEventListener);
-        rulesSession.addEventListener(trackingProcessStatusEventListener);
+        rulesSession.addEventListener(new FactsChangedEventListener());
 
         /*
         PackageBuilder packageBuilder = new PackageBuilder();
         InputStream resourceAsStream = getClass().getResourceAsStream(ruleFile);
         Reader reader = new InputStreamReader(resourceAsStream);
         packageBuilder.addPackageFromDrl(reader);
-        org.drools.core.rule.Package rulesPackage = packageBuilder.getPackage();
+        org.drools.core.rule.Package rulesKSession = packageBuilder.getPackage();
         RuleBase ruleBase = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage(rulesPackage);
+        ruleBase.addPackage(rulesKSession);
         WorkingMemory workingMemory = ruleBase.newStatefulSession();
         AgendaEventListener employeeRuleTracktListener = new TrackingRuleFiredEventListener();
         workingMemory.addEventListener(employeeRuleTracktListener);
@@ -47,17 +48,5 @@ public class DroolsService {
 
     public KieSession getRulesSession() {
         return rulesSession;
-    }
-
-    public TrackingRulesFiredEventListener getTrackingRulesFiredEventListener() {
-        return trackingRulesFiredEventListener;
-    }
-
-    public TrackingFactsChangedEventListener getTrackingFactsChangedEventListener() {
-        return trackingFactsChangedEventListener;
-    }
-
-    public TrackingProcessStatusEventListener getTrackingProcessStatusEventListener() {
-        return trackingProcessStatusEventListener;
     }
 }
