@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.sandl.snlrules.model;
 
-public interface Fact {
+import java.io.Serializable;
+
+public interface Fact extends Serializable {
     String getId();
 }
