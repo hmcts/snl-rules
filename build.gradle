@@ -113,6 +113,7 @@ dependencies {
   compile "org.drools:drools-compiler:${versions.kieApi}"
 
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot
+  testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.6'
 }
 
 jar {
@@ -121,4 +122,35 @@ jar {
   manifest {
     attributes('Implementation-Version': project.version.toString())
   }
+}
+
+sourceSets {
+  test {
+    java.srcDir 'src/test/java'
+  }
+  functional {
+    java.srcDir 'src/test/functional/java'
+    resources.srcDir 'src/test/resources'
+    compileClasspath += main.output + test.output
+    runtimeClasspath += main.output + test.output
+  }
+}
+
+configurations {
+  functionalCompile.extendsFrom testCompile
+  functionalRuntime.extendsFrom testRuntime
+}
+
+task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
+  testClassesDirs = sourceSets.functional.output.classesDirs
+  classpath = sourceSets.functional.runtimeClasspath
+
+  useJUnit {
+    includeCategories 'uk.gov.hmcts.reform.sandl.snlrules.functional.SmokeTest'
+  }
+}
+
+task functional(type: Test, description: 'Runs the functional tests.', group: 'Verification') {
+  testClassesDirs = sourceSets.functional.output.classesDirs
+  classpath = sourceSets.functional.runtimeClasspath
 }
