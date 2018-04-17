@@ -1,0 +1,114 @@
+{
+	"info": {
+		"_postman_id": "a6aabca4-bba4-446d-9eb5-5a5832143ac5",
+		"name": "hmcts-snl",
+		"description": "Sample calls for the service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "insert-availability",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-judge",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s4\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "current-state",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8091/exporthtml",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"exporthtml"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

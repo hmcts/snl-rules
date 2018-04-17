@@ -1,0 +1,18 @@
+package uk.gov.hmcts.reform.sandl.snlrules.rules
+
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Issue;
+
+rule "Failing rule"
+    when
+    	Session()
+    then
+        System.out.println("Failing issue");
+        insertLogical(new Issue("I1", "Fail2"));
+end
+
+
+
+

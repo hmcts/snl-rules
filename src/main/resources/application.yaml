@@ -1,6 +1,9 @@
 server:
   port: 8091
 
+drools:
+  rulesKSession: SampleSessionsKS
+
 management:
   security:
     enabled: ${MANAGEMENT_SECURITY_ENABLED:true}
@@ -8,7 +11,7 @@ management:
 #If you use a database then uncomment below lines and update db properties accordingly leaving tomcat connection settings unchanged.
 spring:
   application:
-    name: Spring Boot Template
+    name: Scheduling and Listing Rules
 #  datasource:
 #      url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
 #      username: ${DB_USER_NAME}
