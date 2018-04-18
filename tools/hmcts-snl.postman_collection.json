@@ -1,34 +1,29 @@
 {
 	"info": {
-		"_postman_id": "a6aabca4-bba4-446d-9eb5-5a5832143ac5",
+		"_postman_id": "d34e95bc-b58b-43e3-93f8-136df2aa4f9e",
 		"name": "hmcts-snl",
 		"description": "Sample calls for the service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "insert-availability",
+			"name": "current-state",
 			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
+				"method": "GET",
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/exporthtml",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8091",
 					"path": [
-						"msg"
+						"exporthtml"
 					]
 				}
 			},
@@ -46,7 +41,35 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smdi2th\\\"}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-availability",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a2\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 7600}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -74,7 +97,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s4\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -91,20 +114,84 @@
 			"response": []
 		},
 		{
-			"name": "current-state",
+			"name": "delete-session",
 			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"delete-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
 				"url": {
-					"raw": "http://localhost:8091/exporthtml",
+					"raw": "http://localhost:8091/msg",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8091",
 					"path": [
-						"exporthtml"
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upsert-session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"update-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j2\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
 					]
 				}
 			},

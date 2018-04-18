@@ -9,16 +9,22 @@ import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 @Data
 @Component
-public class DeleteFactCommand extends FactCommand {
+public class UpsertFactCommand extends FactCommand {
     @Autowired
     private DroolsService droolsService;
 
     @Override
     public void execute(String data) {
         KieSession session = droolsService.getRulesSession();
+        Object fact = deserializeMessage(data, this.getFactType());
 
-        FactHandle factHandle = session.getFactHandle(deserializeMessage(data, this.getFactType()));
-        session.delete(factHandle);
+        FactHandle factHandle = session.getFactHandle(fact);
+
+        if (factHandle == null) {
+            session.insert(fact);
+        } else {
+            session.update(factHandle, fact);
+        }
 
         session.fireAllRules();
     }
