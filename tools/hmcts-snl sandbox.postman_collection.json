@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "9acc747e-b21a-4803-8848-a71c0123db4a",
+		"name": "hmcts-snl sandbox",
+		"description": "Sample calls for the service on Sandbox Azure",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "current-state",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://snl-rules-sandbox-staging.service.core-compute-sandbox.internal/exporthtml",
+					"protocol": "http",
+					"host": [
+						"snl-rules-sandbox-staging",
+						"service",
+						"core-compute-sandbox",
+						"internal"
+					],
+					"path": [
+						"exporthtml"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-judge",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"\n}"
+				},
+				"url": {
+					"raw": "http://snl-rules-sandbox-staging.service.core-compute-sandbox.internal/msg",
+					"protocol": "http",
+					"host": [
+						"snl-rules-sandbox-staging",
+						"service",
+						"core-compute-sandbox",
+						"internal"
+					],
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-availability",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a2\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 7600}\"\n}"
+				},
+				"url": {
+					"raw": "http://snl-rules-sandbox-staging.service.core-compute-sandbox.internal/msg",
+					"protocol": "http",
+					"host": [
+						"snl-rules-sandbox-staging",
+						"service",
+						"core-compute-sandbox",
+						"internal"
+					],
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://snl-rules-sandbox-staging.service.core-compute-sandbox.internal/msg",
+					"protocol": "http",
+					"host": [
+						"snl-rules-sandbox-staging",
+						"service",
+						"core-compute-sandbox",
+						"internal"
+					],
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-session",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"delete-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+				},
+				"url": {
+					"raw": "http://snl-rules-sandbox-staging.service.core-compute-sandbox.internal/msg",
+					"protocol": "http",
+					"host": [
+						"snl-rules-sandbox-staging",
+						"service",
+						"core-compute-sandbox",
+						"internal"
+					],
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "07641164-c84e-474c-998c-238c01084299",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "562f2c81-c3a6-4049-ad89-a59f94809535",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
