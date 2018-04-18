@@ -31,19 +31,6 @@ public class DroolsService {
         rulesSession = kieContainer.newKieSession(droolsConfiguration.getRulesKSession());
 
         rulesSession.addEventListener(new FactsChangedEventListener());
-
-        /*
-        PackageBuilder packageBuilder = new PackageBuilder();
-        InputStream resourceAsStream = getClass().getResourceAsStream(ruleFile);
-        Reader reader = new InputStreamReader(resourceAsStream);
-        packageBuilder.addPackageFromDrl(reader);
-        org.drools.core.rule.Package rulesKSession = packageBuilder.getPackage();
-        RuleBase ruleBase = RuleBaseFactory.newRuleBase();
-        ruleBase.addPackage(rulesKSession);
-        WorkingMemory workingMemory = ruleBase.newStatefulSession();
-        AgendaEventListener employeeRuleTracktListener = new TrackingRuleFiredEventListener();
-        workingMemory.addEventListener(employeeRuleTracktListener);
-         */
     }
 
     public KieSession getRulesSession() {

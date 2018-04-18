@@ -1,6 +1,9 @@
 server:
   port: 8091
 
+drools:
+  rulesKSession: SampleSessionsKS
+
 management:
   security:
     enabled: ${MANAGEMENT_SECURITY_ENABLED:true}
