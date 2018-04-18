@@ -1,13 +1,17 @@
 package uk.gov.hmcts.reform.sandl.snlrules.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Issue implements Fact {
+public class Issue extends Fact {
     private String id;
     private String message;
 }

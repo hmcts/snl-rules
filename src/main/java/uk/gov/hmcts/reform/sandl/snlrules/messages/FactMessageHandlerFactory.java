@@ -7,6 +7,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.DeleteFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.FactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.UpdateFactCommand;
+import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.UpsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
@@ -28,6 +29,7 @@ public class FactMessageHandlerFactory {
         this.availableCommands.put("insert", InsertFactCommand.class);
         this.availableCommands.put("delete", DeleteFactCommand.class);
         this.availableCommands.put("update", UpdateFactCommand.class);
+        this.availableCommands.put("upsert", UpsertFactCommand.class);
 
 
         this.availableFacts = new HashMap<>();
