@@ -6,4 +6,7 @@
   <kbase name="SampleFailingKB" packages="SampleFailing" equalsBehavior="equality">
     <ksession name="SampleFailingKS" type="stateful"/>
   </kbase>
+  <kbase name="SampleNowConceptKB" packages="SampleNowConcept" equalsBehavior="equality">
+    <ksession name="SampleNowConceptKS" type="stateful"/>
+  </kbase>
 </kmodule>

@@ -20,7 +20,6 @@ public class Session extends Fact {
     private OffsetDateTime start;
     private Duration duration;
 
-
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }
