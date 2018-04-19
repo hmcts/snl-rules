@@ -9,6 +9,11 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Issue;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.util.Collection;
@@ -32,6 +37,11 @@ public class DataExportController {
         listFacts(builder, Judge.class, "JUDGE");
         listFacts(builder, Session.class, "SESSION");
         listFacts(builder, Issue.class, "ISSUE");
+        listFacts(builder, Year.class, "YEAR");
+        listFacts(builder, Month.class, "MONTH");
+        listFacts(builder, Day.class, "DAY");
+        listFacts(builder, Hour.class, "HOUR");
+        listFacts(builder, Minute.class, "MINUTE");
 
         return builder.toString();
     }

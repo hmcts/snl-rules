@@ -1,0 +1,77 @@
+package uk.gov.hmcts.reform.sandl.snlrules.rules
+import uk.gov.hmcts.reform.sandl.snlrules.model.Issue
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year
+import java.util.UUID
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute
+
+rule "test year"
+ when
+   Year( $year: year)
+   Session( start.year == $year)
+ then
+   insertLogical(new Issue(UUID.randomUUID().toString(), "same year" ));
+end
+
+rule "test month"
+ when
+   Year( $year: year)
+   Month( $month: month)
+   Session( start.year == $year && start.month.getValue() == $month)
+ then
+   insertLogical(new Issue(UUID.randomUUID().toString(), "same month" ));
+end
+
+rule "test day"
+ when
+   Year( $year: year)
+   Month( $month: month)
+   Day( $day: day)
+   Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day)
+ then
+   insertLogical(new Issue(UUID.randomUUID().toString(), "same day" ));
+end
+
+rule "test hour"
+ when
+   Year( $year: year)
+   Month( $month: month)
+   Day( $day: day)
+   Hour( $hour: hour)
+   Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day &&
+   start.hour == $hour)
+ then
+   insertLogical(new Issue(UUID.randomUUID().toString(), "same hour" ));
+end
+
+
+rule "test minute"
+    when
+      Year( $year: year)
+      Month( $month: month)
+      Day( $day: day)
+      Hour( $hour: hour)
+      Minute( $minute: minute)
+      Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day &&
+      start.hour == $hour && start.minute == $minute)
+    then
+      insertLogical(new Issue(UUID.randomUUID().toString(), "same minute" ));
+   end
+
+rule "is session within one day without judge assigned"
+ when
+   Year( $year: year)
+   Month( $month: month)
+   Day( $day: day)
+   $session: Session( start.year == $year && start.month.getValue() == $month
+   && start.dayOfMonth == $day + 1 && judgeId == null)
+ then
+   insertLogical(new Issue(UUID.randomUUID().toString(),
+   String.format("Session %s is tomorrow and there is no judge assigned", $session.getId()) ));
+end
+
+
+

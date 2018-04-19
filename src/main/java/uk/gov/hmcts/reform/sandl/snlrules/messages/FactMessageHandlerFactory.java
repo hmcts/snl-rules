@@ -11,6 +11,11 @@ import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.UpsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +41,11 @@ public class FactMessageHandlerFactory {
         this.availableFacts.put("judge", Judge.class);
         this.availableFacts.put("availability", Availability.class);
         this.availableFacts.put("session", Session.class);
+        this.availableFacts.put("year", Year.class);
+        this.availableFacts.put("month", Month.class);
+        this.availableFacts.put("day", Day.class);
+        this.availableFacts.put("hour", Hour.class);
+        this.availableFacts.put("minute", Minute.class);
     }
 
     public FactCommand create(String type) {

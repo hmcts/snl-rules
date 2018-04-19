@@ -27,11 +27,11 @@ public class DroolsService {
     public void init() {
         logger.info("Starting drools service, container and session for {}", droolsConfiguration.getRulesKSession());
         KieServices kieServices = KieServices.Factory.get();
-        //kieServices.newKieBaseConfiguration().setOption(EqualityBehaviorOption.EQUALITY);
         KieContainer kieContainer = kieServices.getKieClasspathContainer();
         rulesSession = kieContainer.newKieSession(droolsConfiguration.getRulesKSession());
 
         rulesSession.addEventListener(new FactsChangedEventListener());
+        rulesSession.addEventListener(new RulesChangedEventListener());
     }
 
     public KieSession getRulesSession() {
