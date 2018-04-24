@@ -3,8 +3,10 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages.commands;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Data;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 
 import java.io.IOException;
+import java.util.List;
 import javax.ws.rs.WebApplicationException;
 
 import static com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES;
@@ -20,7 +22,7 @@ public abstract class FactCommand {
             .configure(FAIL_ON_EMPTY_BEANS, false)
             .configure(ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
-    public abstract void execute(String data);
+    public abstract List<FactModification> execute(String data);
 
     protected <T> T deserializeMessage(String message, Class<T> messageClass) {
         try {

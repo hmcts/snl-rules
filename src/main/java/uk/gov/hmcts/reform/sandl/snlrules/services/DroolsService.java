@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
 import uk.gov.hmcts.reform.sandl.snlrules.config.DroolsConfiguration;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.RulesMatchEventListener;
 
+import java.util.List;
 import javax.annotation.PostConstruct;
+
 
 @Service
 @ApplicationScope
 public class DroolsService {
     private static final Logger logger = LoggerFactory.getLogger(DroolsService.class);
+
+    private FactsChangedEventListener factsChangedEventListener;
 
     @Autowired
     private DroolsConfiguration droolsConfiguration;
@@ -31,11 +36,21 @@ public class DroolsService {
         KieContainer kieContainer = kieServices.getKieClasspathContainer();
         rulesSession = kieContainer.newKieSession(droolsConfiguration.getRulesKSession());
 
-        rulesSession.addEventListener(new FactsChangedEventListener());
+        factsChangedEventListener = new FactsChangedEventListener();
+
+        rulesSession.addEventListener(factsChangedEventListener);
         rulesSession.addEventListener(new RulesMatchEventListener());
     }
 
     public KieSession getRulesSession() {
         return rulesSession;
+    }
+
+    public List<FactModification> getFactModifications() {
+        return factsChangedEventListener.getFactModifications();
+    }
+
+    public void clearFactModifications() {
+        factsChangedEventListener.clear();
     }
 }

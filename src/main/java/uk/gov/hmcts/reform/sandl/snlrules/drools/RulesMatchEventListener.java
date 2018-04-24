@@ -22,46 +22,46 @@ public class RulesMatchEventListener implements AgendaEventListener {
 
     @Override
     public void matchCancelled(MatchCancelledEvent event) {
-
+        // not used
     }
 
     @Override
     public void beforeMatchFired(BeforeMatchFiredEvent event) {
-
+        // not used
     }
 
     @Override
     public void afterMatchFired(AfterMatchFiredEvent event) {
-
+        // not used
     }
 
     @Override
     public void agendaGroupPopped(AgendaGroupPoppedEvent event) {
-
+        // not used
     }
 
     @Override
     public void agendaGroupPushed(AgendaGroupPushedEvent event) {
-
+        // not used
     }
 
     @Override
     public void beforeRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
-
+        // not used
     }
 
     @Override
     public void afterRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
-
+        // not used
     }
 
     @Override
     public void beforeRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-
+        // not used
     }
 
     @Override
     public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-
+        // not used
     }
 }

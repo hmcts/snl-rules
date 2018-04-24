@@ -5,7 +5,10 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
+
+import java.util.List;
 
 @Data
 @Component
@@ -14,7 +17,9 @@ public class UpsertFactCommand extends FactCommand {
     private DroolsService droolsService;
 
     @Override
-    public void execute(String data) {
+    public List<FactModification> execute(String data) {
+        droolsService.clearFactModifications();
+
         KieSession session = droolsService.getRulesSession();
         Object fact = deserializeMessage(data, this.getFactType());
 
@@ -27,5 +32,7 @@ public class UpsertFactCommand extends FactCommand {
         }
 
         session.fireAllRules();
+
+        return droolsService.getFactModifications();
     }
 }
