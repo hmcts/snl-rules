@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
 import uk.gov.hmcts.reform.sandl.snlrules.config.DroolsConfiguration;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.RulesMatchEventListener;
 
 import javax.annotation.PostConstruct;
 
@@ -31,7 +32,7 @@ public class DroolsService {
         rulesSession = kieContainer.newKieSession(droolsConfiguration.getRulesKSession());
 
         rulesSession.addEventListener(new FactsChangedEventListener());
-        rulesSession.addEventListener(new RulesChangedEventListener());
+        rulesSession.addEventListener(new RulesMatchEventListener());
     }
 
     public KieSession getRulesSession() {

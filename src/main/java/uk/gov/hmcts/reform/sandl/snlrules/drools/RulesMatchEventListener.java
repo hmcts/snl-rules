@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.sandl.snlrules.services;
+package uk.gov.hmcts.reform.sandl.snlrules.drools;
 
 import org.kie.api.event.rule.AfterMatchFiredEvent;
 import org.kie.api.event.rule.AgendaEventListener;
@@ -9,12 +9,15 @@ import org.kie.api.event.rule.MatchCancelledEvent;
 import org.kie.api.event.rule.MatchCreatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupActivatedEvent;
 import org.kie.api.event.rule.RuleFlowGroupDeactivatedEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class RulesChangedEventListener implements AgendaEventListener {
+public class RulesMatchEventListener implements AgendaEventListener {
+    private static final Logger logger = LoggerFactory.getLogger(RulesMatchEventListener.class);
 
     @Override
     public void matchCreated(MatchCreatedEvent event) {
-        System.out.println(event.getMatch().getRule().getName());
+        logger.trace("Rule match: {}", event.getMatch().getRule().getName());
     }
 
     @Override
