@@ -1,29 +1,34 @@
 {
 	"info": {
-		"_postman_id": "d34e95bc-b58b-43e3-93f8-136df2aa4f9e",
 		"name": "hmcts-snl",
+		"_postman_id": "68a46e42-b525-4704-805b-151817b7154b",
 		"description": "Sample calls for the service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "current-state",
+			"name": "insert-availability",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/exporthtml",
+					"raw": "http://localhost:8091/msg",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8091",
 					"path": [
-						"exporthtml"
+						"msg"
 					]
 				}
 			},
@@ -41,35 +46,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smdi2th\\\"}\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8091/msg",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8091",
-					"path": [
-						"msg"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "insert-availability",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a2\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 7600}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -97,7 +74,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s4\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -114,7 +91,30 @@
 			"response": []
 		},
 		{
-			"name": "delete-session",
+			"name": "current-state",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8091/exporthtml",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"exporthtml"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-year",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -125,7 +125,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"delete-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-year\",\n\t\"data\": \"{\\\"id\\\":\\\"YEAR\\\",\\\"year\\\": 2018}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -142,7 +142,7 @@
 			"response": []
 		},
 		{
-			"name": "upsert-session",
+			"name": "refresh-month",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -153,7 +153,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-month\",\n\t\"data\": \"{\\\"id\\\":\\\"MONTH\\\",\\\"month\\\": 10}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
@@ -170,7 +170,7 @@
 			"response": []
 		},
 		{
-			"name": "update-session",
+			"name": "refresh-day",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -181,7 +181,63 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"update-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s1\\\",\\\"judgeId\\\":\\\"j2\\\",\\\"start\\\":\\\"2019-04-12T15:24:07.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-day\",\n\t\"data\": \"{\\\"id\\\":\\\"DAY\\\",\\\"day\\\": 10}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-hour",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"upsert-hour\",\n\t\"data\": \"{\\\"id\\\":\\\"HOUR\\\",\\\"hour\\\": 10}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "refresh-minute",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"upsert-day\",\n\t\"data\": \"{\\\"id\\\":\\\"DAY\\\",\\\"day\\\": 10}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
