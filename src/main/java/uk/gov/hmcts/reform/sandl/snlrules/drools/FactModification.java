@@ -9,11 +9,6 @@ public class FactModification {
     private Fact oldFact;
     private Fact newFact;
 
-    public FactModification(Fact oldFact, Fact newFact) {
-        this.oldFact = oldFact;
-        this.newFact = newFact;
-    }
-
     @JsonIgnore
     public Class getFactClass() {
         return oldFact != null ? oldFact.getClass() : newFact != null ? newFact.getClass() : null;
