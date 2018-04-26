@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Issue;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
@@ -33,10 +33,11 @@ public class DataExportController {
     private String toPlainHtml() {
         StringBuilder builder = new StringBuilder();
 
+        listFacts(builder, Problem.class, "PROBLEM");
+
         listFacts(builder, Availability.class, "AVAILABILITY");
         listFacts(builder, Judge.class, "JUDGE");
         listFacts(builder, Session.class, "SESSION");
-        listFacts(builder, Issue.class, "ISSUE");
         listFacts(builder, Year.class, "YEAR");
         listFacts(builder, Month.class, "MONTH");
         listFacts(builder, Day.class, "DAY");
