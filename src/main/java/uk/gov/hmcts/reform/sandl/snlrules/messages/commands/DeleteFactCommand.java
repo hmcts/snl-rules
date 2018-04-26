@@ -23,8 +23,11 @@ public class DeleteFactCommand extends FactCommand {
         KieSession session = droolsService.getRulesSession();
 
         FactHandle factHandle = session.getFactHandle(deserializeMessage(data, this.getFactType()));
-        session.delete(factHandle);
-        session.fireAllRules();
+        
+        if (factHandle != null) {
+            session.delete(factHandle);
+            session.fireAllRules();
+        }
 
         return droolsService.getFactModifications();
     }
