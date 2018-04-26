@@ -5,7 +5,10 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
+
+import java.util.List;
 
 @Data
 @Component
@@ -14,12 +17,18 @@ public class DeleteFactCommand extends FactCommand {
     private DroolsService droolsService;
 
     @Override
-    public void execute(String data) {
+    public List<FactModification> execute(String data) {
+        droolsService.clearFactModifications();
+
         KieSession session = droolsService.getRulesSession();
 
         FactHandle factHandle = session.getFactHandle(deserializeMessage(data, this.getFactType()));
-        session.delete(factHandle);
+        
+        if (factHandle != null) {
+            session.delete(factHandle);
+            session.fireAllRules();
+        }
 
-        session.fireAllRules();
+        return droolsService.getFactModifications();
     }
 }

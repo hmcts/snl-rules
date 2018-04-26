@@ -5,9 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessage;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory;
+
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -18,10 +22,12 @@ public class FactMessageController {
     private FactMessageHandlerFactory factMessageHandlerFactory;
 
     @RequestMapping(value = "/msg", method = RequestMethod.PUT)
-    public ResponseEntity<String> msgw(@RequestBody FactMessage factMessage) {
+    @ResponseBody
+    public ResponseEntity<List<FactModification>> msgw(@RequestBody FactMessage factMessage) {
 
-        factMessageHandlerFactory.create(factMessage.getType()).execute(factMessage.getData());
+        return ok(factMessageHandlerFactory
+            .create(factMessage.getType())
+            .execute(factMessage.getData()));
 
-        return ok("DONE");
     }
 }
