@@ -39,7 +39,7 @@ public class FactMessagesTest {
             .contentType(ContentType.JSON)
             .body(msgDelete)
             .when()
-            .put("/msg")
+            .post("/msg")
             .then()
             .statusCode(200);
 
@@ -47,12 +47,12 @@ public class FactMessagesTest {
             .contentType(ContentType.JSON)
             .body(msgInsert)
             .when()
-            .put("/msg")
+            .post("/msg")
             .then()
             .statusCode(200)
             .and()
             .extract().jsonPath();
 
-        assertThat(retrievedFactList.getList("type")).contains("Issue");
+        assertThat(retrievedFactList.getList("type")).contains("Problem");
     }
 }

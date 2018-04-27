@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Issue extends Fact {
+public class Problem extends Fact {
     private String id;
     private String message;
 }

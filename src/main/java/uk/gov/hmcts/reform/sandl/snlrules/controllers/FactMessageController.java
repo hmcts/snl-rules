@@ -21,7 +21,7 @@ public class FactMessageController {
     @Autowired
     private FactMessageHandlerFactory factMessageHandlerFactory;
 
-    @RequestMapping(value = "/msg", method = RequestMethod.PUT)
+    @RequestMapping(value = "/msg", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<List<FactModification>> msgw(@RequestBody FactMessage factMessage) {
 
