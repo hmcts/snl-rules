@@ -23,11 +23,12 @@ public class FactMessageController {
 
     @RequestMapping(value = "/msg", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<List<FactModification>> msgw(@RequestBody FactMessage factMessage) {
-
-        return ok(factMessageHandlerFactory
-            .create(factMessage.getType())
-            .execute(factMessage.getData()));
-
+    public ResponseEntity<List<FactModification>> handleMessage(@RequestBody FactMessage factMessage)
+        throws InterruptedException {
+        synchronized (this) {
+            return ok(factMessageHandlerFactory
+                .create(factMessage.getType())
+                .execute(factMessage.getData()));
+        }
     }
 }
