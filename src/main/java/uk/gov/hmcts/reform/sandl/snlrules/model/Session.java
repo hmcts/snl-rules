@@ -17,6 +17,7 @@ import java.time.OffsetDateTime;
 public class Session extends Fact {
     private String id;
     private String judgeId;
+    private String roomId;
     private OffsetDateTime start;
     private Duration duration;
 
