@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.Data;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
+import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +23,7 @@ public abstract class FactCommand {
             .configure(FAIL_ON_EMPTY_BEANS, false)
             .configure(ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
-    public abstract List<FactModification> execute(String data);
+    public abstract List<FactModification> execute(DroolsService droolsService, String data);
 
     protected <T> T deserializeMessage(String message, Class<T> messageClass) {
         try {

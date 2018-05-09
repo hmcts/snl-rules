@@ -12,11 +12,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
+import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
+import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,18 +36,28 @@ public class FactMessageControllerTest {
     private FactMessageHandlerFactory factMessageHandlerFactory;
 
     @MockBean
+    private DroolsServiceFactory droolsServiceFactory;
+
+    @MockBean
     private InsertFactCommand insertFactCommand;
 
     @Before
     public void setupMock() {
-        when(insertFactCommand.execute(any()))
+        String testingRule = "testingRule";
+        DroolsService droolsService = new DroolsService(testingRule);
+
+        when(insertFactCommand.execute(eq(droolsService), any()))
             .thenReturn(new ArrayList<FactModification>());
+
         when(factMessageHandlerFactory.create("insert-judge"))
             .thenReturn(insertFactCommand);
+
+        when(droolsServiceFactory.getInstance(testingRule))
+            .thenReturn(droolsService);
     }
 
     @Test
-    public void should_the_endpoint_works() throws Exception {
+    public void should_the_endpoint_work() throws Exception {
 
         String msg = "{\t\"type\": \"insert-judge\",\n"
             + "\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"}";

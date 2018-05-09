@@ -9,6 +9,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.UpdateFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.UpsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
+import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
@@ -41,6 +42,7 @@ public class FactMessageHandlerFactory {
         this.availableFacts.put("judge", Judge.class);
         this.availableFacts.put("availability", Availability.class);
         this.availableFacts.put("session", Session.class);
+        this.availableFacts.put("hearingPart", HearingPart.class);
         this.availableFacts.put("year", Year.class);
         this.availableFacts.put("month", Month.class);
         this.availableFacts.put("day", Day.class);

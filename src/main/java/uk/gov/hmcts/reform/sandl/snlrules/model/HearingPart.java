@@ -7,22 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.Duration;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Session extends Fact {
+public class HearingPart extends Fact {
     private String id;
-    private String judgeId;
-    private String roomId;
-    private OffsetDateTime start;
-    private Duration duration;
+    private String sessionId;
     private String caseType;
-
-    public OffsetDateTime getEnd() {
-        return start.plus(duration);
-    }
+    private Duration duration;
 }
