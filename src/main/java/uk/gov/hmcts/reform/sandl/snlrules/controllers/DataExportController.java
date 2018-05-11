@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
+import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
@@ -38,6 +39,7 @@ public class DataExportController {
         listFacts(builder, Availability.class, "AVAILABILITY");
         listFacts(builder, Judge.class, "JUDGE");
         listFacts(builder, Session.class, "SESSION");
+        listFacts(builder, HearingPart.class, "HEARING_PART");
         listFacts(builder, Year.class, "YEAR");
         listFacts(builder, Month.class, "MONTH");
         listFacts(builder, Day.class, "DAY");
