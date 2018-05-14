@@ -1,0 +1,19 @@
+package uk.gov.hmcts.reform.sandl.snlrules.rules
+
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+
+rule "Hearing case type does not match the session case type"
+    when
+    	$hearingPart : HearingPart()
+    	$session : Session(id == $hearingPart.sessionId)
+    	Session(caseType != $hearingPart.caseType)
+    then
+        System.out.println("Hearing " + $hearingPart.getId() + "  case type " + $hearingPart.getCaseType() + " does not match with session " + $session.getId() + " and type " + $session.getCaseType());
+        insertLogical(new Problem($hearingPart.getId() + "@" + $session.getId(), "Hearing " + $hearingPart.getId() + "  case type " + $hearingPart.getCaseType() + " does not match with session " + $session.getId() + " and type " + $session.getCaseType()));
+end
+
+
+
+

@@ -16,13 +16,13 @@ public class DroolsConfiguration {
 
     @Valid
     @NotNull
-    private String rulesKSession;
+    private String rulesDefinition;
 
-    public String getRulesKSession() {
-        return rulesKSession;
+    public String getRulesDefinition() {
+        return rulesDefinition;
     }
 
-    public void setRulesKSession(String rulesKSession) {
-        this.rulesKSession = rulesKSession;
+    public void setRulesDefinition(String rulesDefinition) {
+        this.rulesDefinition = rulesDefinition;
     }
 }

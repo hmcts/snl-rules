@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-  <kbase name="SampleSessionsKB" packages="SampleSessions" equalsBehavior="equality">
-      <ksession name="SampleSessionsKS" type="stateful"/>
+  <kbase name="SessionsKB" packages="Sessions" equalsBehavior="equality">
+      <ksession name="Sessions" type="stateful"/>
+  </kbase>
+  <kbase name="ListingsKB" packages="Listings" equalsBehavior="equality">
+    <ksession name="Listings" type="stateful"/>
   </kbase>
   <kbase name="SampleFailingKB" packages="SampleFailing" equalsBehavior="equality">
     <ksession name="SampleFailingKS" type="stateful"/>

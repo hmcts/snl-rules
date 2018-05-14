@@ -5,7 +5,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
 
-rule "Session Time not Available"
+rule "Session Time For the Judge not Available"
     when
     	$s : Session()
     	not Availability( judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
@@ -15,18 +15,5 @@ rule "Session Time not Available"
 end
 
 
-rule "We have no problems YUPII"
-	when
-		not Problem()
-	then
-		System.out.println(">>YUPI, no problem!");
-end
-
-rule "We have a problem"
-	when
-		Problem()
-	then
-		System.out.println(">>Oh no, there is a new problem :(");
-end
 
 

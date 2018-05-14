@@ -364,6 +364,40 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "insert-hearingPart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-hearingPart\",\n\t\"data\": \"{\\\"id\\\":\\\"2\\\",\\\"sessionId\\\":\\\"s5\\\",\\\"caseType\\\":\\\"SCLAIMS\\\",\\\"duration\\\": 600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
