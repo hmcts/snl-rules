@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Availability extends Fact {
     private OffsetDateTime start;
     private Duration duration;
 
+    @JsonIgnore
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }
