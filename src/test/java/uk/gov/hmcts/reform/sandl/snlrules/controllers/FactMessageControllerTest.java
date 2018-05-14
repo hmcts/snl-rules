@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
