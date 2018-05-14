@@ -47,7 +47,7 @@ public class FactMessageControllerTest {
         DroolsService droolsService = new DroolsService(testingRule);
 
         when(insertFactCommand.execute(eq(droolsService), any()))
-            .thenReturn(new ArrayList<FactModification>());
+            .thenReturn(new ArrayList<>());
 
         when(factMessageHandlerFactory.create("insert-judge"))
             .thenReturn(insertFactCommand);
