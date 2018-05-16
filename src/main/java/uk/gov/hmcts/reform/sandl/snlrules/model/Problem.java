@@ -18,4 +18,9 @@ public class Problem extends Fact {
     @Override public boolean equals(Object o) {
         return super.equals(o);
     }
+
+    @Override public int hashCode() {
+        final int PRIME = 59;
+        return PRIME + super.hashCode();
+    }
 }
