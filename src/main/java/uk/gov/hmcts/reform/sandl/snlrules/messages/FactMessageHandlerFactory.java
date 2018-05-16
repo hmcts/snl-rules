@@ -19,9 +19,9 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 
-import javax.ws.rs.WebApplicationException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ws.rs.WebApplicationException;
 
 @Component
 public class FactMessageHandlerFactory {

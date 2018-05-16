@@ -9,8 +9,8 @@ import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.RulesMatchEventListener;
 
-import javax.ws.rs.WebApplicationException;
 import java.util.List;
+import javax.ws.rs.WebApplicationException;
 
 public class DroolsService {
     private static final Logger logger = LoggerFactory.getLogger(DroolsService.class);
