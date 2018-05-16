@@ -32,7 +32,7 @@ public class Availability extends Fact {
     }
 
     @Override public int hashCode() {
-        final int PRIME = 59;
-        return PRIME + super.hashCode();
+        final int prime = 59;
+        return prime + super.hashCode();
     }
 }
