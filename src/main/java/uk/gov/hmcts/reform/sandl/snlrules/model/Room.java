@@ -13,4 +13,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Room extends Fact {
     private String name;
+
+    @Override public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override public int hashCode() {
+        final int prime = 59;
+        return prime + super.hashCode();
+    }
 }
