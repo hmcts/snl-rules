@@ -32,7 +32,7 @@
 		{
 			"name": "insert-availability",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -60,7 +60,7 @@
 		{
 			"name": "insert-judge",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -88,7 +88,7 @@
 		{
 			"name": "insert-session",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -97,10 +97,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700,\\\"caseType\\\":\\\"SCLAIMS\\\",}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -108,6 +108,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
 					]
 				}
 			},
@@ -116,7 +122,7 @@
 		{
 			"name": "upsert-judge",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -144,7 +150,7 @@
 		{
 			"name": "upsert-availability",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -172,7 +178,7 @@
 		{
 			"name": "upsert-session",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -181,10 +187,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":null,\\\"start\\\":\\\"2018-04-17T10:10:07.255+00:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700,\\\"caseType\\\":\\\"SCLAIMS\\\"}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -192,6 +198,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
 					]
 				}
 			},
@@ -200,7 +212,7 @@
 		{
 			"name": "upsert-year",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -228,7 +240,7 @@
 		{
 			"name": "upsert-month",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -256,7 +268,7 @@
 		{
 			"name": "upsert-day",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -284,7 +296,7 @@
 		{
 			"name": "upsert-hour",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -312,7 +324,7 @@
 		{
 			"name": "upsert-minute",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -340,7 +352,7 @@
 		{
 			"name": "delete-session",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -360,6 +372,40 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "insert-hearingPart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-hearingPart\",\n\t\"data\": \"{\\\"id\\\":\\\"2\\\",\\\"sessionId\\\":\\\"s5\\\",\\\"caseType\\\":\\\"SCLAIMS\\\",\\\"duration\\\": 600}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
 					]
 				}
 			},
