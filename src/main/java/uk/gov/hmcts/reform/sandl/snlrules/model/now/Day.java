@@ -16,7 +16,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 public class Day extends Fact {
     private int day;
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 
