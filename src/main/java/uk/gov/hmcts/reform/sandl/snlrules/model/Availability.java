@@ -15,6 +15,7 @@ import java.time.OffsetDateTime;
 @ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("squid:S3437")
 public class Availability extends Fact {
     private String id;
     private String judgeId;
@@ -26,4 +27,7 @@ public class Availability extends Fact {
         return start.plus(duration);
     }
 
+    @Override public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

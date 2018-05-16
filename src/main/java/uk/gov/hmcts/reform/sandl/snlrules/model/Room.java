@@ -13,4 +13,8 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Room extends Fact {
     private String name;
+
+    @Override public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

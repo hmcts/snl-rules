@@ -14,4 +14,8 @@ import lombok.ToString;
 public class Problem extends Fact {
     private String id;
     private String message;
+
+    @Override public boolean equals(Object o) {
+        return super.equals(o);
+    }
 }

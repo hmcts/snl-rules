@@ -9,6 +9,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.RulesMatchEventListener;
 
+import javax.ws.rs.WebApplicationException;
 import java.util.List;
 
 public class DroolsService {
@@ -29,7 +30,7 @@ public class DroolsService {
         rulesSession = kieContainer.newKieSession(rulesDefinition);
 
         if (rulesSession == null) {
-            throw new RuntimeException(
+            throw new WebApplicationException(
                 String.format("Drools engine with rules %s cannot be created.", rulesDefinition));
         }
 

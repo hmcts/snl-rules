@@ -19,6 +19,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 
+import javax.ws.rs.WebApplicationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,19 +57,19 @@ public class FactMessageHandlerFactory {
         String[] typeSplit = type.split("-");
 
         if (typeSplit.length != 2) {
-            throw new RuntimeException("Type of the message is not supported: " + type);
+            throw new WebApplicationException("Type of the message is not supported: " + type);
         }
 
         String cmd = typeSplit[0];
 
         if (!availableCommands.containsKey(cmd)) {
-            throw new RuntimeException("Unsupported command in message: " + cmd);
+            throw new WebApplicationException("Unsupported command in message: " + cmd);
         }
 
         String dataType = typeSplit[1];
 
         if (!availableFacts.containsKey(dataType)) {
-            throw new RuntimeException("Unsupported data type in message: " + dataType);
+            throw new WebApplicationException("Unsupported data type in message: " + dataType);
         }
 
         FactCommand factCommand = (FactCommand) context.getBean(availableCommands.get(cmd));

@@ -29,7 +29,6 @@ public abstract class FactCommand {
         try {
             return objectMapper.readValue(message, messageClass);
         } catch (IOException e) {
-            //TODO add logger
             throw new WebApplicationException("Incorrect JSON data, cannot deserialize.", e);
         }
     }

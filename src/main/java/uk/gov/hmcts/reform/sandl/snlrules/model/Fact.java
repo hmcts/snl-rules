@@ -27,7 +27,7 @@ public abstract class Fact implements Serializable {
         if (!other.canEqual((Object) this)) {
             return false;
         }
-        return !((this.getId() == null ? other.getId() != null : !this.getId().equals(other.getId())));
+        return !(this.getId() == null ? other.getId() != null : !this.getId().equals(other.getId()));
     }
 
     @Override public int hashCode() {
