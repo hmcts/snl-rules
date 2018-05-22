@@ -16,7 +16,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8091/exporthtml",
+					"raw": "http://localhost:8091/exporthtml?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -24,6 +24,12 @@
 					"port": "8091",
 					"path": [
 						"exporthtml"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
@@ -97,10 +103,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700}\"\n}"
+					"raw": "{\n\t\"type\": \"insert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700,\\\"caseType\\\":\\\"SCLAIMS\\\",}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -108,6 +114,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
 					]
 				}
 			},
@@ -181,10 +193,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":null,\\\"start\\\":\\\"2018-04-17T10:10:07.255+00:00\\\",\\\"duration\\\": 3600}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-session\",\n\t\t\"data\": \"{\\\"id\\\":\\\"s5\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3700,\\\"caseType\\\":\\\"SCLAIMS\\\"}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Listings",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -192,6 +204,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Listings"
+						}
 					]
 				}
 			},
@@ -212,7 +230,7 @@
 					"raw": "{\n\t\"type\": \"upsert-year\",\n\t\"data\": \"{\\\"id\\\":\\\"YEAR\\\",\\\"year\\\": 2018}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -220,6 +238,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
@@ -237,10 +261,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-month\",\n\t\"data\": \"{\\\"id\\\":\\\"MONTH\\\",\\\"month\\\": 10}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-month\",\n\t\"data\": \"{\\\"id\\\":\\\"MONTH\\\",\\\"month\\\": 5}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -248,6 +272,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
@@ -265,10 +295,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-day\",\n\t\"data\": \"{\\\"id\\\":\\\"DAY\\\",\\\"day\\\": 10}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-day\",\n\t\"data\": \"{\\\"id\\\":\\\"DAY\\\",\\\"day\\\": 22}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -276,6 +306,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
@@ -293,10 +329,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-hour\",\n\t\"data\": \"{\\\"id\\\":\\\"HOUR\\\",\\\"hour\\\": 10}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-hour\",\n\t\"data\": \"{\\\"id\\\":\\\"HOUR\\\",\\\"hour\\\": 12}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -304,6 +340,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
@@ -321,10 +363,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-day\",\n\t\"data\": \"{\\\"id\\\":\\\"DAY\\\",\\\"day\\\": 10}\"\n}"
+					"raw": "{\n\t\"type\": \"upsert-minute\",\n\t\"data\": \"{\\\"id\\\":\\\"MINUTE\\\",\\\"minute\\\": 410}\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8091/msg",
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -332,6 +374,12 @@
 					"port": "8091",
 					"path": [
 						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
 					]
 				}
 			},
