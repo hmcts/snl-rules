@@ -17,8 +17,8 @@ rule "Session Time For the Judge not Available"
         $s : Session()
         not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
     then
-        System.out.println("Session " + $s.getId() + "  not available at specified time for judge " + $s.getJudgeId());
-        insertLogical(new Problem($s.getId() + "@" + $s.getJudgeId(), "Session " + $s.getId() + "  not available at specified time for judge " + $s.getJudgeId()));
+        insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_available,
+                                  String.format("session:%s, judge:%s", $s.getId(), $s.getJudgeId())));
 end
 
 rule "Session does not have a judge 4 weeks or less before start"
@@ -32,6 +32,16 @@ rule "Session does not have a judge 4 weeks or less before start"
                                   String.format("session:%s", $s.getId())));
 end
 
+rule "Session does not have a room 4 weeks or less before start"
+    when
+        Year($year: year)
+        Month($month: month)
+        Day($day: day)
+        $s : Session(roomId == null && start.minusWeeks(4).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) <= 0)
+    then
+        insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_room_4_weeks_or_nearer_before_start,
+                                  String.format("session:%s", $s.getId())));
+end
 
 
 

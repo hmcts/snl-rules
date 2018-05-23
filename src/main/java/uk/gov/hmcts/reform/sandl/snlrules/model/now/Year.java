@@ -13,11 +13,20 @@ public class Year extends Fact {
     private int year;
 
     public Year(int year) {
-        this.setId("6ddcfae6-b846-4f4a-afab-83f2e47a980a");
+        this();
         this.year = year;
     }
 
-    @Override public boolean equals(Object o) {
+    public Year() {
+        this.setId("");
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = "6ddcfae6-b846-4f4a-afab-83f2e47a980a";
+    }
+
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 

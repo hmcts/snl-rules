@@ -8,13 +8,13 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Judge extends Fact {
     private String name;
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 

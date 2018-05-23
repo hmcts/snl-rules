@@ -13,11 +13,20 @@ public class Hour extends Fact {
     private int hour;
 
     public Hour(int hour) {
-        this.setId("7c107d5b-30b7-4e48-921c-32294cdb944e");
+        this();
         this.hour = hour;
     }
 
-    @Override public boolean equals(Object o) {
+    public Hour() {
+        this.setId("");
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = "7c107d5b-30b7-4e48-921c-32294cdb944e";
+    }
+
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 

@@ -13,11 +13,20 @@ public class Month extends Fact {
     private int month;
 
     public Month(int month) {
-        this.setId("ddae85d0-7ec7-4bfe-addf-74ef660604fa");
+        this();
         this.month = month;
     }
 
-    @Override public boolean equals(Object o) {
+    public Month() {
+        this.setId("");
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = "ddae85d0-7ec7-4bfe-addf-74ef660604fa";
+    }
+
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 

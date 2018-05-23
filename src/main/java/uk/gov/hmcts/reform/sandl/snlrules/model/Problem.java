@@ -9,7 +9,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Problem extends Fact {
@@ -22,7 +22,7 @@ public class Problem extends Fact {
         this.type = type;
         this.references = references;
 
-        this.id = DigestUtils.md5Hex(this.references).toUpperCase();
+        this.id = DigestUtils.md5Hex(this.toString());
         this.message = String.format("%s for %s", type, references);
     }
 
@@ -32,7 +32,7 @@ public class Problem extends Fact {
         this.message = message;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 

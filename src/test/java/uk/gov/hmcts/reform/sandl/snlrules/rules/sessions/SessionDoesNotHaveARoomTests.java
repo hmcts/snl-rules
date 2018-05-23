@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SessionsTimeTests {
+public class SessionDoesNotHaveARoomTests {
 
     private final static String rulesDefinition = "Sessions";
 
@@ -40,71 +40,67 @@ public class SessionsTimeTests {
     }
 
     @Test
-    public void should_be_no_problem_when_session_does_not_have_a_judge_more_than_4_weeks_before_start() {
+    public void should_be_no_problem_when_session_does_not_have_a_room_more_than_4_weeks_before_start() {
         // set date to A
-        // add sessions without judge taking as date A-5 weeks
+        // add sessions without room taking as date A-5 weeks
         // assert no problem
 
         setDateInRules(2018, 02, 01);
-        // setTimeInRules(9, 0);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
-        String roomId = "33362d68-76e3-430a-84c4-23983c448dc2";
-        rules.insert(new Session(sessionId, null, roomId,
+        String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
+        rules.insert(new Session(sessionId, judgeId, null,
             OffsetDateTime.of(2018, 5, 22, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
         assertThat(getNewProblems()).isEmpty();
     }
 
     @Test
-    public void should_be_problem_when_session_does_not_have_a_judge_4_weeks_or_nearer_before_start() {
+    public void should_be_problem_when_session_does_not_have_a_room_4_weeks_or_nearer_before_start() {
         // set date to A
-        // add sessions without judge taking as date A-3 weeks
+        // add sessions without room taking as date A-3 weeks
         // assert problem
 
         setDateInRules(2018, 04, 05);
-        // setTimeInRules(9, 0);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
-        String roomId = "33362d68-76e3-430a-84c4-23983c448dc2";
-        rules.insert(new Session(sessionId, null, roomId,
+        String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
+        rules.insert(new Session(sessionId, judgeId, null,
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
-        //rules.fireAllRules();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
         assertThat(getNewProblems().size()).isEqualTo(1);
     }
 
     @Test
-    public void should_be_problem_when_session_does_not_have_a_judge_and_date_changes_to_4_weeks_or_nearer_before_start() {
+    public void should_be_problem_when_session_does_not_have_a_room_and_date_changes_to_4_weeks_or_nearer_before_start() {
         // set date to A
-        // add sessions without judge taking as date A+8 weeks
+        // add sessions without room taking as date A+8 weeks
         // change date to A+5 weeks
         // should be a problem
 
         setDateInRules(2018, 01, 01);
-        // setTimeInRules(9, 0);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
-        String roomId = "33362d68-76e3-430a-84c4-23983c448dc2";
-        rules.insert(new Session(sessionId, null, roomId,
+        String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
+        rules.insert(new Session(sessionId, judgeId, null,
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
         assertThat(getNewProblems()).isEmpty();
 
         setDateInRules(2018, 04, 01);
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
         assertThat(getNewProblems().size()).isEqualTo(1);
     }
@@ -123,11 +119,6 @@ public class SessionsTimeTests {
             rules.update(factHandle, d);
         }
     }
-
-//    private void setTimeInRules(int hour, int minute) {
-//        rules.insert(new Hour(hour));
-//        rules.insert(new Minute(minute));
-//    }
 
     private List<FactModification> getNewProblems() {
         return droolsService.getFactModifications()

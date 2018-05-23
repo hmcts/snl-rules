@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 public abstract class Fact implements Serializable {
-    private String id;
+    protected String id;
 
     protected boolean canEqual(Object other) {
         return other instanceof Fact;

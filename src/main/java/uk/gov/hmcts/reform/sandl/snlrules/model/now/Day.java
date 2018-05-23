@@ -13,8 +13,17 @@ public class Day extends Fact {
     private int day;
 
     public Day(int day) {
-        this.setId("527dfdbd-e143-445d-b8d5-fc95a7df7358");
+        this();
         this.day = day;
+    }
+
+    public Day() {
+        this.setId("");
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = "527dfdbd-e143-445d-b8d5-fc95a7df7358";
     }
 
     @Override public boolean equals(Object o) { //NOPMD

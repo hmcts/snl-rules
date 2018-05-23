@@ -10,7 +10,7 @@ import java.time.Duration;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
@@ -20,7 +20,7 @@ public class HearingPart extends Fact {
     private String caseType;
     private Duration duration;
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(Object o) {//NOPMD
         return super.equals(o);
     }
 
