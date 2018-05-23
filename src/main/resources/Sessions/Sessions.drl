@@ -43,5 +43,21 @@ rule "Session does not have a room 4 weeks or less before start"
                                   String.format("session:%s", $s.getId())));
 end
 
+rule "Double booking of judge (includes any overlapping)"
+    no-loop
+    when
+        $s : Session()
+        $s2 : Session(id != $s.id && isOverlapping($s))
+
+        // this check is to prevent the problem being inserted twice for each session,
+        // thanks to the check it will not be inserted twice
+        // it requires no-loop on the rule otherwise it ends in an infinitive loop
+        // due to the fact that the problem is created in this rule
+        not Problem(type == ProblemTypes.Double_booking_of_judge_includes_any_overlapping
+              && (toString().contains($s.id) || toString().contains($s2.id)))
+    then
+        insertLogical(new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
+                                  String.format("session:%s, session:%s", $s.getId(), $s2.getId())));
+end
 
 
