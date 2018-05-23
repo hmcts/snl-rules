@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
@@ -14,10 +13,9 @@ import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getNewProblems;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HearingTypeDoesNotMatchSessionCaseTypeTests {
@@ -51,7 +49,7 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
 
-        assertThat(getNewProblems()).isEmpty();
+        assertThat(getNewProblems(droolsService)).isEmpty();
     }
 
     @Test
@@ -69,13 +67,6 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
-        assertThat(getNewProblems().size()).isEqualTo(1);
-    }
-
-    private List<FactModification> getNewProblems() {
-        return droolsService.getFactModifications()
-            .stream()
-            .filter(m -> m.isInserted() && m.getType().equals("Problem"))
-            .collect(Collectors.toList());
+        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
     }
 }

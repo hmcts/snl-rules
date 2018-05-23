@@ -5,23 +5,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.FactHandle;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getNewProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.setDateInRules;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SessionDoesNotHaveARoomTests {
@@ -45,7 +39,7 @@ public class SessionDoesNotHaveARoomTests {
         // add sessions without room taking as date A-5 weeks
         // assert no problem
 
-        setDateInRules(2018, 02, 01);
+        setDateInRules(rules, 2018, 02, 01);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
         String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
@@ -56,7 +50,7 @@ public class SessionDoesNotHaveARoomTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
-        assertThat(getNewProblems()).isEmpty();
+        assertThat(getNewProblems(droolsService)).isEmpty();
     }
 
     @Test
@@ -65,7 +59,7 @@ public class SessionDoesNotHaveARoomTests {
         // add sessions without room taking as date A-3 weeks
         // assert problem
 
-        setDateInRules(2018, 04, 05);
+        setDateInRules(rules, 2018, 04, 05);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
         String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
@@ -76,7 +70,7 @@ public class SessionDoesNotHaveARoomTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
-        assertThat(getNewProblems().size()).isEqualTo(1);
+        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
     }
 
     @Test
@@ -86,7 +80,7 @@ public class SessionDoesNotHaveARoomTests {
         // change date to A+5 weeks
         // should be a problem
 
-        setDateInRules(2018, 01, 01);
+        setDateInRules(rules, 2018, 01, 01);
 
         String sessionId = "96462d68-76e3-430a-84c4-23983c448dc2";
         String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
@@ -96,34 +90,12 @@ public class SessionDoesNotHaveARoomTests {
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
-        assertThat(getNewProblems()).isEmpty();
+        assertThat(getNewProblems(droolsService)).isEmpty();
 
-        setDateInRules(2018, 04, 01);
+        setDateInRules(rules, 2018, 04, 01);
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a room 4 weeks or less before start"));
 
-        assertThat(getNewProblems().size()).isEqualTo(1);
-    }
-
-    private void setDateInRules(int year, int month, int day) {
-        upsertFact(new Year(year));
-        upsertFact(new Month(month));
-        upsertFact(new Day(day));
-    }
-
-    private void upsertFact(Fact d) {
-        FactHandle factHandle = rules.getFactHandle(d);
-        if (factHandle == null) {
-            rules.insert(d);
-        } else {
-            rules.update(factHandle, d);
-        }
-    }
-
-    private List<FactModification> getNewProblems() {
-        return droolsService.getFactModifications()
-            .stream()
-            .filter(m -> m.isInserted() && m.getType().equals("Problem"))
-            .collect(Collectors.toList());
+        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
     }
 }
