@@ -46,10 +46,12 @@ end
 rule "Double booking of judge (includes any overlapping)"
     when
         $s : Session()
-        $s2 : Session(this != $s && isOverlapping($s))
+        $s2 : Session(this != $s && judgeId == $s.judgeId && isOverlapping($s))
     then
         // this if logic here really is to avoid duplication of the problem for those two conflicting sessions
         // this way both rules runs on both session would produce the same problem (rather than two due to how Problem is coded)
+        // looks a bit tricky and needs to get reviewed once the new problem model is done
+        // and considered whether it should not be covered by equals and hashcode of Problem (not Fact)
         Problem p1 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
                     String.format("session:%s, session:%s", $s.getId(), $s2.getId()));
         Problem p2 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
@@ -61,5 +63,7 @@ rule "Double booking of judge (includes any overlapping)"
             insertLogical(p2);
         }
 end
+
+
 
 
