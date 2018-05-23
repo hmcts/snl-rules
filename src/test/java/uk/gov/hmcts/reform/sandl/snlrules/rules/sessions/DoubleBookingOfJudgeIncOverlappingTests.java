@@ -5,24 +5,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.rule.FactHandle;
 import org.mockito.runners.MockitoJUnitRunner;
-import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getNewProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertProblems;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DoubleBookingOfJudgeIncOverlappingTests {
@@ -59,7 +50,7 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Double booking of judge (includes any overlapping)"));
 
-        assertThat(getNewProblems(droolsService)).isEmpty();
+        assertProblems(droolsService,0, 0, 0);
     }
 
     @Test
@@ -81,7 +72,7 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Double booking of judge (includes any overlapping)"));
 
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+        assertProblems(droolsService,1, 0, 0);
     }
 
     @Test
@@ -103,7 +94,7 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Double booking of judge (includes any overlapping)"));
 
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+        assertProblems(droolsService,1, 0, 0);
     }
 
     @Test
@@ -125,6 +116,6 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Double booking of judge (includes any overlapping)"));
 
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+        assertProblems(droolsService,1, 0, 0);
     }
 }

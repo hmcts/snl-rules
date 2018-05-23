@@ -14,8 +14,7 @@ import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getNewProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertProblems;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HearingTypeDoesNotMatchSessionCaseTypeTests {
@@ -49,7 +48,7 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
 
-        assertThat(getNewProblems(droolsService)).isEmpty();
+        assertProblems(droolsService, 0, 0, 0);
     }
 
     @Test
@@ -67,6 +66,7 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+
+        assertProblems(droolsService,1, 0, 0);
     }
 }

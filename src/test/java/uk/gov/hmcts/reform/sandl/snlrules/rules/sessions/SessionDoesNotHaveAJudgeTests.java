@@ -14,7 +14,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getNewProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getInsertedProblems;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.setDateInRules;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -50,7 +51,7 @@ public class SessionDoesNotHaveAJudgeTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
 
-        assertThat(getNewProblems(droolsService)).isEmpty();
+        assertProblems(droolsService, 0, 0, 0);
     }
 
     @Test
@@ -70,7 +71,7 @@ public class SessionDoesNotHaveAJudgeTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
 
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+        assertProblems(droolsService,1, 0, 0);
     }
 
     @Test
@@ -90,12 +91,12 @@ public class SessionDoesNotHaveAJudgeTests {
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
-        assertThat(getNewProblems(droolsService)).isEmpty();
+        assertThat(getInsertedProblems(droolsService)).isEmpty();
 
         setDateInRules(rules, 2018, 04, 01);
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session does not have a judge 4 weeks or less before start"));
 
-        assertThat(getNewProblems(droolsService).size()).isEqualTo(1);
+        assertProblems(droolsService,1, 0, 0);
     }
 }

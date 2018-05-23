@@ -9,7 +9,7 @@ rule "Hearing case type does not match the session case type"
     when
     	$hearingPart : HearingPart()
     	$session : Session(id == $hearingPart.sessionId)
-    	Session(id == $hearingPart.sessionId && caseType != $hearingPart.caseType)
+    	Session(this == $session && caseType != $hearingPart.caseType)
     then
         insertLogical(new Problem(ProblemTypes.Hearing_case_type_does_not_match_the_session_case_type,
                                   String.format("hearingPart:%s, session:%s", $hearingPart.getId(), $session.getId())));
