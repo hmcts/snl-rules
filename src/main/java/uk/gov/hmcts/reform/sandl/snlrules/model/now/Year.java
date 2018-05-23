@@ -26,7 +26,7 @@ public class Year extends Fact {
         this.id = "6ddcfae6-b846-4f4a-afab-83f2e47a980a";
     }
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

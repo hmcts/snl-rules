@@ -32,7 +32,7 @@ public class Problem extends Fact {
         this.message = message;
     }
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

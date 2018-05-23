@@ -20,7 +20,7 @@ public class HearingPart extends Fact {
     private String caseType;
     private Duration duration;
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

@@ -26,7 +26,7 @@ public class Month extends Fact {
         this.id = "ddae85d0-7ec7-4bfe-addf-74ef660604fa";
     }
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

@@ -27,7 +27,7 @@ public class Availability extends Fact {
         return start.plus(duration);
     }
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

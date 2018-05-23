@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Room extends Fact {
     private String name;
 
-    @Override public boolean equals(Object o) {//NOPMD
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 
