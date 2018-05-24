@@ -14,7 +14,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @NoArgsConstructor
 @SuppressWarnings("squid:S1700")
 public class Year extends Fact {
-    private int year;
+    private int value;
 
     @Override public boolean equals(Object o) {
         return super.equals(o);

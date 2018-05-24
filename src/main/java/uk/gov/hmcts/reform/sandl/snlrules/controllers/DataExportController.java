@@ -28,7 +28,7 @@ public class DataExportController {
     @Autowired
     private DroolsServiceFactory droolsServiceFactory;
 
-    @RequestMapping(value = "/exporthtml", params = "rulesDefinition")
+    @RequestMapping(value = "/exporthtml")
     public ResponseEntity<String> state(
         @RequestParam(value = "rulesDefinition", required = false) String rulesDefinition) {
         DroolsService droolsService = droolsServiceFactory.getInstance(rulesDefinition);
@@ -39,7 +39,6 @@ public class DataExportController {
         StringBuilder builder = new StringBuilder();
 
         listFacts(builder, droolsService, Problem.class, "PROBLEM");
-
         listFacts(builder, droolsService, Availability.class, "AVAILABILITY");
         listFacts(builder, droolsService, Judge.class, "JUDGE");
         listFacts(builder, droolsService, Session.class, "SESSION");

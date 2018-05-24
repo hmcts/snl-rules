@@ -14,7 +14,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @NoArgsConstructor
 @SuppressWarnings("squid:S1700")
 public class Day extends Fact {
-    private int day;
+    private int value;
 
     @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
