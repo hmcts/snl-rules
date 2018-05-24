@@ -8,5 +8,6 @@ public enum ProblemTypes {
     Double_booking_of_judge_includes_any_overlapping,
     Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
     Session_is_overlisted_1_day_or_nearer_before_start,
-    Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start
+    Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start,
+    Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start
 }
