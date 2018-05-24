@@ -25,16 +25,11 @@ public class Problem extends Fact {
 
     public Problem(ProblemTypes type, ProblemSeverities severity, ProblemReference... references) {
         this.type = type;
+        this.severity = severity;
         this.references.addAll(Arrays.asList(references));
 
         this.id = DigestUtils.md5Hex(this.toString());
         this.message = String.format("%s for %s", type, references);
-    }
-
-    // depreciated
-    public Problem(String id, String message) {
-        this.id = id;
-        this.message = message;
     }
 
     @Override public boolean equals(Object o) { //NOPMD

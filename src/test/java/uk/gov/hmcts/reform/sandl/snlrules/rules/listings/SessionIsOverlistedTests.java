@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.sandl.snlrules.rules.listings;
 
 import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
