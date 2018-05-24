@@ -4,6 +4,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
@@ -19,6 +20,13 @@ public class RulesTestHelper {
         return droolsService.getFactModifications()
             .stream()
             .filter(m -> m.isInserted() && m.getType().equals("Problem"))
+            .collect(Collectors.toList());
+    }
+
+    public static List<FactModification> getInsertedProblems(DroolsService droolsService, ProblemTypes problemType) {
+        return droolsService.getFactModifications()
+            .stream()
+            .filter(m -> m.isInserted() && m.getType().equals("Problem") && m.toString().contains(problemType.name()))
             .collect(Collectors.toList());
     }
 
