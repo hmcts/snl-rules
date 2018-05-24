@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.sandl.snlrules.rules.sessions;
+package uk.gov.hmcts.reform.sandl.snlrules.rules.listings;
 
 import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.junit.Before;
@@ -24,7 +24,7 @@ import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.setDateIn
 @RunWith(MockitoJUnitRunner.class)
 public class SessionIsOverlistedTests {
 
-    private final static String rulesDefinition = "Sessions";
+    private final static String rulesDefinition = "Listings";
 
     private DroolsService droolsService;
     private KieSession rules;

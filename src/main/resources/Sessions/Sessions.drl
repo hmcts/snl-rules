@@ -11,7 +11,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
-import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 
 
 rule "Session Time For the Judge not Available"
@@ -90,69 +89,4 @@ rule "Double booking of room (includes any overlapping)"
         } else {
             insertLogical(p2);
         }
-end
-
-rule "Session is overlisted and 1 day or less before start"
-    when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
-        $s : Session()
-        accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
-        // 2 days when ingoring hour and minute it needs to be
-        Session(this == $s && $hpSumMinutes > duration.toMinutes && start.minusDays(2).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
-    then
-        // System.out.println("Total minutes: " + $hpSumMinutes);
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_1_day_or_nearer_before_start,
-                                      String.format("session:%s", $s.getId())));
-end
-
-rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before start"
-    when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
-        $s : Session()
-        accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
-        // 2-5 days when ingoring hour and minute it needs to be
-        Session(this == $s && $hpSumMinutes >= duration.toMinutes * 1.5
-                && start.minusDays(4).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0
-                && start.minusDays(2).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) >= 0)
-    then
-        // System.out.println("Total minutes: " + $hpSumMinutes);
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start,
-                                      String.format("session:%s", $s.getId())));
-end
-
-rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before start"
-    when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
-        $s : Session()
-        accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
-        // 4-8 days when ingoring hour and minute it needs to be
-        Session(this == $s && $hpSumMinutes >= duration.toMinutes * 2
-                && start.minusDays(8).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0
-                && start.minusDays(4).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) >= 0)
-    then
-        // System.out.println("Total minutes: " + $hpSumMinutes);
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start,
-                                      String.format("session:%s", $s.getId())));
-end
-
-rule "Session is listed less or equal 50 percent 7 days before start"
-    when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
-        $s : Session()
-        accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
-        // 4-8 days when ingoring hour and minute it needs to be
-        Session(this == $s && $hpSumMinutes <= duration.toMinutes / 2
-                && start.minusDays(8).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
-    then
-        // System.out.println("Total minutes: " + $hpSumMinutes);
-        insertLogical(new Problem(ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start,
-                                      String.format("session:%s", $s.getId())));
 end
