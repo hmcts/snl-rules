@@ -7,6 +7,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -16,11 +20,12 @@ public class Problem extends Fact {
     private String id;
     private String message;
     private ProblemTypes type;
-    private String references;
+    private ProblemSeverities severity;
+    private List<ProblemReference> references = new ArrayList<>();
 
-    public Problem(ProblemTypes type, String references) {
+    public Problem(ProblemTypes type, ProblemSeverities severity, ProblemReference... references) {
         this.type = type;
-        this.references = references;
+        this.references.addAll(Arrays.asList(references));
 
         this.id = DigestUtils.md5Hex(this.toString());
         this.message = String.format("%s for %s", type, references);

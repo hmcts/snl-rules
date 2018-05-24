@@ -7,7 +7,9 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemReference;
 import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
@@ -19,7 +21,9 @@ rule "Session Time For the Judge not Available"
         not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_available,
-                                  String.format("session:%s, judge:%s", $s.getId(), $s.getJudgeId())));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s.getId()),
+                                  new ProblemReference("judge", $s.getJudgeId())));
 end
 
 rule "Session does not have a judge 4 weeks or less before start"
@@ -30,7 +34,8 @@ rule "Session does not have a judge 4 weeks or less before start"
         $s : Session(judgeId == null && start.minusDays(29).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_4_weeks_or_nearer_before_start,
-                                  String.format("session:%s", $s.getId())));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s.getId())));
 end
 
 rule "Session does not have a room 4 weeks or less before start"
@@ -41,7 +46,8 @@ rule "Session does not have a room 4 weeks or less before start"
         $s : Session(roomId == null && start.minusDays(29).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_room_4_weeks_or_nearer_before_start,
-                                  String.format("session:%s", $s.getId())));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s.getId())));
 end
 
 rule "Double booking of judge (includes any overlapping)"
@@ -54,9 +60,13 @@ rule "Double booking of judge (includes any overlapping)"
         // looks a bit tricky and needs to get reviewed once the new problem model is done
         // and considered whether it should not be covered by equals and hashcode of Problem (not Fact)
         Problem p1 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
-                    String.format("session:%s, session:%s", $s.getId(), $s2.getId()));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s.getId()),
+                                  new ProblemReference("session", $s2.getId()));
         Problem p2 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
-                    String.format("session:%s, session:%s", $s2.getId(), $s.getId()));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s2.getId()),
+                                  new ProblemReference("session", $s.getId()));
 
         if (p1.getId().compareTo(p2.getId()) > 0) {
             insertLogical(p1);
@@ -80,9 +90,13 @@ rule "Double booking of room (includes any overlapping)"
         // looks a bit tricky and needs to get reviewed once the new problem model is done
         // and considered whether it should not be covered by equals and hashcode of Problem (not Fact)
         Problem p1 = new Problem(ProblemTypes.Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
-                    String.format("session:%s, session:%s", $s.getId(), $s2.getId()));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s.getId()),
+                                  new ProblemReference("session", $s2.getId()));
         Problem p2 = new Problem(ProblemTypes.Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
-                    String.format("session:%s, session:%s", $s2.getId(), $s.getId()));
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference("session", $s2.getId()),
+                                  new ProblemReference("session", $s.getId()));
 
         if (p1.getId().compareTo(p2.getId()) > 0) {
             insertLogical(p1);
