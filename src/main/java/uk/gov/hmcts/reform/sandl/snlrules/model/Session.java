@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
@@ -28,7 +28,11 @@ public class Session extends Fact implements Serializable {
         return start.plus(duration);
     }
 
-    @Override public boolean equals(Object o) {
+    public boolean isOverlapping(Session s2) {
+        return start.isBefore(s2.getEnd()) && s2.getStart().isBefore(this.getEnd());
+    }
+
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 
