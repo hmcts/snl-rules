@@ -12,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProblemReference {
-    private String type;
+    private String factId;
+    private String fact;
     private String description;
 }

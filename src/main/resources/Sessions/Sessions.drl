@@ -22,8 +22,8 @@ rule "Session Time For the Judge not Available"
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_available,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId()),
-                                  new ProblemReference("judge", $s.getJudgeId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s.getJudgeId(), "judge", $s.getJudgeId())));
 end
 
 rule "Session does not have a judge 4 weeks or less before start"
@@ -35,7 +35,7 @@ rule "Session does not have a judge 4 weeks or less before start"
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_4_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
 rule "Session does not have a room 4 weeks or less before start"
@@ -47,12 +47,12 @@ rule "Session does not have a room 4 weeks or less before start"
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_room_4_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
 rule "Double booking of judge (includes any overlapping)"
     when
-        $s : Session()
+        $s : Session(judgeId != null)
         $s2 : Session(this != $s && judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
     then
         // this if logic here really is to avoid duplication of the problem for those two conflicting sessions
@@ -61,12 +61,12 @@ rule "Double booking of judge (includes any overlapping)"
         // and considered whether it should not be covered by equals and hashcode of Problem (not Fact)
         Problem p1 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId()),
-                                  new ProblemReference("session", $s2.getId()));
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s2.getId(), "session", $s2.getId()));
         Problem p2 = new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s2.getId()),
-                                  new ProblemReference("session", $s.getId()));
+                                  new ProblemReference($s2.getId(), "session", $s2.getId()),
+                                  new ProblemReference($s.getId(), "session", $s.getId()));
 
         if (p1.getId().compareTo(p2.getId()) > 0) {
             insertLogical(p1);
@@ -91,12 +91,12 @@ rule "Double booking of room (includes any overlapping)"
         // and considered whether it should not be covered by equals and hashcode of Problem (not Fact)
         Problem p1 = new Problem(ProblemTypes.Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId()),
-                                  new ProblemReference("session", $s2.getId()));
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s2.getId(), "session", $s2.getId()));
         Problem p2 = new Problem(ProblemTypes.Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s2.getId()),
-                                  new ProblemReference("session", $s.getId()));
+                                  new ProblemReference($s2.getId(), "session", $s2.getId()),
+                                  new ProblemReference($s.getId(), "session", $s.getId()));
 
         if (p1.getId().compareTo(p2.getId()) > 0) {
             insertLogical(p1);

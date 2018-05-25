@@ -21,8 +21,8 @@ rule "Hearing case type does not match the session case type"
     then
         insertLogical(new Problem(ProblemTypes.Hearing_case_type_does_not_match_the_session_case_type,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("hearingPart", $hearingPart.getId()),
-                                  new ProblemReference("session", $session.getId())));
+                                  new ProblemReference($hearingPart.getId(), "hearingPart", $hearingPart.getId()),
+                                  new ProblemReference($s.getId(), "session", $session.getId())));
 end
 
 rule "Session is overlisted and 1 day or less before start"
@@ -38,7 +38,7 @@ rule "Session is overlisted and 1 day or less before start"
         // System.out.println("Total minutes: " + $hpSumMinutes);
         insertLogical(new Problem(ProblemTypes.Session_is_overlisted_1_day_or_nearer_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
 rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before start"
@@ -56,7 +56,7 @@ rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before s
         // System.out.println("Total minutes: " + $hpSumMinutes);
         insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
 rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before start"
@@ -74,7 +74,7 @@ rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before 
         // System.out.println("Total minutes: " + $hpSumMinutes);
         insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
 rule "Session is listed less or equal 50 percent 7 days before start"
@@ -91,6 +91,6 @@ rule "Session is listed less or equal 50 percent 7 days before start"
         // System.out.println("Total minutes: " + $hpSumMinutes);
         insertLogical(new Problem(ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference("session", $s.getId())));
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
 end
 
