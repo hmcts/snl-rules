@@ -27,9 +27,9 @@ end
 
 rule "Session is overlisted and 1 day or less before start"
     when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
         $s : Session()
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         // 2 days when ingoring hour and minute it needs to be
@@ -43,9 +43,9 @@ end
 
 rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before start"
     when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
         $s : Session()
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         // 2-5 days when ingoring hour and minute it needs to be
@@ -61,9 +61,9 @@ end
 
 rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before start"
     when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
         $s : Session()
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         // 4-8 days when ingoring hour and minute it needs to be
@@ -79,9 +79,9 @@ end
 
 rule "Session is listed less or equal 50 percent 7 days before start"
     when
-        Year($year: year)
-        Month($month: month)
-        Day($day: day)
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
         $s : Session()
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         // 4-8 days when ingoring hour and minute it needs to be

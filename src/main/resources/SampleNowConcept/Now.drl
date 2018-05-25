@@ -10,7 +10,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute
 
 rule "test year"
  when
-   Year( $year: year)
+   Year( $year: value)
    Session( start.year == $year)
  then
    insertLogical(new Problem(UUID.randomUUID().toString(), "same year" ));
@@ -18,8 +18,8 @@ end
 
 rule "test month"
  when
-   Year( $year: year)
-   Month( $month: month)
+   Year( $year: value)
+   Month( $month: value)
    Session( start.year == $year && start.month.getValue() == $month)
  then
    insertLogical(new Problem(UUID.randomUUID().toString(), "same month" ));
@@ -27,9 +27,9 @@ end
 
 rule "test day"
  when
-   Year( $year: year)
-   Month( $month: month)
-   Day( $day: day)
+   Year( $year: value)
+   Month( $month: value)
+   Day( $day: value)
    Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day)
  then
    insertLogical(new Problem(UUID.randomUUID().toString(), "same day" ));
@@ -37,10 +37,10 @@ end
 
 rule "test hour"
  when
-   Year( $year: year)
-   Month( $month: month)
-   Day( $day: day)
-   Hour( $hour: hour)
+   Year( $year: value)
+   Month( $month: value)
+   Day( $day: value)
+   Hour( $hour: value)
    Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day &&
    start.hour == $hour)
  then
@@ -50,11 +50,11 @@ end
 
 rule "test minute"
     when
-      Year( $year: year)
-      Month( $month: month)
-      Day( $day: day)
-      Hour( $hour: hour)
-      Minute( $minute: minute)
+      Year( $year: value)
+      Month( $month: value)
+      Day( $day: value)
+      Hour( $hour: value)
+      Minute( $minute: value)
       Session( start.year == $year && start.month.getValue() == $month && start.dayOfMonth == $day &&
       start.hour == $hour && start.minute == $minute)
     then
@@ -63,9 +63,9 @@ rule "test minute"
 
 rule "is session within one day without judge assigned"
  when
-   Year( $year: year)
-   Month( $month: month)
-   Day( $day: day)
+   Year( $year: value)
+   Month( $month: value)
+   Day( $day: value)
    $session: Session( start.year == $year && start.month.getValue() == $month
    && start.dayOfMonth == $day + 1 && judgeId == null)
  then
