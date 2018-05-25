@@ -207,7 +207,6 @@ public class SessionIsOverlistedTests {
         String sessionId_1 = "96462d68-76e3-430a-84c4-23983c448dc2";
         String sessionId_2 = "010492c1-ce9c-4ecd-b6fe-fdffd323c18f";
         String sessionId_3 = "749960cb-bd25-4513-9907-96b06593afac";
-        String sessionId_4 = "32261ef1-d556-456f-9d62-e81a4ecd44a9";
         String judgeId = "78d4d025-7ebf-4ccd-a9ed-fe12c9bf26ab";
         String roomId = "bbe08aac-bf0f-415f-bffe-16242ee6964d";
 
@@ -237,23 +236,16 @@ public class SessionIsOverlistedTests {
         rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId_3, "FTRACK", Duration.ofMinutes(70)));
         rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId_3, "FTRACK", Duration.ofMinutes(60)));
 
-        // 7 day before
-        rules.insert(new Session(sessionId_4, judgeId, roomId,
-            OffsetDateTime.of(2018, 5, 30, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofMinutes(60), "FTRACK"));
-
-        rules.insert(new HearingPart("af010ad0-0284-4d83-8d94-cf6637ad04ea", sessionId_4, "FTRACK", Duration.ofMinutes(120)));
-
         //some other sessions and hearings so we have something else in the rules
         addSomeDummySessionsAndHearings();
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session is overlisted greater or equal 100 percent and 3 to 7 days before start"));
 
-        assertProblems(droolsService,4, 0, 0);
+        assertProblems(droolsService,3, 0, 0);
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start).size())
-            .isEqualTo(4);
+            .isEqualTo(3);
     }
 
     @Test
@@ -320,23 +312,16 @@ public class SessionIsOverlistedTests {
         rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId_3, "FTRACK", Duration.ofMinutes(10)));
         rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId_3, "FTRACK", Duration.ofMinutes(19)));
 
-        // 7 day before
-        rules.insert(new Session(sessionId_4, judgeId, roomId,
-            OffsetDateTime.of(2018, 5, 30, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofMinutes(60), "FTRACK"));
-
-        rules.insert(new HearingPart("af010ad0-0284-4d83-8d94-cf6637ad04ea", sessionId_1, "FTRACK", Duration.ofMinutes(2)));
-
         //some other sessions and hearings so we have something else in the rules
         addSomeDummySessionsAndHearings();
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter("Session is listed less or equal 50 percent 7 days before start"));
 
-        assertProblems(droolsService,4, 0, 0);
+        assertProblems(droolsService,3, 0, 0);
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start).size())
-            .isEqualTo(4);
+            .isEqualTo(3);
     }
 
     private void addSomeDummySessionsAndHearings() {

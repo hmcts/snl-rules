@@ -31,7 +31,7 @@ rule "Session does not have a judge 4 weeks or less before start"
         Year($year: year)
         Month($month: month)
         Day($day: day)
-        $s : Session(judgeId == null && start.minusDays(29).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
+        $s : Session(judgeId == null && start.minusDays(28).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_4_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
@@ -43,7 +43,7 @@ rule "Session does not have a room 4 weeks or less before start"
         Year($year: year)
         Month($month: month)
         Day($day: day)
-        $s : Session(roomId == null && start.minusDays(29).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
+        $s : Session(roomId == null && start.minusDays(28).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
     then
         insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_room_4_weeks_or_nearer_before_start,
                                   ProblemSeverities.Warn,
@@ -83,7 +83,7 @@ rule "Double booking of room (includes any overlapping)"
         Day($day: day)
         $s : Session()
         $s2 : Session(this != $s && roomId != null && roomId == $s.roomId && isOverlapping($s)
-                        && start.minusDays(15).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
+                        && start.minusDays(14).compareTo(OffsetDateTime.of($year, $month, $day, 0, 0, 0, 0, ZoneOffset.UTC)) < 0)
     then
         // this if logic here really is to avoid duplication of the problem for those two conflicting sessions
         // this way both rules runs on both session would produce the same problem (rather than two due to how Problem is coded)
