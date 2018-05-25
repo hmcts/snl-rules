@@ -8,13 +8,12 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@SuppressWarnings("squid:S1700")
 public class Day extends Fact {
-    private int day;
+    private int value;
 
-    public Day(int day) {
+    public Day(int value) {
         this();
-        this.day = day;
+        this.value = value;
     }
 
     public Day() {

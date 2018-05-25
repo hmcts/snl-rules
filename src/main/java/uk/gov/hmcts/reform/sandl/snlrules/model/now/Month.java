@@ -8,13 +8,12 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@SuppressWarnings("squid:S1700")
 public class Month extends Fact {
-    private int month;
+    private int value;
 
-    public Month(int month) {
+    public Month(int value) {
         this();
-        this.month = month;
+        this.value = value;
     }
 
     public Month() {

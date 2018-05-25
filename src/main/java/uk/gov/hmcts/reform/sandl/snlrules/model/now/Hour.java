@@ -8,13 +8,12 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@SuppressWarnings("squid:S1700")
 public class Hour extends Fact {
-    private int hour;
+    private int value;
 
-    public Hour(int hour) {
+    public Hour(int value) {
         this();
-        this.hour = hour;
+        this.value = value;
     }
 
     public Hour() {

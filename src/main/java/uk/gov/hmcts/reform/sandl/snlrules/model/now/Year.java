@@ -8,13 +8,12 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@SuppressWarnings("squid:S1700")
 public class Year extends Fact {
-    private int year;
+    private int value;
 
-    public Year(int year) {
+    public Year(int value) {
         this();
-        this.year = year;
+        this.value = value;
     }
 
     public Year() {
