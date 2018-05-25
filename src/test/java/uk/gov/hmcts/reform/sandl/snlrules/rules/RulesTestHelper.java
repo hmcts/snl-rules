@@ -16,6 +16,9 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RulesTestHelper {
+    private RulesTestHelper() {
+    }
+
     public static List<FactModification> getInsertedProblems(DroolsService droolsService) {
         return droolsService.getFactModifications()
             .stream()

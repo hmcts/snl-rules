@@ -19,7 +19,15 @@ import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertPro
 @RunWith(MockitoJUnitRunner.class)
 public class HearingTypeDoesNotMatchSessionCaseTypeTests {
 
-    private final static String rulesDefinition = "Listings";
+    private static final String rulesDefinition = "Listings";
+
+    private static final String HEARING_CASE_TYPE_DOES_NOT_MATCH_THE_SESSION_CASE_TYPE
+        = "Hearing case type does not match the session case type";
+
+    private static final String sessionId = "f9c351ec-0668-4000-9c39-927518f7389a";
+    private static final String roomId = "a3a64d2e-9d42-47d6-ade8-5a5c0d940713";
+    private static final String judgeId = "63e52964-5501-479b-b170-08caec4654a0";
+    private static final String hearingPartId = "5ff73771-6d1a-4479-9631-3d5af0c944e7";
 
     private DroolsService droolsService;
     private KieSession rules;
@@ -34,11 +42,6 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
 
     @Test
     public void should_be_no_problem_when_hearing_caseType_matches_session_caseType() {
-        String sessionId = "f9c351ec-0668-4000-9c39-927518f7389a";
-        String roomId = "a3a64d2e-9d42-47d6-ade8-5a5c0d940713";
-        String judgeId = "63e52964-5501-479b-b170-08caec4654a0";
-        String hearingPartId = "5ff73771-6d1a-4479-9631-3d5af0c944e7";
-
         rules.insert(new Session(sessionId, judgeId, roomId,
             OffsetDateTime.of(2018, 5, 22, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
@@ -46,18 +49,13 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
         rules.insert(new HearingPart(hearingPartId, sessionId, "FTRACK", Duration.ofMinutes(60)));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(HEARING_CASE_TYPE_DOES_NOT_MATCH_THE_SESSION_CASE_TYPE));
 
         assertProblems(droolsService, 0, 0, 0);
     }
 
     @Test
     public void should_be_problem_when_hearing_caseType_doesnot_match_session_caseType() {
-        String sessionId = "f9c351ec-0668-4000-9c39-927518f7389a";
-        String roomId = "a3a64d2e-9d42-47d6-ade8-5a5c0d940713";
-        String judgeId = "63e52964-5501-479b-b170-08caec4654a0";
-        String hearingPartId = "5ff73771-6d1a-4479-9631-3d5af0c944e7";
-
         rules.insert(new Session(sessionId, judgeId, roomId,
             OffsetDateTime.of(2018, 5, 22, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "MTRACK"));
@@ -65,7 +63,7 @@ public class HearingTypeDoesNotMatchSessionCaseTypeTests {
         rules.insert(new HearingPart(hearingPartId, sessionId, "FTRACK", Duration.ofMinutes(60)));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter("Hearing case type does not match the session case type"));
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(HEARING_CASE_TYPE_DOES_NOT_MATCH_THE_SESSION_CASE_TYPE));
 
         assertProblems(droolsService,1, 0, 0);
     }
