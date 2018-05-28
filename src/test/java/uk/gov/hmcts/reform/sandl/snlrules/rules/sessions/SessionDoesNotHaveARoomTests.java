@@ -66,6 +66,11 @@ public class SessionDoesNotHaveARoomTests {
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_ROOM_4_WEEKS_OR_LESS_BEFORE_START));
 
         assertProblems(droolsService,1, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 11);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_ROOM_4_WEEKS_OR_LESS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 1);
     }
 
     @Test
@@ -85,5 +90,10 @@ public class SessionDoesNotHaveARoomTests {
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_ROOM_4_WEEKS_OR_LESS_BEFORE_START));
 
         assertProblems(droolsService,1, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 11);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_ROOM_4_WEEKS_OR_LESS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 1);
     }
 }
