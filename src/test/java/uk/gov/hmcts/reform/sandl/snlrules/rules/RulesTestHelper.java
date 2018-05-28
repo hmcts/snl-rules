@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RulesTestHelper {
+public final class RulesTestHelper {
     private RulesTestHelper() {
     }
 

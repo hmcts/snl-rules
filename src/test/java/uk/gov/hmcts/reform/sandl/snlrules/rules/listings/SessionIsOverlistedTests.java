@@ -34,7 +34,6 @@ public class SessionIsOverlistedTests {
     private static final String SESSION_LISTED_LESS_OR_EQ_50_PERCENT_7_DAYS_BEFORE_START
         = "Session is listed less or equal 50 percent 7 days before start";
 
-
     private static final String sessionId1 = "96462d68-76e3-430a-84c4-23983c448dc2";
     private static final String sessionId2 = "010492c1-ce9c-4ecd-b6fe-fdffd323c18f";
     private static final String sessionId3 = "749960cb-bd25-4513-9907-96b06593afac";
@@ -106,7 +105,6 @@ public class SessionIsOverlistedTests {
         rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(25)));
         addSomeDummySessionsAndHearings();
 
-
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_AND_1_DAY_OR_LESS_BEFORE_START));
 
@@ -114,6 +112,11 @@ public class SessionIsOverlistedTests {
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_overlisted_1_day_or_nearer_before_start).size())
             .isEqualTo(1);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 25);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_AND_1_DAY_OR_LESS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 1);
     }
 
     @Test
@@ -136,6 +139,12 @@ public class SessionIsOverlistedTests {
         rules.fireAllRules(
             new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_GR_OR_EQ_50_PERCENT_AND_1_TO_3_DAYS_BEFORE_START));
 
+        assertProblems(droolsService,0, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 26);
+        rules.fireAllRules(
+            new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_GR_OR_EQ_50_PERCENT_AND_1_TO_3_DAYS_BEFORE_START));
         assertProblems(droolsService,0, 0, 0);
     }
 
@@ -174,6 +183,12 @@ public class SessionIsOverlistedTests {
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start).size())
             .isEqualTo(2);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 27);
+        rules.fireAllRules(
+            new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_GR_OR_EQ_50_PERCENT_AND_1_TO_3_DAYS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 2);
     }
 
     @Test
@@ -196,6 +211,10 @@ public class SessionIsOverlistedTests {
         rules.fireAllRules(
             new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_GR_OR_EQ_100_PERCENT_AND_3_TO_7_DAYS_BEFORE_START));
 
+        assertProblems(droolsService,0, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 29);
         assertProblems(droolsService,0, 0, 0);
     }
 
@@ -245,6 +264,12 @@ public class SessionIsOverlistedTests {
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start).size())
             .isEqualTo(3);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 30);
+        rules.fireAllRules(
+            new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_GR_OR_EQ_100_PERCENT_AND_3_TO_7_DAYS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 3);
     }
 
     @Test
@@ -314,6 +339,11 @@ public class SessionIsOverlistedTests {
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start).size())
             .isEqualTo(3);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 05, 30);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_LISTED_LESS_OR_EQ_50_PERCENT_7_DAYS_BEFORE_START));
+        assertProblems(droolsService,0, 0, 3);
     }
 
     private void addSomeDummySessionsAndHearings() {

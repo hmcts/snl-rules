@@ -22,7 +22,7 @@ public class DoubleBookingOfRoomIncOverlappingTests {
     private static final String rulesDefinition = "Sessions";
 
     private static final String DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING
-        = "Double booking of room (includes any overlapping)";
+        = "Double booking of room (includes any overlapping) 2 weeks before start";
 
     private static final String sessionId1 = "08db06c5-2457-4501-bd83-15aa5037f930";
     private static final String sessionId2 = "dcc87520-75f0-4427-9810-d851485dc1a7";
@@ -112,6 +112,11 @@ public class DoubleBookingOfRoomIncOverlappingTests {
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
 
         assertProblems(droolsService,1, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 04, 11);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
+        assertProblems(droolsService,0, 0, 1);
     }
 
     @Test
@@ -130,6 +135,11 @@ public class DoubleBookingOfRoomIncOverlappingTests {
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
 
         assertProblems(droolsService,1, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 11);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
+        assertProblems(droolsService,0, 0, 1);
     }
 
     @Test
@@ -148,5 +158,10 @@ public class DoubleBookingOfRoomIncOverlappingTests {
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
 
         assertProblems(droolsService,1, 0, 0);
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 11);
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
+        assertProblems(droolsService,0, 0, 1);
     }
 }
