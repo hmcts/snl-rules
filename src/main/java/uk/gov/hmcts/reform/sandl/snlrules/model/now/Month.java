@@ -33,4 +33,9 @@ public class Month extends Fact {
         final int prime = 59;
         return prime + super.hashCode();
     }
+
+    @Override
+    public String toDescription() {
+        return "Month: " + value;
+    }
 }

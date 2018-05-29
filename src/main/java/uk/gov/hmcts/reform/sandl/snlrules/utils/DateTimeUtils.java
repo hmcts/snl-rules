@@ -22,4 +22,22 @@ public final class DateTimeUtils {
 
         return greaterOrEqualsDays <= days && days < lessDays;
     }
+
+    public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) {
+        return dateTimeToCheck.isAfter(start) && dateTimeToCheck.isBefore(end);
+    }
+
+    public static boolean olderThan(OffsetDateTime dateTimeToCheck,
+                                    int currentYear, int currentMonth, int currentDay,
+                                    int olderThan) {
+        OffsetDateTime dateToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
+
+        OffsetDateTime currentDate = OffsetDateTime.of(
+            currentYear, currentMonth, currentDay,
+            0, 0, 0, 0, ZoneOffset.UTC);
+
+        long days = ChronoUnit.DAYS.between(dateToCheck, currentDate);
+
+        return olderThan < days;
+    }
 }

@@ -23,4 +23,8 @@ public class Judge extends Fact {
         final int prime = 59;
         return prime + super.hashCode();
     }
+
+    @Override public String toDescription() {
+        return "Name: " + name;
+    }
 }
