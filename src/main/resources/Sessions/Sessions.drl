@@ -1,19 +1,75 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules
 
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
+import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemReference;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
+
 
 rule "Session Time For the Judge not Available"
     when
-    	$s : Session()
-    	not Availability( judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
+        $s : Session(judgeId != null)
+        not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
     then
-        System.out.println("Session " + $s.getId() + "  not available at specified time for judge " + $s.getJudgeId());
-        insertLogical(new Problem($s.getId() + "@" + $s.getJudgeId(), "Session " + $s.getId() + "  not available at specified time for judge " + $s.getJudgeId()));
+        insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_available,
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s.getJudgeId(), "judge", $s.getJudgeId())));
 end
 
+rule "Session does not have a judge 4 weeks or less before start"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $s : Session(judgeId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
+    then
+        insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_judge_4_weeks_or_nearer_before_start,
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
+end
 
+rule "Session does not have a room 4 weeks or less before start"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
+    then
+        insertLogical(new Problem(ProblemTypes.Session_does_not_have_a_room_4_weeks_or_nearer_before_start,
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference($s.getId(), "session", $s.getId())));
+end
 
+rule "Double booking of judge (includes any overlapping)"
+    when
+        $s : Session(judgeId != null)
+        $s2 : Session(this != $s && id <= $s.id && judgeId != null && $s.judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
+    then
+        insertLogical(new Problem(ProblemTypes.Double_booking_of_judge_includes_any_overlapping,
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s2.getId(), "session", $s2.getId())));
+end
 
+rule "Double booking of room (includes any overlapping) 2 weeks before start"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $s : Session(roomId != null)
+        $s2 : Session(this != $s && id <= $s.id && roomId != null && $s.roomId != null && roomId == $s.roomId && isOverlapping($s)
+                        && DateTimeUtils.between(start, $year, $month, $day, 0, 14))
+    then
+        insertLogical(new Problem(ProblemTypes.Double_booking_of_room_includes_any_overlapping_2_weeks_or_nearer_before_start,
+                                  ProblemSeverities.Warn,
+                                  new ProblemReference($s.getId(), "session", $s.getId()),
+                                  new ProblemReference($s2.getId(), "session", $s2.getId())));
+end

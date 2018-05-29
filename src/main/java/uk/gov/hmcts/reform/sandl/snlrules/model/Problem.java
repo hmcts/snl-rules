@@ -5,17 +5,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Problem extends Fact {
     private String id;
     private String message;
+    private ProblemTypes type;
+    private ProblemSeverities severity;
+    private List<ProblemReference> references = new ArrayList<>();
 
-    @Override public boolean equals(Object o) {
+    public Problem(ProblemTypes type, ProblemSeverities severity, ProblemReference... references) {
+        this.type = type;
+        this.severity = severity;
+        this.references.addAll(Arrays.asList(references));
+
+        this.id = DigestUtils.md5Hex(this.toString());
+        this.message = String.format("%s for %s", type, references);
+    }
+
+    @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 

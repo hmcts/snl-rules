@@ -21,20 +21,26 @@ public class FactsChangedEventListener extends DefaultRuleRuntimeEventListener {
     @Override
     public void objectInserted(final ObjectInsertedEvent event) {
         logger.debug("INSERTED: " + event.getObject());
-        factModifications.add(new FactModification(null, (Fact) event.getObject()));
+        if (event.getObject() instanceof Fact) {
+            factModifications.add(new FactModification(null, (Fact) event.getObject()));
+        }
     }
 
     @Override
     public void objectUpdated(final ObjectUpdatedEvent event) {
         logger.debug("UPDATED OLD: " + event.getOldObject());
         logger.debug("UPDATED NEW: " + event.getObject());
-        factModifications.add(new FactModification((Fact) event.getOldObject(), (Fact) event.getObject()));
+        if (event.getObject() instanceof Fact) {
+            factModifications.add(new FactModification((Fact) event.getOldObject(), (Fact) event.getObject()));
+        }
     }
 
     @Override
     public void objectDeleted(final ObjectDeletedEvent event) {
         logger.debug("DELETED OLD: " + event.getOldObject());
-        factModifications.add(new FactModification((Fact) event.getOldObject(), null));
+        if (event.getOldObject() instanceof Fact) {
+            factModifications.add(new FactModification((Fact) event.getOldObject(), null));
+        }
     }
 
 
