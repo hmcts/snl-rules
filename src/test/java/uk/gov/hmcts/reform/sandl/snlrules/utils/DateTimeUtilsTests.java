@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -124,7 +125,7 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void should_be_between_two_dates() {
+    public void should_be_between_two_dates() throws DateComparisonException {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 16, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
@@ -133,7 +134,7 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void should_not_be_between_two_dates() {
+    public void should_not_be_between_two_dates() throws DateComparisonException {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 30, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
@@ -142,7 +143,7 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void should_be_between_two_dates_when_on_date() {
+    public void should_be_between_two_dates_when_on_date() throws DateComparisonException {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
@@ -151,9 +152,18 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void should_be_between_two_dates_when_on_date_but_different_hours() {
+    public void should_be_between_two_dates_when_on_date_but_different_hours() throws DateComparisonException {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertTrue(DateTimeUtils.between(dateToBeChecked, after, before));
+    }
+
+    @Test(expected = DateComparisonException.class)
+    public void should_throw_exception_when_after_date_is_actually_greater_than_before_date() throws DateComparisonException {
+        OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime after = OffsetDateTime.of(2018, 05, 30, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
 
         Assert.assertTrue(DateTimeUtils.between(dateToBeChecked, after, before));

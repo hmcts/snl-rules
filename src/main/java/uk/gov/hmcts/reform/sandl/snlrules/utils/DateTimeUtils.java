@@ -1,5 +1,7 @@
 package uk.gov.hmcts.reform.sandl.snlrules.utils;
 
+import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
+
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -23,10 +25,14 @@ public final class DateTimeUtils {
         return greaterOrEqualsDays <= days && days < lessDays;
     }
 
-    public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) {
+    public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) throws DateComparisonException {
         dateTimeToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
         start = start.truncatedTo(ChronoUnit.DAYS);
         end = end.truncatedTo(ChronoUnit.DAYS);
+
+        if (start.isAfter(end)) {
+            throw new DateComparisonException("Start date cannot be after the end date.");
+        }
 
         return !start.isAfter(dateTimeToCheck) && !end.isBefore(dateTimeToCheck);
     }
