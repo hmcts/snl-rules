@@ -24,7 +24,11 @@ public final class DateTimeUtils {
     }
 
     public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) {
-        return dateTimeToCheck.isAfter(start) && dateTimeToCheck.isBefore(end);
+        dateTimeToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
+        start = start.truncatedTo(ChronoUnit.DAYS);
+        end = end.truncatedTo(ChronoUnit.DAYS);
+
+        return !start.isAfter(dateTimeToCheck) && !end.isBefore(dateTimeToCheck);
     }
 
     public static boolean olderThan(OffsetDateTime dateTimeToCheck,
