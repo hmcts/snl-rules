@@ -40,4 +40,8 @@ public class Session extends Fact implements Serializable {
         final int prime = 59;
         return prime + super.hashCode();
     }
+
+    @Override public String toDescription() {
+        return "Start: " + start + ", Case type: " + caseType;
+    }
 }

@@ -15,4 +15,10 @@ public class ProblemReference {
     private String factId;
     private String fact;
     private String description;
+
+    public ProblemReference(Fact fact) {
+        this.factId = fact.getId();
+        this.fact = fact.getClass().getSimpleName();
+        this.description = fact.toDescription();
+    }
 }

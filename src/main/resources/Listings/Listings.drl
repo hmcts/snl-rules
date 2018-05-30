@@ -14,13 +14,56 @@ import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 rule "Hearing case type does not match the session case type"
     when
     	$hearingPart : HearingPart()
-    	$session : Session(id == $hearingPart.sessionId)
-    	Session(this == $session && caseType != $hearingPart.caseType)
+    	$session : Session(id == $hearingPart.sessionId && caseType != $hearingPart.caseType)
     then
-        insertLogical(new Problem(ProblemTypes.Hearing_case_type_does_not_match_the_session_case_type,
+        insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference($hearingPart.getId(), "hearingPart", $hearingPart.getId()),
-                                  new ProblemReference($session.getId(), "session", $session.getId())));
+                                  "Hearing case type does not match the session case type",
+                                  new ProblemReference($hearingPart),
+                                  new ProblemReference($session)));
+end
+
+rule "Listing request target schedule has not been adhered to when listed"
+    when
+        $hearingPart: HearingPart(scheduleEnd != null && scheduleStart != null)
+        $session: Session(id == $hearingPart.sessionId &&
+         !DateTimeUtils.between(start, $hearingPart.scheduleStart, $hearingPart.scheduleEnd))
+    then
+        insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
+                                  ProblemSeverities.Warn,
+                                  "Listing request target schedule has not been adhered to when listed",
+                                  new ProblemReference($hearingPart),
+                                  new ProblemReference($session)));
+end
+
+rule "Listing request is more than 60 days old, and it has not been listed yet"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $hearingPart: HearingPart(sessionId == null &&
+        DateTimeUtils.olderThan(createdAt, $year, $month, $day, 60))
+    then
+        insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
+                                  ProblemSeverities.Warn,
+                                  "Listing request is more than 60 days old, and it has not been listed yet",
+                                  new ProblemReference($hearingPart)));
+
+end
+
+rule "Listing request target schedule to date is 4 weeks or nearer from today and it has not been listed yet"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $hearingPart: HearingPart(sessionId == null && scheduleEnd != null && scheduleStart != null
+        && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
+    then
+        insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
+                                  ProblemSeverities.Warn,
+                                  "Listing request target schedule to date is 4 weeks or nearer from today "
+                                 + "and it has not been listed yet",
+                                 new ProblemReference($hearingPart)));
 end
 
 rule "Session is overlisted and 1 day or less before start"
@@ -32,9 +75,10 @@ rule "Session is overlisted and 1 day or less before start"
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         Session(this == $s && $hpSumMinutes > duration.toMinutes && DateTimeUtils.between(start, $year, $month, $day, 0, 2))
     then
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_1_day_or_nearer_before_start,
+        insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference($s.getId(), "session", $s.getId())));
+                                  "Session is overlisted and 1 day or less before start",
+                                  new ProblemReference($s)));
 end
 
 rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before start"
@@ -46,9 +90,10 @@ rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before s
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 1.5 && DateTimeUtils.between(start, $year, $month, $day, 2, 4))
     then
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start,
+        insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference($s.getId(), "session", $s.getId())));
+                                  "Session is overlisted greater or equal 50 percent and 1 to 3 days before start",
+                                  new ProblemReference($s)));
 end
 
 rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before start"
@@ -60,9 +105,10 @@ rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before 
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 2 && DateTimeUtils.between(start, $year, $month, $day, 4, 7))
     then
-        insertLogical(new Problem(ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start,
+        insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference($s.getId(), "session", $s.getId())));
+                                  "Session is overlisted greater or equal 100 percent and 3 to 7 days before start",
+                                  new ProblemReference($s)));
 end
 
 rule "Session is listed less or equal 50 percent 7 days before start"
@@ -74,8 +120,9 @@ rule "Session is listed less or equal 50 percent 7 days before start"
         accumulate(hp : HearingPart(sessionId == $s.id), $hpSumMinutes: sum(hp.getDuration().toMinutes()))
         Session(this == $s && $hpSumMinutes <= duration.toMinutes / 2 && DateTimeUtils.between(start, $year, $month, $day, 0, 7))
     then
-        insertLogical(new Problem(ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start,
+        insertLogical(new Problem(ProblemTypes.Session_utilisation_underlisted,
                                   ProblemSeverities.Warn,
-                                  new ProblemReference($s.getId(), "session", $s.getId())));
+                                  "Session is listed less or equal 50 percent 7 days before start",
+                                  new ProblemReference($s)));
 end
 
