@@ -39,7 +39,6 @@ public class DataExportController {
         StringBuilder builder = new StringBuilder();
 
         listFacts(builder, droolsService, Problem.class, "PROBLEM");
-
         listFacts(builder, droolsService, Availability.class, "AVAILABILITY");
         listFacts(builder, droolsService, Judge.class, "JUDGE");
         listFacts(builder, droolsService, Session.class, "SESSION");
