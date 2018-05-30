@@ -41,7 +41,7 @@ rule "Listing request is more than 60 days old, and it has not been listed yet"
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $hearingPart: HearingPart(sessionId == null &&
+        $hearingPart: HearingPart(sessionId == null && createdAt != null &&
         DateTimeUtils.olderThan(createdAt, $year, $month, $day, 60))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,

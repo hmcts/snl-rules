@@ -50,6 +50,6 @@ public class HearingPart extends Fact {
 
     @Override public String toDescription() {
         return "Duration: " + duration + ", Case type: " + caseType + ", Scheduled start: "
-            + scheduleStart + ", Scheduled end: " + scheduleEnd;
+            + scheduleStart + ", Scheduled end: " + scheduleEnd + ", Created at: " + createdAt;
     }
 }

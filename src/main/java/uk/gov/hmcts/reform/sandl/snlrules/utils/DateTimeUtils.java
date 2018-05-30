@@ -40,6 +40,10 @@ public final class DateTimeUtils {
     public static boolean olderThan(OffsetDateTime dateTimeToCheck,
                                     int currentYear, int currentMonth, int currentDay,
                                     int olderThan) {
+        if (dateTimeToCheck == null) {
+            throw new NullPointerException("Date time to check cannot be null");
+        }
+
         OffsetDateTime dateToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
 
         OffsetDateTime currentDate = OffsetDateTime.of(
