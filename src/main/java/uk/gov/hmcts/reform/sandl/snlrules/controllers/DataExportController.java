@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
@@ -39,6 +40,7 @@ public class DataExportController {
         StringBuilder builder = new StringBuilder();
 
         listFacts(builder, droolsService, Problem.class, "PROBLEM");
+        listFacts(builder, droolsService, Room.class, "ROOM");
         listFacts(builder, droolsService, Availability.class, "AVAILABILITY");
         listFacts(builder, droolsService, Judge.class, "JUDGE");
         listFacts(builder, droolsService, Session.class, "SESSION");

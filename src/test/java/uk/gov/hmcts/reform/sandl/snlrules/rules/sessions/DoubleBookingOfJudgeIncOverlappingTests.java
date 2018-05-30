@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
@@ -83,6 +84,8 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
+        rules.insert(new Judge(judgeId1, "John Harris"));
+
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_JUDGE_INCLUDES_ANY_OVERLAPPING));
 
@@ -99,6 +102,8 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
             OffsetDateTime.of(2018, 4, 10, 8, 30, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
+        rules.insert(new Judge(judgeId1, "John Harris"));
+
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_JUDGE_INCLUDES_ANY_OVERLAPPING));
 
@@ -114,6 +119,8 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
         rules.insert(new Session(sessionId2, judgeId1, roomId2,
             OffsetDateTime.of(2018, 4, 10, 9, 30, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Judge(judgeId1, "John Harris"));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_JUDGE_INCLUDES_ANY_OVERLAPPING));
