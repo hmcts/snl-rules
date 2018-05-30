@@ -25,7 +25,7 @@ public final class DateTimeUtils {
         return greaterOrEqualsDays <= days && days < lessDays;
     }
 
-    public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) throws DateComparisonException {
+    public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) {
         dateTimeToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
         start = start.truncatedTo(ChronoUnit.DAYS);
         end = end.truncatedTo(ChronoUnit.DAYS);
