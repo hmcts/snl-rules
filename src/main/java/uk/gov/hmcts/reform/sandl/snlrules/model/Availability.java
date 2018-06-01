@@ -39,7 +39,7 @@ public class Availability extends Fact {
 
     @Override
     public String toDescription() {
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration" + duration)
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
             .replace("null", "N/A");
     }
 }
