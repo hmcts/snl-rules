@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -38,6 +39,7 @@ public class Availability extends Fact {
 
     @Override
     public String toDescription() {
-        return "Start: " + start + ", duration" + duration;
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration" + duration)
+            .replace("null", "N/A");
     }
 }

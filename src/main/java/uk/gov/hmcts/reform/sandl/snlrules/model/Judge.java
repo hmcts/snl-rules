@@ -25,6 +25,6 @@ public class Judge extends Fact {
     }
 
     @Override public String toDescription() {
-        return "Name: " + name;
+        return ("Name: " + name).replace("null", "N/A");
     }
 }
