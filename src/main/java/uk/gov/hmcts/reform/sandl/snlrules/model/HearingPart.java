@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
@@ -49,7 +50,8 @@ public class HearingPart extends Fact {
     }
 
     @Override public String toDescription() {
-        return "Duration: " + duration + ", Case type: " + caseType + ", Scheduled start: "
-            + scheduleStart + ", Scheduled end: " + scheduleEnd + ", Created at: " + createdAt;
+        return ("Duration: " + duration + ", Case type: " + caseType + ", Scheduled start: "
+            + DateTimeUtils.humanizeDate(scheduleStart) + ", Scheduled end: " + DateTimeUtils.humanizeDate(scheduleEnd)
+            + ", Created at: " + createdAt).replace("null", "N/A");
     }
 }

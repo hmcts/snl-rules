@@ -55,7 +55,10 @@ end
 
 rule "Double booking of judge (includes any overlapping)"
     when
-        $s : Session(judgeId != null)
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $s : Session(judgeId != null && DateTimeUtils.isAfter(start, $year, $month, $day))
         $judge : Judge(id == $s.judgeId)
         $s2 : Session(this != $s && id <= $s.id && judgeId != null && $s.judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
     then

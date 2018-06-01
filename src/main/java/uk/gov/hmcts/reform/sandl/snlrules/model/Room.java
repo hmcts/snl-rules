@@ -25,6 +25,6 @@ public class Room extends Fact {
     }
 
     @Override public String toDescription() {
-        return "Room name: " + name;
+        return ("Room name: " + name).replace("null", "N/A");
     }
 }

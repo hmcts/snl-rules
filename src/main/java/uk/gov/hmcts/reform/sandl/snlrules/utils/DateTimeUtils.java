@@ -4,6 +4,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public final class DateTimeUtils {
@@ -53,5 +54,19 @@ public final class DateTimeUtils {
         long days = ChronoUnit.DAYS.between(dateToCheck, currentDate);
 
         return olderThan < days;
+    }
+
+    public static boolean isAfter(OffsetDateTime date, int currentYear, int currentMonth, int currentDay) {
+        OffsetDateTime currentDate = OffsetDateTime.of(currentYear, currentMonth, currentDay,
+            0, 0, 0, 0, ZoneOffset.UTC);
+
+        return date.isAfter(currentDate);
+    }
+
+    public static String humanizeDate(OffsetDateTime dateTime) {
+        if (dateTime == null) {
+            return "N/A";
+        }
+        return dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 }

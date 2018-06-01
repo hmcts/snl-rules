@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.time.Duration;
@@ -42,6 +43,7 @@ public class Session extends Fact implements Serializable {
     }
 
     @Override public String toDescription() {
-        return "Start: " + start + ", Case type: " + caseType;
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", Case type: " + caseType)
+            .replace("null", "N/A");
     }
 }

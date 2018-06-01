@@ -43,6 +43,7 @@ public class Problem extends Fact {
 
     @Override
     public String toDescription() {
-        return "Message: " + message + ", type: " + type + ", severity: " + severity;
+        return ("Message: " + message + ", type: " + type + ", severity: " + severity)
+            .replace("null", "N/A");
     }
 }
