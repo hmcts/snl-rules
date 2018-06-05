@@ -93,6 +93,7 @@ public class FactMessagesTest {
             .and()
             .extract().jsonPath();
 
+        assertThat(retrievedFactList.getList("type").size()).isEqualTo(2);
         assertThat(retrievedFactList.getList("type")).contains("Problem");
         assertThat(retrievedFactList.getList("type")).contains("Judge");
     }
