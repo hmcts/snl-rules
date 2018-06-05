@@ -1,14 +1,11 @@
 package uk.gov.hmcts.reform.sandl.snlrules.functional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ExtractableResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import javax.xml.ws.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,11 +94,11 @@ public class FactMessagesTest {
             .and()
             .extract();
 
-         retrievedFactList = res.jsonPath();
-
-
         System.out.println("======================= " + res.asString());
         System.out.println("======================= " + res.toString());
+
+        retrievedFactList = res.jsonPath();
+
         assertThat(retrievedFactList.getList("type").size()).isEqualTo(2);
         assertThat(retrievedFactList.getList("type")).contains("Problem");
         assertThat(retrievedFactList.getList("type")).contains("Judge");
