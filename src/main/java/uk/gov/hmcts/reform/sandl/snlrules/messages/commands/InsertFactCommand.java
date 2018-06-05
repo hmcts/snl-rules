@@ -18,13 +18,6 @@ public class InsertFactCommand extends FactCommand {
         droolsService.getRulesSession().insert(deserializeMessage(data, this.getFactType()));
         droolsService.getRulesSession().fireAllRules();
 
-        // temporary to debug
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return droolsService.getFactModifications();
     }
 }
