@@ -1,10 +1,14 @@
 package uk.gov.hmcts.reform.sandl.snlrules.functional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.ExtractableResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+
+import javax.xml.ws.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -83,7 +87,7 @@ public class FactMessagesTest {
 
         assertThat(retrievedFactList.getList("type")).contains("Session");
 
-        retrievedFactList = given()
+        ExtractableResponse<io.restassured.response.Response> res = given()
             .contentType(ContentType.JSON)
             .body(msgJudgeInsert)
             .when()
@@ -91,9 +95,13 @@ public class FactMessagesTest {
             .then()
             .statusCode(200)
             .and()
-            .extract().jsonPath();
+            .extract();
 
-        System.out.println("======================= " + retrievedFactList.toString());
+         retrievedFactList = res.jsonPath();
+
+
+        System.out.println("======================= " + res.asString());
+        System.out.println("======================= " + res.toString());
         assertThat(retrievedFactList.getList("type").size()).isEqualTo(2);
         assertThat(retrievedFactList.getList("type")).contains("Problem");
         assertThat(retrievedFactList.getList("type")).contains("Judge");
