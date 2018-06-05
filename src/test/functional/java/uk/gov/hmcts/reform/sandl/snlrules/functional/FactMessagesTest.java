@@ -30,13 +30,6 @@ public class FactMessagesTest {
             + "\\\"duration\\\": 3600}\"\n"
             + "}";
 
-        final String msgJudgeDelete = "{\n"
-            + "\t\"type\": \"delete-judge\",\n"
-            + "\t\"data\": \"{"
-            + "\\\"id\\\":\\\"" + judgeId + "\\\","
-            + "\\\"name\\\":\\\"John Smith\\\"}\"\n"
-            + "}";
-
         final String msgSessionInsert = "{\n"
             + "\t\"type\": \"insert-session\",\n"
             + "\t\"data\": \"{"
@@ -46,25 +39,10 @@ public class FactMessagesTest {
             + "\\\"duration\\\": 3600}\"\n"
             + "}";
 
-        final String  msgJudgeInsert = "{\n"
-            + "\t\"type\": \"insert-judge\",\n"
-            + "\t\"data\": \"{"
-            + "\\\"id\\\":\\\"" + judgeId + "\\\","
-            + "\\\"name\\\":\\\"John Smith\\\"}\"\n"
-            + "}";
-
         // ensure there is no fact with the id already
         given()
             .contentType(ContentType.JSON)
             .body(msgSessionDelete)
-            .when()
-            .post("/msg?rulesDefinition=Sessions")
-            .then()
-            .statusCode(200);
-
-        given()
-            .contentType(ContentType.JSON)
-            .body(msgJudgeDelete)
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
@@ -82,19 +60,5 @@ public class FactMessagesTest {
             .extract().jsonPath();
 
         assertThat(retrievedFactList.getList("type")).contains("Session");
-
-        retrievedFactList = given()
-            .contentType(ContentType.JSON)
-            .body(msgJudgeInsert)
-            .when()
-            .post("/msg?rulesDefinition=Sessions")
-            .then()
-            .statusCode(200)
-            .and()
-            .extract().jsonPath();
-
-        assertThat(retrievedFactList.getList("type").size()).isEqualTo(2);
-        assertThat(retrievedFactList.getList("type")).contains("Problem");
-        assertThat(retrievedFactList.getList("type")).contains("Judge");
     }
 }
