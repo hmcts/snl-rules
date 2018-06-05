@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.sandl.snlrules.functional;
 
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.ExtractableResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,13 +30,6 @@ public class FactMessagesTest {
             + "\\\"duration\\\": 3600}\"\n"
             + "}";
 
-        final String msgJudgeDelete = "{\n"
-            + "\t\"type\": \"delete-judge\",\n"
-            + "\t\"data\": \"{"
-            + "\\\"id\\\":\\\"" + judgeId + "\\\","
-            + "\\\"name\\\":\\\"John Smith\\\"}\"\n"
-            + "}";
-
         final String msgSessionInsert = "{\n"
             + "\t\"type\": \"insert-session\",\n"
             + "\t\"data\": \"{"
@@ -47,25 +39,10 @@ public class FactMessagesTest {
             + "\\\"duration\\\": 3600}\"\n"
             + "}";
 
-        final String  msgJudgeInsert = "{\n"
-            + "\t\"type\": \"insert-judge\",\n"
-            + "\t\"data\": \"{"
-            + "\\\"id\\\":\\\"" + judgeId + "\\\","
-            + "\\\"name\\\":\\\"John Smith\\\"}\"\n"
-            + "}";
-
         // ensure there is no fact with the id already
         given()
             .contentType(ContentType.JSON)
             .body(msgSessionDelete)
-            .when()
-            .post("/msg?rulesDefinition=Sessions")
-            .then()
-            .statusCode(200);
-
-        given()
-            .contentType(ContentType.JSON)
-            .body(msgJudgeDelete)
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
@@ -83,24 +60,5 @@ public class FactMessagesTest {
             .extract().jsonPath();
 
         assertThat(retrievedFactList.getList("type")).contains("Session");
-
-        ExtractableResponse<io.restassured.response.Response> res = given()
-            .contentType(ContentType.JSON)
-            .body(msgJudgeInsert)
-            .when()
-            .post("/msg?rulesDefinition=Sessions")
-            .then()
-            .statusCode(200)
-            .and()
-            .extract();
-
-        System.out.println("======================= " + res.asString());
-        System.out.println("======================= " + res.toString());
-
-        retrievedFactList = res.jsonPath();
-
-        assertThat(retrievedFactList.getList("type").size()).isEqualTo(2);
-        assertThat(retrievedFactList.getList("type")).contains("Problem");
-        assertThat(retrievedFactList.getList("type")).contains("Judge");
     }
 }
