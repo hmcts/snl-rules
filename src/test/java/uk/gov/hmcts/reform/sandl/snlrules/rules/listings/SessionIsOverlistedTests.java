@@ -110,7 +110,7 @@ public class SessionIsOverlistedTests {
 
         assertProblems(droolsService,1, 0, 0);
         assertThat(getInsertedProblems(droolsService,
-            ProblemTypes.Session_is_overlisted_1_day_or_nearer_before_start).size())
+            ProblemTypes.Session_utilisation_overlisted).size())
             .isEqualTo(1);
 
         droolsService.clearFactModifications();
@@ -181,7 +181,7 @@ public class SessionIsOverlistedTests {
 
         assertProblems(droolsService,2, 0, 0);
         assertThat(getInsertedProblems(droolsService,
-            ProblemTypes.Session_is_overlisted_greater_or_equal_50_percent_and_1_to_3_days_before_start).size())
+            ProblemTypes.Session_utilisation_overlisted).size())
             .isEqualTo(2);
 
         droolsService.clearFactModifications();
@@ -262,7 +262,7 @@ public class SessionIsOverlistedTests {
 
         assertProblems(droolsService,3, 0, 0);
         assertThat(getInsertedProblems(droolsService,
-            ProblemTypes.Session_is_overlisted_greater_or_equal_100_percent_and_3_to_7_days_before_start).size())
+            ProblemTypes.Session_utilisation_overlisted).size())
             .isEqualTo(3);
 
         droolsService.clearFactModifications();
@@ -337,7 +337,7 @@ public class SessionIsOverlistedTests {
 
         assertProblems(droolsService,3, 0, 0);
         assertThat(getInsertedProblems(droolsService,
-            ProblemTypes.Session_is_listed_less_or_equal_50_percent_7_days_before_start).size())
+            ProblemTypes.Session_utilisation_underlisted).size())
             .isEqualTo(3);
 
         droolsService.clearFactModifications();

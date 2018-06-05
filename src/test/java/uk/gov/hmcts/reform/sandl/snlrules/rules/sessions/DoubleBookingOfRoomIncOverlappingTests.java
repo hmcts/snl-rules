@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
@@ -108,6 +109,8 @@ public class DoubleBookingOfRoomIncOverlappingTests {
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
+        rules.insert(new Room(roomId1, "Room A"));
+
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
 
@@ -131,6 +134,8 @@ public class DoubleBookingOfRoomIncOverlappingTests {
             OffsetDateTime.of(2018, 4, 10, 8, 30, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
+        rules.insert(new Room(roomId1, "Room A"));
+
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
 
@@ -153,6 +158,8 @@ public class DoubleBookingOfRoomIncOverlappingTests {
         rules.insert(new Session(sessionId2, judgeId2, roomId1,
             OffsetDateTime.of(2018, 4, 10, 9, 30, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Room(roomId1, "Room A"));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));

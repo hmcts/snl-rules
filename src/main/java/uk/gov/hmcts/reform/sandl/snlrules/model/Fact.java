@@ -36,4 +36,6 @@ public abstract class Fact implements Serializable {
         result = result * prime + (this.getId() == null ? 43 : this.getId().hashCode());
         return result;
     }
+
+    public abstract String toDescription();
 }

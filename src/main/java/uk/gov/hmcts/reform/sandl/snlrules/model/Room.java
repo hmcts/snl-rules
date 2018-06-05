@@ -23,4 +23,8 @@ public class Room extends Fact {
         final int prime = 59;
         return prime + super.hashCode();
     }
+
+    @Override public String toDescription() {
+        return ("Room name: " + name).replace("null", "N/A");
+    }
 }
