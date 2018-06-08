@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
+import java.time.OffsetDateTime;
 
 rule "Session Time For the Judge not Available"
     when
@@ -86,4 +87,14 @@ rule "Double booking of room (includes any overlapping) 2 weeks before start"
                                   new ProblemReference($s),
                                   new ProblemReference($s2),
                                   new ProblemReference($room)));
+end
+
+
+query "search" (OffsetDateTime from, OffsetDateTime to)
+    $room : Room()
+    $judge: Judge()
+    $avalRoom: Availability(judgeId == $room.id && DateTimeUtils.between(start, from, to))
+    $avalJudge: Availability(judgeId == $judge.id && sameDay($avalRoom))
+    not Session((judgeId == $judge.id && DateTimeUtils.sameDay($avalJudge.start, start)) ||
+    (roomId == $room.id && DateTimeUtils.sameDay($avalRoom.start, start)))
 end

@@ -69,4 +69,11 @@ public final class DateTimeUtils {
         }
         return dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
+
+    public static boolean sameDay(OffsetDateTime one, OffsetDateTime two) {
+        OffsetDateTime startTruncated = one.truncatedTo(ChronoUnit.DAYS);
+        OffsetDateTime toCompareStartTruncated = two.truncatedTo(ChronoUnit.DAYS);
+
+        return !startTruncated.isAfter(toCompareStartTruncated) && !startTruncated.isBefore(toCompareStartTruncated);
+    }
 }
