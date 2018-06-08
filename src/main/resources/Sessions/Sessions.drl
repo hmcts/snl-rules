@@ -89,6 +89,49 @@ rule "Double booking of room (includes any overlapping) 2 weeks before start"
                                   new ProblemReference($room)));
 end
 
+//rule "cos tam robi"
+//  when
+//    $s: Session($start: start, $id: id)
+//    $s2: Session(id != $id && DateTimeUtils.sameDay($start, start))
+//    $a: Availability(DateTimeUtils.sameDay($start, start))
+//  then
+//    insertLogical(new Exception($a.getStart() + " "
+//    + $a.getDuration() + " " + $s.getStart() + " " + $s.getDuration() + " " + $s2.getStart() + " " + $s2.getDuration() +
+//    " *** " + $s2.getStart().plus($s2.getDuration())));
+//end
+
+rule "cos tam robi pomiedzy"
+  when
+    $s: Session($start: start, $id: id)
+    $s2: Session(id != $id && DateTimeUtils.sameDay($start, start) && start.plus(duration) < $s.start)
+  then
+    insertLogical(new Exception(
+    " rula pomiedzy *** " + $s2.getStart().plus($s2.getDuration()) + "***" + $s.getStart()));
+end
+
+rule "cos tam robi po"
+  when
+    $s: Availability($start: start, $id: id)
+    $s2: Session(id < $id && DateTimeUtils.sameDay($start, start) && start.plus(duration) > $s.start )
+  then
+    insertLogical(new Exception(
+    "rula po *** " + $s2.getStart().plus($s2.getDuration()) + "***" + $s.getStart().plus($s.getDuration())));
+end
+
+
+rule "cos tam robi przed"
+  when
+    $s: Availability($start: start, $id: id)
+    $s2: Session(id < $id && DateTimeUtils.sameDay($start, start) && start > $s.start )
+  then
+    insertLogical(new Exception(
+    "rula przed *** " + $s.getStart() + "***" + $s2.getStart()));
+end
+
+query "dupa" (OffsetDateTime from, OffsetDateTime to)
+  $ex: Exception()
+end
+
 
 query "search" (OffsetDateTime from, OffsetDateTime to)
     $room : Room()

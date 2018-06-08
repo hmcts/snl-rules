@@ -8,6 +8,7 @@ import org.kie.api.runtime.rule.QueryResultsRow;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
@@ -42,53 +43,36 @@ public class QueriesTests {
 
         rules.insert(new Availability("1", "judge1",
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(1)));
+            Duration.ofHours(3)));
 
         rules.insert(new Availability("2", "room1",
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofHours(3)));
 
-        rules.insert(new Availability("3", "judge1",
-            OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(1)));
+        rules.insert(new Session("15", "judge1", null,
+            OffsetDateTime.of(2018, 4, 10, 10, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(15), "FTRACK"));
+        rules.insert(new Session("16", "judge1", null,
+            OffsetDateTime.of(2018, 4, 10, 11, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(30), "FTRACK"));
 
-        rules.insert(new Availability("4", "room1",
-            OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(2)));
+        rules.insert(new Session("17", "judge1", null,
+            OffsetDateTime.of(2018, 4, 10, 11, 40, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(10), "FTRACK"));
 
+        rules.fireAllRules();
 
-        rules.insert(new Availability("5", "judge2",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(1)));
-
-        rules.insert(new Availability("6", "room2",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(3)));
-
-        rules.insert(new Availability("7", "judge2",
-            OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(1)));
-
-        rules.insert(new Availability("8", "room2",
-            OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(2)));
 
 
         OffsetDateTime from = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime to = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
 
-        QueryResults results = rules.getQueryResults("search", from, to);
+        QueryResults results = rules.getQueryResults("dupa", from, to);
 
         for ( QueryResultsRow row : results ) {
-            Room room = ( Room ) row.get( "$room" );
-            System.out.print( room.toDescription() + " " );
-            Availability roomAval = ( Availability ) row.get( "$avalRoom" );
-            System.out.print( roomAval.toDescription() );
+            Exception room = ( Exception ) row.get( "$ex" );
+            System.out.println( room.getMessage() + " " );
 
-            Judge judge = ( Judge ) row.get( "$judge" );
-            System.out.print( judge.toDescription() + " " );
-            Availability judgeAval = ( Availability ) row.get( "$avalJudge" );
-            System.out.print( judgeAval.toDescription() + "\n" );
         }
 
     }
