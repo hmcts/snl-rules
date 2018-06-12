@@ -1,31 +1,34 @@
 package uk.gov.hmcts.reform.sandl.snlrules.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.codec.digest.DigestUtils;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("squid:S3437")
-public class Availability extends Fact {
+public class BookableRoom extends Fact {
     private String id;
-    private String judgeId;
     private String roomId;
     private OffsetDateTime start;
     private Duration duration;
 
-    @JsonIgnore
+    public BookableRoom(String roomId, OffsetDateTime start, Duration duration) {
+        this.roomId = roomId;
+        this.start = start;
+        this.duration = duration;
+        this.id = DigestUtils.md5Hex(this.toString());
+    }
+
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }
@@ -43,12 +46,5 @@ public class Availability extends Fact {
     public String toDescription() {
         return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
             .replace("null", "N/A");
-    }
-
-    public boolean sameDay(Availability availability) {
-        OffsetDateTime startTruncated = this.start.truncatedTo(ChronoUnit.DAYS);
-        OffsetDateTime toCompareStartTruncated = availability.start.truncatedTo(ChronoUnit.DAYS);
-
-        return !startTruncated.isAfter(toCompareStartTruncated) && !startTruncated.isBefore(toCompareStartTruncated);
     }
 }

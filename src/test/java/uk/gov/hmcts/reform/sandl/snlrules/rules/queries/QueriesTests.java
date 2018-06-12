@@ -8,6 +8,7 @@ import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.SearchSession;
@@ -35,10 +36,8 @@ public class QueriesTests {
         rules = droolsService.getRulesSession();
     }
 
-
-    // https://docs.jboss.org/drools/release/7.7.0.Final/drools-docs/html_single/index.html#_querysection
     @Test
-    public void testQuery() {
+    public void testJudgeQuery() {
 
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
@@ -46,60 +45,11 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(new Availability("1", "judge1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(3)));
-
-        rules.insert(new Availability("2", "room1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(3)));
-
-        rules.insert(new Session("15", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 10, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofMinutes(15), "FTRACK"));
-        rules.insert(new Session("16", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 11, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofMinutes(30), "FTRACK"));
-
-        rules.insert(new Session("17", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 11, 40, 0, 0, ZoneOffset.UTC),
-            Duration.ofMinutes(10), "FTRACK"));
-
-        rules.fireAllRules();
-
-
-        OffsetDateTime from = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
-        OffsetDateTime to = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
-        Duration dur = Duration.ofMinutes(10);
-
-        QueryResults results = rules.getQueryResults("findSlot", from, to, dur);
-
-        for (QueryResultsRow row : results) {
-            Session session = (Session) row.get("$newSe");
-            System.out.println(session.toString());
-
-        }
-
-    }
-
-    @Test
-    public void test2Query() {
-
-        rules.insert(new Room("room1", "Room A"));
-        rules.insert(new Judge("judge1", "John Harris"));
-
-        rules.insert(new Room("room2", "Room B"));
-        rules.insert(new Judge("judge2", "John Doe"));
-
-        rules.insert(new Availability("1", "judge1",
+        rules.insert(new Availability("1", "judge1", null,
             OffsetDateTime.of(2018, 3, 5, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofHours(3)));
 
-        rules.insert(new Availability("2", "judge1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
-            Duration.ofHours(3)));
-
-        rules.insert(new Availability("2", "room1",
+        rules.insert(new Availability("2", "judge1", null,
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofHours(3)));
 
@@ -115,10 +65,6 @@ public class QueriesTests {
             Duration.ofMinutes(10), "FTRACK"));
 
 
-//        rules.insert(new SearchSession("judge1", "room1",
-//            OffsetDateTime.of(2018, 4, 10, 0, 1, 0, 0, ZoneOffset.UTC),
-//            Duration.ofMinutes(10), "FTRACK"));
-
         rules.fireAllRules();
 
 
@@ -129,14 +75,67 @@ public class QueriesTests {
             System.out.println(a.toString());
           }
 
-//        for (Object a : rules.getObjects(new ClassObjectFilter(SearchSessionResult.class))) {
-//            System.out.println(a.toString());
-//        }
-
         QueryResults results = rules.getQueryResults("exception", from, to);
 
         for (QueryResultsRow row : results) {
             BookableJudge session = (BookableJudge) row.get("$ex");
+            System.out.println(session.toString());
+        }
+    }
+
+    @Test
+    public void testRoomQuery() {
+
+        rules.insert(new Room("room1", "Room A"));
+
+        rules.insert(new Room("room2", "Room B"));
+
+        rules.insert(new Availability("1", null, "room1",
+            OffsetDateTime.of(2018, 3, 5, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofHours(3)));
+
+        rules.insert(new Availability("2", null, "room1",
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofHours(3)));
+
+        rules.insert(new Availability("2", null, "room1",
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofHours(3)));
+
+        rules.insert(new Session("15", null, "room1",
+            OffsetDateTime.of(2018, 4, 10, 10, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(15), "FTRACK"));
+        rules.insert(new Session("16", null, "room1",
+            OffsetDateTime.of(2018, 4, 10, 11, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(30), "FTRACK"));
+
+        rules.insert(new Session("17", null, "room1",
+            OffsetDateTime.of(2018, 4, 10, 11, 42, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(10), "FTRACK"));
+
+
+//        rules.insert(new SearchSession("judge1", "room1",
+//            OffsetDateTime.of(2018, 4, 10, 0, 1, 0, 0, ZoneOffset.UTC),
+//            Duration.ofMinutes(10), "FTRACK"));
+
+        rules.fireAllRules();
+
+
+        OffsetDateTime from = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime to = OffsetDateTime.of(2018, 5, 10, 9, 0, 0, 0, ZoneOffset.UTC);
+        Duration dur = Duration.ofMinutes(10);
+        for (Object a : rules.getObjects(new ClassObjectFilter(BookableRoom.class))) {
+            System.out.println(a.toString());
+        }
+
+//        for (Object a : rules.getObjects(new ClassObjectFilter(SearchSessionResult.class))) {
+//            System.out.println(a.toString());
+//        }
+
+        QueryResults results = rules.getQueryResults("exceptionRoom", from, to);
+
+        for (QueryResultsRow row : results) {
+            BookableRoom session = (BookableRoom) row.get("$ex");
             System.out.println(session.toString());
         }
     }
