@@ -168,4 +168,44 @@ public class DateTimeUtilsTests {
 
         Assert.assertTrue(DateTimeUtils.between(dateToBeChecked, after, before));
     }
+
+    @Test
+    public void should_contain_other_date_time() {
+        OffsetDateTime biggerStart = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime biggerEnd = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualStart = OffsetDateTime.of(2018, 05, 21, 10, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualEnd = OffsetDateTime.of(2018, 05, 21, 11, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertTrue(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
+    }
+
+    @Test
+    public void should_contain_other_date() {
+        OffsetDateTime biggerStart = OffsetDateTime.of(2018, 05, 20, 0, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime biggerEnd = OffsetDateTime.of(2018, 05, 22, 12, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualStart = OffsetDateTime.of(2018, 05, 21, 1, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualEnd = OffsetDateTime.of(2018, 05, 21, 11, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertTrue(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
+    }
+
+    @Test
+    public void should_contain_other_date_time_equals() {
+        OffsetDateTime biggerStart = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime biggerEnd = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualStart = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualEnd = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertTrue(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
+    }
+
+    @Test
+    public void should_not_contain_other_date_time() {
+        OffsetDateTime biggerStart = OffsetDateTime.of(2018, 05, 21, 10, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime biggerEnd = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualStart = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime smallerOrEqualEnd = OffsetDateTime.of(2018, 05, 21, 12, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertFalse(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
+    }
 }

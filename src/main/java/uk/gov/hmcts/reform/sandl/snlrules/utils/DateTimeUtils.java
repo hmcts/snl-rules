@@ -76,4 +76,12 @@ public final class DateTimeUtils {
 
         return !startTruncated.isAfter(toCompareStartTruncated) && !startTruncated.isBefore(toCompareStartTruncated);
     }
+
+    public static boolean contains(OffsetDateTime biggerStart, OffsetDateTime biggerEnd,
+                                   OffsetDateTime smallerOrEqualStart, OffsetDateTime smallerOrEqualEnd) {
+
+        boolean startsAfterOrEqual = !smallerOrEqualStart.isBefore(biggerStart);
+        boolean endsBeforeOrEqual = !smallerOrEqualEnd.isAfter(biggerEnd);
+        return startsAfterOrEqual && endsBeforeOrEqual;
+    }
 }
