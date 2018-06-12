@@ -197,3 +197,37 @@ query "exceptionRoom" (OffsetDateTime from, OffsetDateTime to)
   $ex: BookableRoom()
 end
 
+query JudgeAndRoomAvailable(
+      String $judgeId,               // Judge can be set or an unbound variable
+      String $roomId,                // Room can be set or an unbound variable
+      Duration $duration,          // duration must always be set
+      OffsetDateTime $slotBegin,    // Always unbound - out variable set by the query
+      OffsetDateTime $slotEnd,      // Always unbound - out variable set by the query
+      OffsetDateTime $begin,        // Always set - the start of the time range we're looking at
+      OffsetDateTime $end          // Always set - the end of the time range we're looking at
+      )
+
+      $jb : BookableJudge(
+           judgeId == $judgeId//,
+//           duration >= $duration,
+//           begin <= $end - $duration,      // At least duration available before the end of the target period
+//           end >= $begin + $duration
+           )     // At least duration available after the start of the target period
+      $rb : BookableRoom(
+           roomId == $roomId//,
+//           duration >= $duration,
+//           begin <= $end - $duration,      // At least duration available before the end of the target period
+//           end >= $begin + $duration,      // At least duration available after the start of the target period
+//           end >= $jb.begin + $duration,   // At least duration available after the start of the judge bookable period
+//           begin <= $jb.end - $duration
+           )  // At least duration available before the end of the judge bookable period
+      //Number($slotBegin:= OffsetDateTime.now())
+      $l : Number() from (Long.valueOf(2))
+      $ww : OffsetDateTime() from (OffsetDateTime.now())
+      //$slotBegin:= OffsetDateTime() from (OffsetDateTime.now())
+      //
+      // Not sure how to ensure $slotBeing and $slotEnd are bound to values.  They need to be set to:
+      // $slotBegin = max($jb.begin, $rb.begin)
+      // $slotEnd = min($jb.end, $rb.end)
+      //
+end
