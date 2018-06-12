@@ -18,15 +18,14 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
-public class Session extends Fact implements Serializable {
-    private String id;
+public class SearchSession extends Fact implements Serializable {
     private String judgeId;
     private String roomId;
     private OffsetDateTime start;
     private Duration duration;
     private String caseType;
 
-    public Session(OffsetDateTime start, Duration duration) {
+    public SearchSession(OffsetDateTime start, Duration duration) {
         this.start = start;
         this.duration = duration;
     }
@@ -35,7 +34,7 @@ public class Session extends Fact implements Serializable {
         return start.plus(duration);
     }
 
-    public boolean isOverlapping(Session s2) {
+    public boolean isOverlapping(SearchSession s2) {
         return start.isBefore(s2.getEnd()) && s2.getStart().isBefore(this.getEnd());
     }
 

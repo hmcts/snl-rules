@@ -5,10 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.kie.api.definition.type.Position;
+import org.apache.commons.codec.digest.DigestUtils;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
-import java.io.Serializable;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
@@ -17,26 +16,21 @@ import java.time.OffsetDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("squid:S3437")
-public class Session extends Fact implements Serializable {
+public class BookableJudge extends Fact {
     private String id;
     private String judgeId;
-    private String roomId;
     private OffsetDateTime start;
     private Duration duration;
-    private String caseType;
 
-    public Session(OffsetDateTime start, Duration duration) {
+    public BookableJudge(String judgeId, OffsetDateTime start, Duration duration) {
+        this.judgeId = judgeId;
         this.start = start;
         this.duration = duration;
+        this.id = DigestUtils.md5Hex(this.toString());
     }
 
     public OffsetDateTime getEnd() {
         return start.plus(duration);
-    }
-
-    public boolean isOverlapping(Session s2) {
-        return start.isBefore(s2.getEnd()) && s2.getStart().isBefore(this.getEnd());
     }
 
     @Override public boolean equals(Object o) { //NOPMD
@@ -48,8 +42,9 @@ public class Session extends Fact implements Serializable {
         return prime + super.hashCode();
     }
 
-    @Override public String toDescription() {
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", Case type: " + caseType)
+    @Override
+    public String toDescription() {
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
             .replace("null", "N/A");
     }
 }

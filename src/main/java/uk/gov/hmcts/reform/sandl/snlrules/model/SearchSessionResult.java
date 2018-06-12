@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.kie.api.definition.type.Position;
+import org.apache.commons.codec.digest.DigestUtils;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.io.Serializable;
@@ -18,7 +18,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
-public class Session extends Fact implements Serializable {
+public class SearchSessionResult extends Fact implements Serializable {
     private String id;
     private String judgeId;
     private String roomId;
@@ -26,16 +26,17 @@ public class Session extends Fact implements Serializable {
     private Duration duration;
     private String caseType;
 
-    public Session(OffsetDateTime start, Duration duration) {
+    public SearchSessionResult(OffsetDateTime start, Duration duration) {
         this.start = start;
         this.duration = duration;
+        this.id = DigestUtils.md5Hex(this.toString());
     }
 
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }
 
-    public boolean isOverlapping(Session s2) {
+    public boolean isOverlapping(SearchSessionResult s2) {
         return start.isBefore(s2.getEnd()) && s2.getStart().isBefore(this.getEnd());
     }
 

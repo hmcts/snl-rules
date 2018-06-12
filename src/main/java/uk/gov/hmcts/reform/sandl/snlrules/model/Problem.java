@@ -27,7 +27,6 @@ public class Problem extends Fact {
         this.type = type;
         this.severity = severity;
         this.references.addAll(Arrays.asList(references));
-
         this.id = DigestUtils.md5Hex(this.toString());
         this.message = message;
     }
