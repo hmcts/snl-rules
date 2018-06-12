@@ -84,4 +84,12 @@ public final class DateTimeUtils {
         boolean endsBeforeOrEqual = !smallerOrEqualEnd.isAfter(biggerEnd);
         return startsAfterOrEqual && endsBeforeOrEqual;
     }
+
+    public static OffsetDateTime max(OffsetDateTime v1, OffsetDateTime v2) {
+        return v1.isAfter(v2) ? v1 : v2;
+    }
+
+    public static OffsetDateTime min(OffsetDateTime v1, OffsetDateTime v2) {
+        return v1.isAfter(v2) ? v2 : v1;
+    }
 }
