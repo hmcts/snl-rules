@@ -20,6 +20,7 @@ import java.time.OffsetDateTime;
 public class Availability extends Fact {
     private String id;
     private String judgeId;
+    private String roomId;
     private OffsetDateTime start;
     private Duration duration;
 
