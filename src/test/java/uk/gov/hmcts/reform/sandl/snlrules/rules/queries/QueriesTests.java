@@ -12,6 +12,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
@@ -22,7 +23,6 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertResults;
 
 public class QueriesTests {
     private static final String rulesDefinition = "Sessions";
@@ -178,18 +178,14 @@ public class QueriesTests {
             offsetDateTimeOf("10-04-2018 11:42"),
             Duration.ofMinutes(10), "FTRACK"));
 
-        rules.fireAllRules();
-
-
         OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
         OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
 
         Duration dur = Duration.ofMinutes(4);
 
+        rules.fireAllRules();
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
-
-        System.out.println("=========== " + results.size());
 
         Map<OffsetDateTime, OffsetDateTime> expectedResults = new HashMap<>();
         expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
@@ -243,8 +239,6 @@ public class QueriesTests {
             offsetDateTimeOf("10-04-2018 11:39"),
             Duration.ofMinutes(16), "FTRACK"));
 
-        rules.fireAllRules();
-
         OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
         OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
 
@@ -255,6 +249,8 @@ public class QueriesTests {
         expectedResults.put(offsetDateTimeOf("10-04-2018 11:30"), offsetDateTimeOf("10-04-2018 11:39"));
         expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
         expectedResults.put(offsetDateTimeOf("10-04-2018 11:55"), offsetDateTimeOf("10-04-2018 12:00"));
+
+        rules.fireAllRules();
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
@@ -278,6 +274,15 @@ public class QueriesTests {
             System.out.println(rb.toString());
             System.out.println("Possible space for session: " + bookableStart + " - " + bookableEnd + " - " + Duration.between(bookableStart, bookableEnd));
             System.out.println("===========");
+        }
+    }
+
+    private static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, QueryResults results) {
+        for (QueryResultsRow row : results) {
+            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
+            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
+
+            RulesTestHelper.assertResults(expectedResults, bookableStart, bookableEnd);
         }
     }
 }

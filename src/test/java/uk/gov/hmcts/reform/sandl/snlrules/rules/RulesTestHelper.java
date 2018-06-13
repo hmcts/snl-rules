@@ -82,20 +82,11 @@ public final class RulesTestHelper {
         }
     }
 
-    private static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
+    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
         if (expectedResults.containsKey(bookableStart)) {
             Assert.assertEquals(bookableEnd, expectedResults.get(bookableStart));
         } else {
             fail("invalid results");
-        }
-    }
-
-    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, QueryResults results) {
-        for (QueryResultsRow row : results) {
-            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
-            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
-
-            assertResults(expectedResults, bookableStart, bookableEnd);
         }
     }
 }
