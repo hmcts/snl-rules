@@ -3,6 +3,8 @@ package uk.gov.hmcts.reform.sandl.snlrules.rules;
 import org.junit.Assert;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
+import org.kie.api.runtime.rule.QueryResults;
+import org.kie.api.runtime.rule.QueryResultsRow;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
@@ -80,11 +82,20 @@ public final class RulesTestHelper {
         }
     }
 
-    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
+    private static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
         if (expectedResults.containsKey(bookableStart)) {
             Assert.assertEquals(bookableEnd, expectedResults.get(bookableStart));
         } else {
             fail("invalid results");
+        }
+    }
+
+    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, QueryResults results) {
+        for (QueryResultsRow row : results) {
+            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
+            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
+
+            assertResults(expectedResults, bookableStart, bookableEnd);
         }
     }
 }

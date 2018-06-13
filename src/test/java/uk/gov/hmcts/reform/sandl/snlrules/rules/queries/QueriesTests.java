@@ -195,20 +195,9 @@ public class QueriesTests {
         expectedResults.put(offsetDateTimeFromString("10-04-2018 11:30"), offsetDateTimeFromString("10-04-2018 11:42"));
         expectedResults.put(offsetDateTimeFromString("10-04-2018 11:52"), offsetDateTimeFromString("10-04-2018 12:00"));
 
-        for (QueryResultsRow row : results) {
-            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
-            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
+        printQueryResults(results);
 
-            BookableJudge bj = (BookableJudge) row.get("$jb");
-            System.out.println(bj.toString());
-            BookableRoom rb = (BookableRoom) row.get("$rb");
-            System.out.println(rb.toString());
-            System.out.println("Possible space for session: " + bookableStart + " - " + bookableEnd + " - " + Duration.between(bookableStart, bookableEnd));
-            System.out.println("===========");
-
-            assertResults(expectedResults, bookableStart, bookableEnd);
-        }
-
+        assertResults(expectedResults, results);
         assertThat(results.size()).isEqualTo(4);
     }
 
@@ -268,6 +257,13 @@ public class QueriesTests {
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
 
+        printQueryResults(results);
+
+        assertResults(expectedResults, results);
+        assertThat(results.size()).isEqualTo(4);
+    }
+
+    private void printQueryResults(QueryResults results) {
         System.out.println("=========== " + results.size());
 
         for (QueryResultsRow row : results) {
@@ -280,10 +276,6 @@ public class QueriesTests {
             System.out.println(rb.toString());
             System.out.println("Possible space for session: " + bookableStart + " - " + bookableEnd + " - " + Duration.between(bookableStart, bookableEnd));
             System.out.println("===========");
-
-            assertResults(expectedResults, bookableStart, bookableEnd);
         }
-
-        assertThat(results.size()).isEqualTo(4);
     }
 }
