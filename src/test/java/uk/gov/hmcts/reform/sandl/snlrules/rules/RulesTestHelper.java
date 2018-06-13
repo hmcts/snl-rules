@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules;
 
+import org.junit.Assert;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
@@ -10,10 +11,13 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public final class RulesTestHelper {
     private RulesTestHelper() {
@@ -73,6 +77,14 @@ public final class RulesTestHelper {
             rules.insert(d);
         } else {
             rules.update(factHandle, d);
+        }
+    }
+
+    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
+        if (expectedResults.containsKey(bookableStart)) {
+            Assert.assertEquals(bookableEnd, expectedResults.get(bookableStart));
+        } else {
+            fail("invalid results");
         }
     }
 }
