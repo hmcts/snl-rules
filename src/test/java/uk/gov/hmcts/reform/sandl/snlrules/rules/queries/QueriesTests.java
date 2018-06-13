@@ -40,7 +40,7 @@ public class QueriesTests {
     }
 
     @Test
-    public void testJudgeQuery() {
+    public void should_judge_be_bookable_when_available_and_with_some_sessions() {
 
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
@@ -91,7 +91,7 @@ public class QueriesTests {
     }
 
     @Test
-    public void testRoomQuery() {
+    public void should_room_be_bookable_when_available_and_with_some_sessions() {
 
         rules.insert(new Room("room1", "Room A"));
 
@@ -143,7 +143,7 @@ public class QueriesTests {
     }
 
     @Test
-    public void testRoomAllDayAvailableAndJudgeSomeSlotsQuery() {
+    public void should_have_space_for_room_with_mixed_avaialability() {
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
 
@@ -180,7 +180,7 @@ public class QueriesTests {
     }
 
     @Test
-    public void testRoomSomeSlotsAndJudgeSomeSlotsQuery() {
+    public void should_have_space_for_room_and_judge_with_mixed_avaialability() {
 
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
@@ -197,6 +197,7 @@ public class QueriesTests {
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
         rules.insert(newSession("16", null, "room1","2018-04-10 11:00", 30, "FTRACK"));
         rules.insert(newSession("17", null, "room1","2018-04-10 11:42", 10, "FTRACK"));
+
         rules.insert(newSession("37", "judge1", null,"2018-04-10 11:39", 16, "FTRACK"));
 
         OffsetDateTime from = offsetDateTimeOf("2018-04-09 09:00");
