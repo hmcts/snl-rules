@@ -150,25 +150,14 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(new Availability("1", "judge1", null,
-            offsetDateTimeOf("05-03-2018 09:00"), Duration.ofHours(3)));
+        rules.insert(newAvailability("1", "judge1", null,"05-03-2018 09:00", 3));
+        rules.insert(newAvailability("2", "judge1", null,"10-04-2018 09:00", 3));
+        rules.insert(newAvailability("12", null, "room1","10-04-2018 09:00", 3));
+        rules.insert(newAvailability("13", null, "room1","10-04-2018 09:00", 3));
 
-        rules.insert(new Availability("2", "judge1", null,
-            offsetDateTimeOf("10-04-2018 09:00"), Duration.ofHours(3)));
-
-        rules.insert(new Availability("12", null, "room1",
-            offsetDateTimeOf("10-04-2018 09:00"), Duration.ofHours(3)));
-
-        rules.insert(new Availability("13", null, "room1",
-            offsetDateTimeOf("10-04-2018 09:00"), Duration.ofHours(3)));
-
-        rules.insert(new Session("15", null, "room1",
-            offsetDateTimeOf("10-04-2018 10:00"), Duration.ofMinutes(15), "FTRACK"));
-        rules.insert(new Session("16", null, "room1",
-            offsetDateTimeOf("10-04-2018 11:00"), Duration.ofMinutes(30), "FTRACK"));
-
-        rules.insert(new Session("17", null, "room1",
-            offsetDateTimeOf("10-04-2018 11:42"), Duration.ofMinutes(10), "FTRACK"));
+        rules.insert(newSession("15", null, "room1","10-04-2018 10:00", 15, "FTRACK"));
+        rules.insert(newSession("16", null, "room1","10-04-2018 11:00", 30, "FTRACK"));
+        rules.insert(newSession("17", null, "room1","10-04-2018 11:42", 10, "FTRACK"));
 
         OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
         OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
@@ -200,20 +189,14 @@ public class QueriesTests {
         rules.insert(new Judge("judge2", "John Doe"));
 
         rules.insert(newAvailability("1", "judge1", null, "05-03-2018 09:00", 3));
-
         rules.insert(newAvailability("2", "judge1", null, "10-04-2018 09:00", 3));
-
         rules.insert(newAvailability("12", null, "room1", "10-04-2018 09:00", 3));
-
         rules.insert(newAvailability("13", null, "room1", "10-04-2018 09:00", 3));
 
         rules.insert(newSession("15", null, "room1","10-04-2018 10:00", 15, "FTRACK"));
-
         rules.insert(newSession("15", null, "room1","10-04-2018 10:00", 15, "FTRACK"));
         rules.insert(newSession("16", null, "room1","10-04-2018 11:00", 30, "FTRACK"));
-
         rules.insert(newSession("17", null, "room1","10-04-2018 11:42", 10, "FTRACK"));
-
         rules.insert(newSession("37", "judge1", null,"10-04-2018 11:39", 16, "FTRACK"));
 
         OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
@@ -238,12 +221,12 @@ public class QueriesTests {
         assertThat(results.size()).isEqualTo(4);
     }
 
-    private Session newSession(String id, String judgeId, String roomId, String start, int duration, String caseType) {
-        return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(duration), caseType);
+    private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String caseType) {
+        return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes), caseType);
     }
 
-    private Availability newAvailability(String id, String judgeId, String roomId, String start, int duration) {
-        return new Availability(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofHours(duration));
+    private Availability newAvailability(String id, String judgeId, String roomId, String start, int minutes) {
+        return new Availability(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofHours(minutes));
     }
 
     private void printQueryResults(QueryResults results) {
