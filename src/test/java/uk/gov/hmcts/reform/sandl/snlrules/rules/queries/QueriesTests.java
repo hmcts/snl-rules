@@ -222,6 +222,33 @@ public class QueriesTests {
         assertThat(results.size()).isEqualTo(4);
     }
 
+    @Test
+    public void should_have_common_part_for_search_within_bookable() {
+
+        rules.insert(new Room("room1", "Room A"));
+        rules.insert(new Judge("judge1", "John Harris"));
+
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8));
+
+        OffsetDateTime from = offsetDateTimeOf("2018-04-10 10:00");
+        OffsetDateTime to = offsetDateTimeOf("2018-04-10 12:00");
+        Duration dur = Duration.ofMinutes(30);
+
+        Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
+        add(expected, "2018-04-10 10:00", "2018-04-10 12:00");
+
+        rules.fireAllRules();
+
+        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
+            "judge1", "room1", dur, from, to);
+
+        printQueryResults(results);
+
+        assertResults(expected, results);
+        assertThat(results.size()).isEqualTo(1);
+    }
+
     private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String caseType) {
         return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes), caseType);
     }
@@ -231,7 +258,7 @@ public class QueriesTests {
     }
 
     private void printQueryResults(QueryResults results) {
-        System.out.println("=========== " + results.size());
+        System.out.println("=========== results count" + results.size());
 
         for (QueryResultsRow row : results) {
             OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
@@ -247,6 +274,7 @@ public class QueriesTests {
     }
 
     private static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, QueryResults results) {
+        assertThat(results.size()).isGreaterThan(0);
         for (QueryResultsRow row : results) {
             OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
             OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
