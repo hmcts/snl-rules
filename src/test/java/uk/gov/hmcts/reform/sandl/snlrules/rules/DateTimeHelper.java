@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeHelper {
 
-    public static OffsetDateTime offsetDateTimeFromString(String date) {
+    public static OffsetDateTime offsetDateTimeOf(String date) {
         String dateFormat = "dd-MM-yyyy HH:mm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 

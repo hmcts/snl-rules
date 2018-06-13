@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeFromString;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertResults;
 
 public class QueriesTests {
@@ -152,36 +152,38 @@ public class QueriesTests {
         rules.insert(new Judge("judge2", "John Doe"));
 
         rules.insert(new Availability("1", "judge1", null,
-            OffsetDateTime.of(2018, 3, 5, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("05-03-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("2", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("12", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("13", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Session("15", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 10, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 10:00"),
             Duration.ofMinutes(15), "FTRACK"));
         rules.insert(new Session("16", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 11, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 11:00"),
             Duration.ofMinutes(30), "FTRACK"));
 
         rules.insert(new Session("17", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 11, 42, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 11:42"),
             Duration.ofMinutes(10), "FTRACK"));
 
         rules.fireAllRules();
 
-        OffsetDateTime from = OffsetDateTime.of(2018, 4, 9, 9, 0, 0, 0, ZoneOffset.UTC);
-        OffsetDateTime to = OffsetDateTime.of(2018, 4, 11, 9, 0, 0, 0, ZoneOffset.UTC);
+
+        OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
+        OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
+
         Duration dur = Duration.ofMinutes(4);
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
@@ -190,10 +192,10 @@ public class QueriesTests {
         System.out.println("=========== " + results.size());
 
         Map<OffsetDateTime, OffsetDateTime> expectedResults = new HashMap<>();
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 09:00"), offsetDateTimeFromString("10-04-2018 10:00"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 10:15"), offsetDateTimeFromString("10-04-2018 11:00"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 11:30"), offsetDateTimeFromString("10-04-2018 11:42"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 11:52"), offsetDateTimeFromString("10-04-2018 12:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 10:15"), offsetDateTimeOf("10-04-2018 11:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 11:30"), offsetDateTimeOf("10-04-2018 11:42"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 11:52"), offsetDateTimeOf("10-04-2018 12:00"));
 
         for (QueryResultsRow row : results) {
             OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
@@ -222,48 +224,48 @@ public class QueriesTests {
         rules.insert(new Judge("judge2", "John Doe"));
 
         rules.insert(new Availability("1", "judge1", null,
-            OffsetDateTime.of(2018, 3, 5, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("05-03-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("2", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("12", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Availability("13", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 09:00"),
             Duration.ofHours(3)));
 
         rules.insert(new Session("15", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 10, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 10:00"),
             Duration.ofMinutes(15), "FTRACK"));
         rules.insert(new Session("16", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 11, 0, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 11:00"),
             Duration.ofMinutes(30), "FTRACK"));
 
         rules.insert(new Session("17", null, "room1",
-            OffsetDateTime.of(2018, 4, 10, 11, 42, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 11:42"),
             Duration.ofMinutes(10), "FTRACK"));
 
         rules.insert(new Session("37", "judge1", null,
-            OffsetDateTime.of(2018, 4, 10, 11, 39, 0, 0, ZoneOffset.UTC),
+            offsetDateTimeOf("10-04-2018 11:39"),
             Duration.ofMinutes(16), "FTRACK"));
 
         rules.fireAllRules();
 
+        OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
+        OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
 
-        OffsetDateTime from = OffsetDateTime.of(2018, 4, 9, 9, 0, 0, 0, ZoneOffset.UTC);
-        OffsetDateTime to = OffsetDateTime.of(2018, 4, 11, 9, 0, 0, 0, ZoneOffset.UTC);
         Duration dur = Duration.ofMinutes(4);
 
         Map<OffsetDateTime, OffsetDateTime> expectedResults = new HashMap<>();
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 10:15"), offsetDateTimeFromString("10-04-2018 11:00"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 11:30"), offsetDateTimeFromString("10-04-2018 11:39"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 09:00"), offsetDateTimeFromString("10-04-2018 10:00"));
-        expectedResults.put(offsetDateTimeFromString("10-04-2018 11:55"), offsetDateTimeFromString("10-04-2018 12:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 10:15"), offsetDateTimeOf("10-04-2018 11:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 11:30"), offsetDateTimeOf("10-04-2018 11:39"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
+        expectedResults.put(offsetDateTimeOf("10-04-2018 11:55"), offsetDateTimeOf("10-04-2018 12:00"));
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
