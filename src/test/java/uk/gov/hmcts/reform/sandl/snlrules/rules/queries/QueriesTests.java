@@ -75,7 +75,7 @@ public class QueriesTests {
         Duration dur = Duration.ofMinutes(10);
         for (Object a : rules.getObjects(new ClassObjectFilter(BookableJudge.class))) {
             System.out.println(a.toString());
-          }
+        }
 
         QueryResults results = rules.getQueryResults("all bookable judges", from, to);
 
@@ -83,6 +83,11 @@ public class QueriesTests {
             BookableJudge session = (BookableJudge) row.get("$bookableJudge");
             System.out.println(session.toString());
         }
+//        start=2018-03-05T09:00Z, duration=PT3H)
+//        start=2018-04-10T09:00Z, duration=PT1H)
+//        start=2018-04-10T11:52Z, duration=PT8M)
+//        start=2018-04-10T11:30Z, duration=PT12M)
+//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
@@ -131,6 +136,11 @@ public class QueriesTests {
             BookableRoom session = (BookableRoom) row.get("$bookableRoom");
             System.out.println(session.toString());
         }
+//        start=2018-03-05T09:00Z, duration=PT3H)
+//        start=2018-04-10T09:00Z, duration=PT1H)
+//        start=2018-04-10T11:52Z, duration=PT8M)
+//        start=2018-04-10T11:30Z, duration=PT12M)
+//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
