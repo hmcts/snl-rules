@@ -11,16 +11,12 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
-import uk.gov.hmcts.reform.sandl.snlrules.model.SearchSession;
-import uk.gov.hmcts.reform.sandl.snlrules.model.SearchSessionResult;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,6 +79,11 @@ public class QueriesTests {
             BookableJudge session = (BookableJudge) row.get("$bookableJudge");
             System.out.println(session.toString());
         }
+//        start=2018-03-05T09:00Z, duration=PT3H)
+//        start=2018-04-10T09:00Z, duration=PT1H)
+//        start=2018-04-10T11:52Z, duration=PT8M)
+//        start=2018-04-10T11:30Z, duration=PT12M)
+//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
@@ -131,6 +132,11 @@ public class QueriesTests {
             BookableRoom session = (BookableRoom) row.get("$bookableRoom");
             System.out.println(session.toString());
         }
+//        start=2018-03-05T09:00Z, duration=PT3H)
+//        start=2018-04-10T09:00Z, duration=PT1H)
+//        start=2018-04-10T11:52Z, duration=PT8M)
+//        start=2018-04-10T11:30Z, duration=PT12M)
+//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
@@ -268,7 +274,7 @@ public class QueriesTests {
 
         assertThat(results.size()).isEqualTo(4);
 // assert
-        // 2018-04-10T10:15Z - 2018-04-10T11:00Z - PT45M
+        //2018-04-10T10:15Z - 2018-04-10T11:00Z - PT45M
         //2018-04-10T11:30Z - 2018-04-10T11:39Z - PT9M
         //2018-04-10T09:00Z - 2018-04-10T10:00Z - PT1H
         //2018-04-10T11:55Z - 2018-04-10T12:00Z - PT5M
