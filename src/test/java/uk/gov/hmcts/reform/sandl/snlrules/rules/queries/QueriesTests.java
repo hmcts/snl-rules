@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeDayFirstOf;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 
 public class QueriesTests {
@@ -159,8 +159,8 @@ public class QueriesTests {
         rules.insert(newSession("16", null, "room1","10-04-2018 11:00", 30, "FTRACK"));
         rules.insert(newSession("17", null, "room1","10-04-2018 11:42", 10, "FTRACK"));
 
-        OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
-        OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
+        OffsetDateTime from = offsetDateTimeDayFirstOf("09-04-2018 09:00");
+        OffsetDateTime to = offsetDateTimeDayFirstOf("11-04-2018 09:00");
         Duration dur = Duration.ofMinutes(4);
 
         rules.fireAllRules();
@@ -199,8 +199,8 @@ public class QueriesTests {
         rules.insert(newSession("17", null, "room1","10-04-2018 11:42", 10, "FTRACK"));
         rules.insert(newSession("37", "judge1", null,"10-04-2018 11:39", 16, "FTRACK"));
 
-        OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
-        OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
+        OffsetDateTime from = offsetDateTimeDayFirstOf("09-04-2018 09:00");
+        OffsetDateTime to = offsetDateTimeDayFirstOf("11-04-2018 09:00");
 
         Duration dur = Duration.ofMinutes(4);
 
@@ -222,11 +222,11 @@ public class QueriesTests {
     }
 
     private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String caseType) {
-        return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes), caseType);
+        return new Session(id, judgeId, roomId, offsetDateTimeDayFirstOf(start), Duration.ofMinutes(minutes), caseType);
     }
 
     private Availability newAvailability(String id, String judgeId, String roomId, String start, int minutes) {
-        return new Availability(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofHours(minutes));
+        return new Availability(id, judgeId, roomId, offsetDateTimeDayFirstOf(start), Duration.ofHours(minutes));
     }
 
     private void printQueryResults(QueryResults results) {

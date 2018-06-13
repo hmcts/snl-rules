@@ -3,8 +3,6 @@ package uk.gov.hmcts.reform.sandl.snlrules.rules;
 import org.junit.Assert;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
-import org.kie.api.runtime.rule.QueryResults;
-import org.kie.api.runtime.rule.QueryResultsRow;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeDayFirstOf;
 
 public final class RulesTestHelper {
     private RulesTestHelper() {
@@ -92,6 +90,6 @@ public final class RulesTestHelper {
     }
 
     public static void add(Map<OffsetDateTime, OffsetDateTime> expectedResults, String start, String end) {
-        expectedResults.put(offsetDateTimeOf(start), offsetDateTimeOf(end));
+        expectedResults.put(offsetDateTimeDayFirstOf(start), offsetDateTimeDayFirstOf(end));
     }
 }
