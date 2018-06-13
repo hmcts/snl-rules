@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
 
 public final class RulesTestHelper {
     private RulesTestHelper() {
@@ -88,5 +89,9 @@ public final class RulesTestHelper {
         } else {
             fail("invalid results");
         }
+    }
+
+    public static void add(Map<OffsetDateTime, OffsetDateTime> expectedResults, String start, String end) {
+        expectedResults.put(offsetDateTimeOf(start), offsetDateTimeOf(end));
     }
 }

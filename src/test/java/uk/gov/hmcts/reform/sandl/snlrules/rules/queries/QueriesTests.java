@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 
 public class QueriesTests {
     private static final String rulesDefinition = "Sessions";
@@ -180,22 +181,21 @@ public class QueriesTests {
 
         OffsetDateTime from = offsetDateTimeOf("09-04-2018 09:00");
         OffsetDateTime to = offsetDateTimeOf("11-04-2018 09:00");
-
         Duration dur = Duration.ofMinutes(4);
 
         rules.fireAllRules();
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
 
-        Map<OffsetDateTime, OffsetDateTime> expectedResults = new HashMap<>();
-        expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 10:15"), offsetDateTimeOf("10-04-2018 11:00"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 11:30"), offsetDateTimeOf("10-04-2018 11:42"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 11:52"), offsetDateTimeOf("10-04-2018 12:00"));
+        Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
+        add(expected, "10-04-2018 09:00", "10-04-2018 10:00");
+        add(expected, "10-04-2018 10:15", "10-04-2018 11:00");
+        add(expected, "10-04-2018 11:30", "10-04-2018 11:42");
+        add(expected, "10-04-2018 11:52", "10-04-2018 12:00");
 
         printQueryResults(results);
 
-        assertResults(expectedResults, results);
+        assertResults(expected, results);
         assertThat(results.size()).isEqualTo(4);
     }
 
@@ -244,11 +244,11 @@ public class QueriesTests {
 
         Duration dur = Duration.ofMinutes(4);
 
-        Map<OffsetDateTime, OffsetDateTime> expectedResults = new HashMap<>();
-        expectedResults.put(offsetDateTimeOf("10-04-2018 10:15"), offsetDateTimeOf("10-04-2018 11:00"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 11:30"), offsetDateTimeOf("10-04-2018 11:39"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 09:00"), offsetDateTimeOf("10-04-2018 10:00"));
-        expectedResults.put(offsetDateTimeOf("10-04-2018 11:55"), offsetDateTimeOf("10-04-2018 12:00"));
+        Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
+        add(expected, "10-04-2018 10:15", "10-04-2018 11:00");
+        add(expected, "10-04-2018 11:30", "10-04-2018 11:39");
+        add(expected, "10-04-2018 09:00", "10-04-2018 10:00");
+        add(expected, "10-04-2018 11:55", "10-04-2018 12:00");
 
         rules.fireAllRules();
 
@@ -257,7 +257,7 @@ public class QueriesTests {
 
         printQueryResults(results);
 
-        assertResults(expectedResults, results);
+        assertResults(expected, results);
         assertThat(results.size()).isEqualTo(4);
     }
 
