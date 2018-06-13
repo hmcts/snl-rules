@@ -7,17 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeHelper {
 
-    @Deprecated
-    public static OffsetDateTime offsetDateTimeDayFirstOf(String date) {
-        String dateFormat = "dd-MM-yyyy HH:mm";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
-
-        LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
-
-
-        return OffsetDateTime.of(localDateTime, ZoneOffset.UTC);
-    }
-
     public static OffsetDateTime offsetDateTimeOf(String date) {
         String dateFormat = "yyyy-MM-dd HH:mm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
