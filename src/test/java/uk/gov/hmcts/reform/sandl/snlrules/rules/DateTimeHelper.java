@@ -6,6 +6,8 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeHelper {
+    private DateTimeHelper() {
+    }
 
     public static OffsetDateTime offsetDateTimeOf(String date) {
         String dateFormat = "yyyy-MM-dd HH:mm";

@@ -1,12 +1,5 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules
 
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
-import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
-import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemReference;
-import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
-import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
@@ -17,82 +10,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-rule "Session Time For the Judge not Available"
-    when
-        $s : Session(judgeId != null)
-        $j : Judge(id == $s.judgeId)
-        not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
-                                  "Session Time For the Judge not Available",
-                                  new ProblemReference($s),
-                                  new ProblemReference($j)));
-end
-
-rule "Session does not have a judge 4 weeks or less before start"
-    when
-        Year($year: value)
-        Month($month: value)
-        Day($day: value)
-        $s : Session(judgeId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
-                                  "Session does not have a judge 4 weeks or less before start",
-                                  new ProblemReference($s)));
-end
-
-rule "Session does not have a room 4 weeks or less before start"
-    when
-        Year($year: value)
-        Month($month: value)
-        Day($day: value)
-        $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
-                                  "Session does not have a room 4 weeks or less before start",
-                                  new ProblemReference($s)));
-end
-
-rule "Double booking of judge (includes any overlapping)"
-    when
-        Year($year: value)
-        Month($month: value)
-        Day($day: value)
-        $s : Session(judgeId != null && DateTimeUtils.isAfter(start, $year, $month, $day))
-        $judge : Judge(id == $s.judgeId)
-        $s2 : Session(this != $s && id <= $s.id && judgeId != null && $s.judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warn,
-                                  "Double booking of judge",
-                                  new ProblemReference($s),
-                                  new ProblemReference($s2),
-                                  new ProblemReference($judge)));
-end
-
-rule "Double booking of room (includes any overlapping) 2 weeks before start"
-    when
-        Year($year: value)
-        Month($month: value)
-        Day($day: value)
-        $s : Session(roomId != null)
-        $room: Room(id == $s.roomId)
-        $s2 : Session(this != $s && id <= $s.id && roomId != null && $s.roomId != null && roomId == $s.roomId && isOverlapping($s)
-                        && DateTimeUtils.between(start, $year, $month, $day, 0, 14))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warn,
-                                  "Double booking of room",
-                                  new ProblemReference($s),
-                                  new ProblemReference($s2),
-                                  new ProblemReference($room)));
-end
 
 /* judge bookable */
 
