@@ -208,4 +208,6 @@ public class DateTimeUtilsTests {
 
         Assert.assertFalse(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
     }
+
+//TODO testy z max
 }
