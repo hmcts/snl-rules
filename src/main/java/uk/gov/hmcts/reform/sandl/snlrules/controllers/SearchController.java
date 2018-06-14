@@ -21,6 +21,8 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.springframework.http.ResponseEntity.ok;
 import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.offsetDateTimeOf;
@@ -44,26 +46,32 @@ public class SearchController {
             offsetDateTimeOf(from), offsetDateTimeOf(to), judgeId, roomId));
     }
 
-    public List<SessionProposition> searchEngine(DroolsService droolsService, Duration duration,
+    private List<SessionProposition> searchEngine(DroolsService droolsService, Duration duration,
                              OffsetDateTime from, OffsetDateTime to, String judgeId, String roomId) {
 
         KieSession session = droolsService.getRulesSession();
 
-        List<SessionProposition> results = new ArrayList<>();
-
         QueryResults queryResults = session.getQueryResults("JudgeAndRoomAvailable",
             judgeId, roomId, duration, from, to);
 
-        for (QueryResultsRow row : queryResults) {
-            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
-            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
+        List<SessionProposition> sessionPropositionList = StreamSupport.stream(queryResults.spliterator(), false)
+            .sorted((row1, row2) -> {
+                OffsetDateTime bookableStart1 = (OffsetDateTime) row1.get("$bookableStart");
+                OffsetDateTime bookableStart2 = (OffsetDateTime) row2.get("$bookableStart");
 
-            BookableJudge bj = (BookableJudge) row.get("$jb");
-            BookableRoom rb = (BookableRoom) row.get("$rb");
+                return bookableStart1.compareTo(bookableStart2);
+            }).limit(100).map(row -> {
+                OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
+                OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
 
-            results.add(new SessionProposition(bj.getJudgeId(), rb.getRoomId(), bookableStart, bookableEnd));
-        }
+                BookableJudge bj = (BookableJudge) row.get("$jb");
+                BookableRoom rb = (BookableRoom) row.get("$rb");
 
-        return results;
+                return new SessionProposition(bj.getJudgeId(), rb.getRoomId(), bookableStart, bookableEnd);
+            })
+            .collect(Collectors.toList());
+
+
+        return sessionPropositionList;
     }
 }
