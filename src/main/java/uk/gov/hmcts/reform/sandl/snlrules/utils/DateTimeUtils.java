@@ -105,4 +105,12 @@ public final class DateTimeUtils {
 
         return OffsetDateTime.of(localDateTime, ZoneOffset.UTC);
     }
+
+    public static boolean isGreaterOrEquals(OffsetDateTime v1, OffsetDateTime v2) {
+        return  !v1.isBefore(v2);
+    }
+
+    public static boolean isLessOrEquals(OffsetDateTime v1, OffsetDateTime v2) {
+        return  !v1.isAfter(v2);
+    }
 }

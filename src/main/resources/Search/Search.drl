@@ -119,15 +119,16 @@ query JudgeAndRoomAvailable(
       $jb : BookableJudge(
            judgeId == $judgeId || $judgeId == null,
            duration >= $duration,
-           $end.minus($duration).isAfter(start), //start <= $end - $duration
-           $start.plus($duration).isBefore(end)) //end >= $start + $duration
+           DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
+           DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)) //end >= $start + $duration
+           )
       $rb : BookableRoom(
            roomId == $roomId || $roomId == null,
            duration >= $duration,
-           $end.minus($duration).isAfter(start), //start <= $end - $duration
-           $start.plus($duration).isBefore(end), //end >= $start + $duration
-           $jb.start.plus($duration).isBefore(end), //end >= $jb.start + $duration
-           $jb.end.minus($duration).isAfter(start) //start <= $jb.end - $duration
+           DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
+           DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)), //end >= $start + $duration
+           DateTimeUtils.isGreaterOrEquals(end, $jb.start.plus($duration)), //end >= $jb.start + $duration
+           DateTimeUtils.isLessOrEquals(start, $jb.end.minus($duration)) //start <= $jb.end - $duration
            )
 
       $bookableStart : OffsetDateTime() from (DateTimeUtils.max($start, $jb.start, $rb.start))

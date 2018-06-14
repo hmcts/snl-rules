@@ -210,12 +210,168 @@ public class SearchTests {
         rules.fireAllRules();
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
-        "judge1", "room1", dur, from, to);
+            "judge1", "room1", dur, from, to);
 
         printQueryResults(results);
 
         assertResults(expected, results);
         assertThat(results.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void should_have_space_for_room__without_judge() {
+
+        rules.insert(new Room("room1", "Room A"));
+        rules.insert(new Judge("judge1", "John Harris"));
+
+        rules.insert(new Room("room2", "Room B"));
+        rules.insert(new Judge("judge2", "John Doe"));
+
+
+        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3 * 60));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("3", "judge2", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3 * 60));
+
+        rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
+        rules.insert(newSession("15", "judge1", "room1","2018-04-10 10:00", 15, "FTRACK"));
+        rules.insert(newSession("16", "judge2",  "room1","2018-04-10 11:00", 30, "FTRACK"));
+        rules.insert(newSession("17", null, "room1","2018-04-10 11:42", 10, "FTRACK"));
+
+        rules.insert(newSession("37", "judge1", null,"2018-04-10 11:39", 16, "FTRACK"));
+
+        rules.fireAllRules();
+
+        OffsetDateTime from = offsetDateTimeOf("2018-04-09 09:00");
+        OffsetDateTime to = offsetDateTimeOf("2018-04-11 09:00");
+        Duration dur = Duration.ofMinutes(4);
+        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
+            "judge1", null, dur, from, to);
+
+        printQueryResults(results);
+
+        Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
+        add(expected, "2018-04-10 10:15", "2018-04-10 11:00");
+        add(expected, "2018-04-10 11:30", "2018-04-10 11:39");
+        add(expected, "2018-04-10 09:00", "2018-04-10 10:00");
+        add(expected, "2018-04-10 11:55", "2018-04-10 12:00");
+
+        assertResults(expected, results);
+        assertThat(results.size()).isEqualTo(4);
+    }
+
+    @Test
+    public void should_have_space_for_judge__without_room() {
+
+        rules.insert(new Room("room1", "Room A"));
+        rules.insert(new Judge("judge1", "John Harris"));
+
+        rules.insert(new Room("room2", "Room B"));
+        rules.insert(new Judge("judge2", "John Doe"));
+
+
+        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3 * 60));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("3", null, "room2", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3 * 60));
+
+        rules.insert(newSession("15", "judge1", "room1","2018-04-10 10:00", 15, "FTRACK"));
+        rules.insert(newSession("15", "judge1", null,"2018-04-10 10:00", 15, "FTRACK"));
+        rules.insert(newSession("16", "judge1",  "room1","2018-04-10 11:00", 30, "FTRACK"));
+        rules.insert(newSession("17", "judge1", "room1","2018-04-10 11:42", 10, "FTRACK"));
+
+        rules.insert(newSession("37", "judge1", null,"2018-04-10 11:39", 16, "FTRACK"));
+
+        rules.fireAllRules();
+
+        OffsetDateTime from = offsetDateTimeOf("2018-04-09 09:00");
+        OffsetDateTime to = offsetDateTimeOf("2018-04-11 09:00");
+        Duration dur = Duration.ofMinutes(4);
+        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
+            null, "room1", dur, from, to);
+
+        printQueryResults(results);
+
+        Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
+        add(expected, "2018-04-10 10:15", "2018-04-10 11:00");
+        add(expected, "2018-04-10 11:30", "2018-04-10 11:39");
+        add(expected, "2018-04-10 09:00", "2018-04-10 10:00");
+        add(expected, "2018-04-10 11:55", "2018-04-10 12:00");
+
+        assertResults(expected, results);
+        assertThat(results.size()).isEqualTo(4);
+    }
+
+    @Test
+    public void should_have_space_when_no_room_no_judge() {
+
+        rules.insert(new Room("room1", "Room A"));
+        rules.insert(new Judge("judge1", "John Harris"));
+
+        rules.insert(new Room("room2", "Room B"));
+        rules.insert(new Judge("judge2", "John Doe"));
+
+        rules.insert(new Room("room3", "Room C"));
+        rules.insert(new Judge("judge3", "Amy Wesson"));
+
+
+        rules.insert(newAvailability("1", "judge1", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("2", "judge2", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("3", "judge3", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("11", null, "room1", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("12", null, "room2", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("13", null, "room3", "2018-04-10 09:00", 3 * 60));
+
+        rules.fireAllRules();
+
+        OffsetDateTime from = offsetDateTimeOf("2018-04-10 09:00");
+        OffsetDateTime to = offsetDateTimeOf("2018-04-10 10:00");
+        Duration dur = Duration.ofMinutes(60);
+        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
+            null, null, dur, from, to);
+
+        printQueryResults(results);
+
+        assertContains("judge1", "room1", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge1", "room2", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge1", "room3", "2018-04-10 09:00", "2018-04-10 10:00", results);
+
+        assertContains("judge2", "room1", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge2", "room2", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge2", "room3", "2018-04-10 09:00", "2018-04-10 10:00", results);
+
+        assertContains("judge3", "room1", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge3", "room2", "2018-04-10 09:00", "2018-04-10 10:00", results);
+        assertContains("judge3", "room3", "2018-04-10 09:00", "2018-04-10 10:00", results);
+
+        assertThat(results.size()).isEqualTo(9);
+    }
+
+    private void assertContains(String judgeId, String roomId, String start, String end, QueryResults results) {
+        boolean found = false;
+        for (QueryResultsRow row : results) {
+            OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
+            OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
+            BookableRoom bookableRoom = (BookableRoom) row.get("$rb");
+            BookableJudge bookableJudge = (BookableJudge) row.get("$jb");
+
+            System.out.println(judgeId + " " + roomId + " " + start + " " + end);
+            System.out.println(bookableJudge.getJudgeId() + " " + bookableRoom.getRoomId()
+                + " " + bookableStart + " " + bookableEnd);
+
+            if (bookableRoom.getRoomId().equals(roomId)
+                && bookableJudge.getJudgeId().equals(judgeId)
+                && bookableStart.equals(offsetDateTimeOf(start))
+                && bookableEnd.equals(offsetDateTimeOf(end))) {
+                found = true;
+                System.out.println("TRUE");
+                break;
+            }
+        }
+
+        assertThat(found).isTrue();
     }
 
     private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String caseType) {
