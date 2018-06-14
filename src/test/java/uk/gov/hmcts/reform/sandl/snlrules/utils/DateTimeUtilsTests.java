@@ -9,6 +9,8 @@ import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+
 @RunWith(MockitoJUnitRunner.class)
 public class DateTimeUtilsTests {
     @Test
@@ -209,5 +211,75 @@ public class DateTimeUtilsTests {
         Assert.assertFalse(DateTimeUtils.contains(biggerStart, biggerEnd, smallerOrEqualStart, smallerOrEqualEnd));
     }
 
-//TODO testy z max
+    @Test
+    public void should_pick_correct_max_same_day() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-04 12:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-04 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-04 15:00");
+
+        Assert.assertEquals(DateTimeUtils.max(min, medium, max), max);
+    }
+
+    @Test
+    public void should_pick_correct_max_same_day_different_args_order() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-04 12:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-04 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-04 15:00");
+
+        Assert.assertEquals(DateTimeUtils.max(max, medium, min), max);
+    }
+
+    @Test
+    public void should_pick_correct_max_different_days() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-06 13:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-07 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-08 13:00");
+
+        Assert.assertEquals(DateTimeUtils.max(min, medium, max), max);
+    }
+
+    @Test
+    public void should_pick_correct_max_two_same_dates() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-06 13:00");
+        OffsetDateTime max1 = offsetDateTimeOf("2018-03-08 13:00");
+        OffsetDateTime max2 = offsetDateTimeOf("2018-03-08 13:00");
+
+        Assert.assertEquals(DateTimeUtils.max(min, max1, max2), max2);
+    }
+
+    @Test
+    public void should_pick_correct_min_same_day() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-04 12:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-04 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-04 15:00");
+
+        Assert.assertEquals(DateTimeUtils.min(min, medium, max), min);
+    }
+
+    @Test
+    public void should_pick_correct_min_same_day_different_args_order() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-04 12:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-04 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-04 15:00");
+
+        Assert.assertEquals(DateTimeUtils.min(max, medium, min), min);
+    }
+
+    @Test
+    public void should_pick_correct_min_different_days() {
+        OffsetDateTime min = offsetDateTimeOf("2018-03-06 13:00");
+        OffsetDateTime medium = offsetDateTimeOf("2018-03-07 13:00");
+        OffsetDateTime max = offsetDateTimeOf("2018-03-08 13:00");
+
+        Assert.assertEquals(DateTimeUtils.min(min, medium, max), min);
+    }
+
+    @Test
+    public void should_pick_correct_min_two_same_dates() {
+        OffsetDateTime max = offsetDateTimeOf("2018-03-10 13:00");
+        OffsetDateTime min1 = offsetDateTimeOf("2018-03-08 13:00");
+        OffsetDateTime min2 = offsetDateTimeOf("2018-03-08 13:00");
+
+        Assert.assertEquals(DateTimeUtils.min(max, min2, min1), min2);
+    }
 }

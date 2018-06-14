@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.sandl.snlrules.rules.queries;
+package uk.gov.hmcts.reform.sandl.snlrules.rules.search;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 
-public class QueriesTests {
+public class SearchTests {
     private static final String rulesDefinition = "Search";
 
     private DroolsService droolsService;
