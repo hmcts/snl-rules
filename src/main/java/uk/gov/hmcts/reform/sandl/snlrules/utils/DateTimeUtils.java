@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.utils;
 
 import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -101,5 +102,15 @@ public final class DateTimeUtils {
     public static OffsetDateTime min(OffsetDateTime v1, OffsetDateTime v2, OffsetDateTime v3) {
         OffsetDateTime win1 =  v1.isAfter(v2) ? v2 : v1;
         return  v3.isAfter(win1) ? win1 : v3;
+    }
+
+    public static OffsetDateTime offsetDateTimeOf(String date) {
+        String dateFormat = "yyyy-MM-dd HH:mm";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+
+        LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
+
+
+        return OffsetDateTime.of(localDateTime, ZoneOffset.UTC);
     }
 }
