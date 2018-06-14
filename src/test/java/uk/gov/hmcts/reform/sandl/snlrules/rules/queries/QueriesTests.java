@@ -172,10 +172,10 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(newAvailability("1", "judge1", null,"2018-03-05 09:00", 3));
-        rules.insert(newAvailability("2", "judge1", null,"2018-04-10 09:00", 3));
-        rules.insert(newAvailability("12", null, "room1","2018-04-10 09:00", 3));
-        rules.insert(newAvailability("13", null, "room1","2018-04-10 09:00", 3));
+        rules.insert(newAvailability("1", "judge1", null,"2018-03-05 09:00", 3*60));
+        rules.insert(newAvailability("2", "judge1", null,"2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("12", null, "room1","2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("13", null, "room1","2018-04-10 09:00", 3*60));
 
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
         rules.insert(newSession("16", null, "room1","2018-04-10 11:00", 30, "FTRACK"));
@@ -210,10 +210,10 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3));
-        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3));
-        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3));
-        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3));
+        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3*60));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3*60));
 
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
@@ -250,8 +250,8 @@ public class QueriesTests {
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
 
-        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8));
-        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8*60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8*60));
 
         OffsetDateTime from = offsetDateTimeOf("2018-04-10 10:00");
         OffsetDateTime to = offsetDateTimeOf("2018-04-10 12:00");
@@ -276,7 +276,7 @@ public class QueriesTests {
     }
 
     private Availability newAvailability(String id, String judgeId, String roomId, String start, int minutes) {
-        return new Availability(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofHours(minutes));
+        return new Availability(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes));
     }
 
     private void printQueryResults(QueryResults results) {
