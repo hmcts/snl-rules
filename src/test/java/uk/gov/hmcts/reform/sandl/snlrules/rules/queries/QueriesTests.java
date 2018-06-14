@@ -18,10 +18,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +27,7 @@ import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDate
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 
 public class QueriesTests {
-    private static final String rulesDefinition = "Sessions";
+    private static final String rulesDefinition = "Search";
 
     private DroolsService droolsService;
     private KieSession rules;
@@ -203,7 +200,7 @@ public class QueriesTests {
         rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8 * 60));
         rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8 * 60));
 
-        OffsetDateTime from = offsetDateTimeOf("2018-04-10 09:00");
+        OffsetDateTime from = offsetDateTimeOf("2018-04-10 10:00");
         OffsetDateTime to = offsetDateTimeOf("2018-04-10 12:00");
         Duration dur = Duration.ofMinutes(30);
 
@@ -213,7 +210,7 @@ public class QueriesTests {
         rules.fireAllRules();
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
-            "judge1", "room1", dur, from, to);
+        "judge1", "room1", dur, from, to);
 
         printQueryResults(results);
 

@@ -130,6 +130,6 @@ query JudgeAndRoomAvailable(
            start <= $jb.end.minus($duration)
            )
 
-      $bookableStart : OffsetDateTime() from (DateTimeUtils.max($jb.start, $rb.start))
-      $bookableEnd : OffsetDateTime() from (DateTimeUtils.min($jb.end, $rb.end))
+      $bookableStart : OffsetDateTime() from (DateTimeUtils.max($start, $jb.start, $rb.start))
+      $bookableEnd : OffsetDateTime() from (DateTimeUtils.min($end, $jb.end, $rb.end))
 end
