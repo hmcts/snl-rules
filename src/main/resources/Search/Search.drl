@@ -29,7 +29,7 @@ when
       $a : Availability(judgeId == $judgeId)
       $s : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
       not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && start < $s.start)
+                  && start.isBefore($s.start))
 then
       insertLogical(new BookableJudge($judgeId, $a.getStart(), Duration.between($a.getStart(), $s.getStart())));
 end
@@ -40,7 +40,7 @@ when
       $a : Availability(judgeId == $judgeId)
       $s : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
       not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && end > $s.end)
+                  && end.isAfter($s.end))
 then
       insertLogical(new BookableJudge($judgeId, $s.getEnd(), Duration.between($s.getEnd(), $a.getEnd())));
 end
@@ -54,8 +54,8 @@ when
       $s2 : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
                      && start > $s1.end)
       not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && start > $s1.end
-                  && start < $s2.start)
+                  && start.isAfter($s1.end)
+                  && start.isBefore($s2.start))
 then
       insertLogical(new BookableJudge($judgeId, $s1.getEnd(), Duration.between($s1.getEnd(), $s2.getStart())));
 end
@@ -76,7 +76,7 @@ when
       $a : Availability(roomId == $roomId)
       $s : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
       not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && start < $s.start)
+                  && start.isBefore($s.start))
 then
       insertLogical(new BookableRoom($roomId, $a.getStart(), Duration.between($a.getStart(), $s.getStart())));
 end
@@ -87,7 +87,7 @@ when
       $a : Availability(roomId == $roomId)
       $s : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
       not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && end > $s.end)
+                  && end.isAfter($s.end))
 then
       insertLogical(new BookableRoom($roomId, $s.getEnd(), Duration.between($s.getEnd(), $a.getEnd())));
 end
@@ -101,8 +101,8 @@ when
       $s2 : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
                      && start > $s1.end)
       not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
-                  && start > $s1.end
-                  && start < $s2.start)
+                  && start.isAfter($s1.end)
+                  && start.isBefore($s2.start))
 then
       insertLogical(new BookableRoom($roomId, $s1.getEnd(), Duration.between($s1.getEnd(), $s2.getStart())));
 end
@@ -117,17 +117,17 @@ query JudgeAndRoomAvailable(
       )
 
       $jb : BookableJudge(
-           judgeId == $judgeId,
+           judgeId == $judgeId || $judgeId == null,
            duration >= $duration,
-           start <= $end.minus($duration),
-           end >= $start.plus($duration))
+           $end.minus($duration).isAfter(start), //start <= $end - $duration
+           $start.plus($duration).isBefore(end)) //end >= $start + $duration
       $rb : BookableRoom(
-           roomId == $roomId,
+           roomId == $roomId || $roomId == null,
            duration >= $duration,
-           start <= $end.minus($duration),
-           end >= $start.plus($duration),
-           end >= $jb.start.plus($duration),
-           start <= $jb.end.minus($duration)
+           $end.minus($duration).isAfter(start), //start <= $end - $duration
+           $start.plus($duration).isBefore(end), //end >= $start + $duration
+           $jb.start.plus($duration).isBefore(end), //end >= $jb.start + $duration
+           $jb.end.minus($duration).isAfter(start) //start <= $jb.end - $duration
            )
 
       $bookableStart : OffsetDateTime() from (DateTimeUtils.max($start, $jb.start, $rb.start))
