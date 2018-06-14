@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.kie.api.definition.type.Position;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.io.Serializable;

@@ -81,7 +81,8 @@ public final class RulesTestHelper {
         }
     }
 
-    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults, OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
+    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults,
+                                     OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
         if (expectedResults.containsKey(bookableStart)) {
             Assert.assertEquals(bookableEnd, expectedResults.get(bookableStart));
         } else {

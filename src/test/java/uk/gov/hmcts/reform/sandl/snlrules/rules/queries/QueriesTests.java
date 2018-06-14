@@ -172,10 +172,10 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(newAvailability("1", "judge1", null,"2018-03-05 09:00", 3*60));
-        rules.insert(newAvailability("2", "judge1", null,"2018-04-10 09:00", 3*60));
-        rules.insert(newAvailability("12", null, "room1","2018-04-10 09:00", 3*60));
-        rules.insert(newAvailability("13", null, "room1","2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("1", "judge1", null,"2018-03-05 09:00", 3 * 60));
+        rules.insert(newAvailability("2", "judge1", null,"2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("12", null, "room1","2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("13", null, "room1","2018-04-10 09:00", 3 * 60));
 
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
         rules.insert(newSession("16", null, "room1","2018-04-10 11:00", 30, "FTRACK"));
@@ -189,13 +189,14 @@ public class QueriesTests {
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
             "judge1", "room1", dur, from, to);
 
+        printQueryResults(results);
+
         Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
         add(expected, "2018-04-10 09:00", "2018-04-10 10:00");
         add(expected, "2018-04-10 10:15", "2018-04-10 11:00");
         add(expected, "2018-04-10 11:30", "2018-04-10 11:42");
         add(expected, "2018-04-10 11:52", "2018-04-10 12:00");
 
-        printQueryResults(results);
 
         assertResults(expected, results);
         assertThat(results.size()).isEqualTo(4);
@@ -210,10 +211,10 @@ public class QueriesTests {
         rules.insert(new Room("room2", "Room B"));
         rules.insert(new Judge("judge2", "John Doe"));
 
-        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3*60));
-        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3*60));
-        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3*60));
-        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3*60));
+        rules.insert(newAvailability("1", "judge1", null, "2018-05-03 09:00", 3 * 60));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 3 * 60));
+        rules.insert(newAvailability("13", null, "room1", "2018-04-10 09:00", 3 * 60));
 
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
         rules.insert(newSession("15", null, "room1","2018-04-10 10:00", 15, "FTRACK"));
@@ -222,23 +223,21 @@ public class QueriesTests {
 
         rules.insert(newSession("37", "judge1", null,"2018-04-10 11:39", 16, "FTRACK"));
 
+        rules.fireAllRules();
+
         OffsetDateTime from = offsetDateTimeOf("2018-04-09 09:00");
         OffsetDateTime to = offsetDateTimeOf("2018-04-11 09:00");
-
         Duration dur = Duration.ofMinutes(4);
+        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
+            "judge1", "room1", dur, from, to);
+
+        printQueryResults(results);
 
         Map<OffsetDateTime, OffsetDateTime> expected = new HashMap<>();
         add(expected, "2018-04-10 10:15", "2018-04-10 11:00");
         add(expected, "2018-04-10 11:30", "2018-04-10 11:39");
         add(expected, "2018-04-10 09:00", "2018-04-10 10:00");
         add(expected, "2018-04-10 11:55", "2018-04-10 12:00");
-
-        rules.fireAllRules();
-
-        QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
-            "judge1", "room1", dur, from, to);
-
-        printQueryResults(results);
 
         assertResults(expected, results);
         assertThat(results.size()).isEqualTo(4);
@@ -250,10 +249,10 @@ public class QueriesTests {
         rules.insert(new Room("room1", "Room A"));
         rules.insert(new Judge("judge1", "John Harris"));
 
-        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8*60));
-        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8*60));
+        rules.insert(newAvailability("2", "judge1", null, "2018-04-10 09:00", 8 * 60));
+        rules.insert(newAvailability("12", null, "room1", "2018-04-10 09:00", 8 * 60));
 
-        OffsetDateTime from = offsetDateTimeOf("2018-04-10 10:00");
+        OffsetDateTime from = offsetDateTimeOf("2018-04-10 09:00");
         OffsetDateTime to = offsetDateTimeOf("2018-04-10 12:00");
         Duration dur = Duration.ofMinutes(30);
 
@@ -290,7 +289,8 @@ public class QueriesTests {
             System.out.println(bj.toString());
             BookableRoom rb = (BookableRoom) row.get("$rb");
             System.out.println(rb.toString());
-            System.out.println("Possible space for session: " + bookableStart + " - " + bookableEnd + " - " + Duration.between(bookableStart, bookableEnd));
+            System.out.println("Possible space for session: " + bookableStart + " - " + bookableEnd
+                + " - " + Duration.between(bookableStart, bookableEnd));
             System.out.println("===========");
         }
     }

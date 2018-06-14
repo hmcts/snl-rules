@@ -212,7 +212,7 @@ query JudgeAndRoomAvailable(
            judgeId == $judgeId,
            duration >= $duration,
            start <= $end.minus($duration),
-           end >= $start.plus(duration))
+           end >= $start.plus($duration))
       $rb : BookableRoom(
            roomId == $roomId,
            duration >= $duration,
