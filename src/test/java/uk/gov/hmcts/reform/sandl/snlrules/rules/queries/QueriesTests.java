@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules.queries;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.runtime.ClassObjectFilter;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 
@@ -79,15 +81,25 @@ public class QueriesTests {
 
         QueryResults results = rules.getQueryResults("all bookable judges", from, to);
 
+        assertThat(results.size()).isEqualTo(5);
+
+        Map<OffsetDateTime, Duration> expectedResults = new HashMap<>();
+        expectedResults.put(offsetDateTimeOf("2018-03-05 09:00"), Duration.ofHours(3));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 09:00"), Duration.ofHours(1));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 11:52"), Duration.ofMinutes(8));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 11:30"), Duration.ofMinutes(12));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 10:15"), Duration.ofMinutes(45));
+
         for (QueryResultsRow row : results) {
             BookableJudge session = (BookableJudge) row.get("$bookableJudge");
             System.out.println(session.toString());
+
+            if (expectedResults.containsKey(session.getStart())) {
+                Assert.assertEquals(session.getDuration(), expectedResults.get(session.getStart()));
+            } else {
+                fail("invalid results");
+            }
         }
-//        start=2018-03-05T09:00Z, duration=PT3H)
-//        start=2018-04-10T09:00Z, duration=PT1H)
-//        start=2018-04-10T11:52Z, duration=PT8M)
-//        start=2018-04-10T11:30Z, duration=PT12M)
-//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
@@ -131,15 +143,25 @@ public class QueriesTests {
 
         QueryResults results = rules.getQueryResults("all bookable rooms", from, to);
 
+        assertThat(results.size()).isEqualTo(5);
+
+        Map<OffsetDateTime, Duration> expectedResults = new HashMap<>();
+        expectedResults.put(offsetDateTimeOf("2018-03-05 09:00"), Duration.ofHours(3));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 09:00"), Duration.ofHours(1));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 11:52"), Duration.ofMinutes(8));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 11:30"), Duration.ofMinutes(12));
+        expectedResults.put(offsetDateTimeOf("2018-04-10 10:15"), Duration.ofMinutes(45));
+
         for (QueryResultsRow row : results) {
             BookableRoom session = (BookableRoom) row.get("$bookableRoom");
             System.out.println(session.toString());
+
+            if (expectedResults.containsKey(session.getStart())) {
+                Assert.assertEquals(session.getDuration(), expectedResults.get(session.getStart()));
+            } else {
+                fail("invalid results");
+            }
         }
-//        start=2018-03-05T09:00Z, duration=PT3H)
-//        start=2018-04-10T09:00Z, duration=PT1H)
-//        start=2018-04-10T11:52Z, duration=PT8M)
-//        start=2018-04-10T11:30Z, duration=PT12M)
-//        start=2018-04-10T10:15Z, duration=PT45M)
     }
 
     @Test
