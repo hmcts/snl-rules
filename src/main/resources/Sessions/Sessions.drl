@@ -189,16 +189,6 @@ then
       insertLogical(new BookableRoom($roomId, $s1.getEnd(), Duration.between($s1.getEnd(), $s2.getStart())));
 end
 
-/* queries*/
-
-query "all bookable judges" (OffsetDateTime from, OffsetDateTime to)
-  $bookableJudge: BookableJudge()
-end
-
-query "all bookable rooms" (OffsetDateTime from, OffsetDateTime to)
-  $bookableRoom: BookableRoom()
-end
-
 /* search */
 query JudgeAndRoomAvailable(
       String $judgeId,              // can be null
