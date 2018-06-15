@@ -49,7 +49,7 @@ public class SearchController {
         QueryResults queryResults = session.getQueryResults("JudgeAndRoomAvailable",
             judgeId, roomId, duration, from, to);
 
-        List<SessionProposition> sessionPropositionList = StreamSupport.stream(queryResults.spliterator(), false)
+        return StreamSupport.stream(queryResults.spliterator(), false)
             .sorted((row1, row2) -> {
                 OffsetDateTime bookableStart1 = (OffsetDateTime) row1.get("$bookableStart");
                 OffsetDateTime bookableStart2 = (OffsetDateTime) row2.get("$bookableStart");
@@ -65,8 +65,5 @@ public class SearchController {
                 return new SessionProposition(bj.getJudgeId(), rb.getRoomId(), bookableStart, bookableEnd);
             })
             .collect(Collectors.toList());
-
-
-        return sessionPropositionList;
     }
 }

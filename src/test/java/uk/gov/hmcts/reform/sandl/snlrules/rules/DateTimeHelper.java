@@ -5,7 +5,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
-public class DateTimeHelper {
+public final class DateTimeHelper {
     private DateTimeHelper() {
     }
 

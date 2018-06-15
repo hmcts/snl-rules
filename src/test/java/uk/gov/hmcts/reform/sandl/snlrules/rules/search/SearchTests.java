@@ -29,12 +29,11 @@ import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
 public class SearchTests {
     private static final String rulesDefinition = "Search";
 
-    private DroolsService droolsService;
     private KieSession rules;
 
     @Before
     public void setup() {
-        droolsService = new DroolsService(rulesDefinition);
+        DroolsService droolsService = new DroolsService(rulesDefinition);
         droolsService.init();
 
         rules = droolsService.getRulesSession();
