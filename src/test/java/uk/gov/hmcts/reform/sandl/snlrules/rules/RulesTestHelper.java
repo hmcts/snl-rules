@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.offsetDateTimeOf;
 
 public final class RulesTestHelper {
     private RulesTestHelper() {

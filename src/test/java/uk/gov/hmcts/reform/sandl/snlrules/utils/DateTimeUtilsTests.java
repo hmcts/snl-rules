@@ -9,7 +9,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.offsetDateTimeOf;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DateTimeUtilsTests {

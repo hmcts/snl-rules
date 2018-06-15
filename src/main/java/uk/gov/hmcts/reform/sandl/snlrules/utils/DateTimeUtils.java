@@ -71,13 +71,6 @@ public final class DateTimeUtils {
         return dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
-    public static boolean sameDay(OffsetDateTime one, OffsetDateTime two) {
-        OffsetDateTime startTruncated = one.truncatedTo(ChronoUnit.DAYS);
-        OffsetDateTime toCompareStartTruncated = two.truncatedTo(ChronoUnit.DAYS);
-
-        return !startTruncated.isAfter(toCompareStartTruncated) && !startTruncated.isBefore(toCompareStartTruncated);
-    }
-
     public static boolean contains(OffsetDateTime biggerStart, OffsetDateTime biggerEnd,
                                    OffsetDateTime smallerOrEqualStart, OffsetDateTime smallerOrEqualEnd) {
 
@@ -101,7 +94,6 @@ public final class DateTimeUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
 
         LocalDateTime localDateTime = LocalDateTime.parse(date, formatter);
-
 
         return OffsetDateTime.of(localDateTime, ZoneOffset.UTC);
     }

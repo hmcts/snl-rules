@@ -10,7 +10,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
@@ -43,12 +42,5 @@ public class Availability extends Fact {
     public String toDescription() {
         return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
             .replace("null", "N/A");
-    }
-
-    public boolean sameDay(Availability availability) {
-        OffsetDateTime startTruncated = this.start.truncatedTo(ChronoUnit.DAYS);
-        OffsetDateTime toCompareStartTruncated = availability.start.truncatedTo(ChronoUnit.DAYS);
-
-        return !startTruncated.isAfter(toCompareStartTruncated) && !startTruncated.isBefore(toCompareStartTruncated);
     }
 }

@@ -23,8 +23,8 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static uk.gov.hmcts.reform.sandl.snlrules.rules.DateTimeHelper.offsetDateTimeOf;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.add;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.offsetDateTimeOf;
 
 public class SearchTests {
     private static final String rulesDefinition = "Search";
@@ -209,7 +209,7 @@ public class SearchTests {
         rules.fireAllRules();
 
         QueryResults results = rules.getQueryResults("JudgeAndRoomAvailable",
-            "judge1", "room1", dur, from, to);
+                "judge1", "room1", dur, from, to);
 
         printQueryResults(results);
 
