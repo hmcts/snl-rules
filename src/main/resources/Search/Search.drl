@@ -1,0 +1,134 @@
+package uk.gov.hmcts.reform.sandl.snlrules.rules
+
+import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
+import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
+
+import java.time.Duration;
+import java.time.OffsetDateTime;
+
+
+/* judge bookable */
+
+rule "Judge without sessions is always bookable"
+when
+      $j : Judge($judgeId: id)
+      $a : Availability(judgeId == $judgeId)
+      not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
+then
+    insertLogical(new BookableJudge($j.getId(), $a.getStart(), $a.getDuration()));
+end
+
+rule "Judge is bookable before first session"
+when
+      $j : Judge($judgeId: id)
+      $a : Availability(judgeId == $judgeId)
+      $s : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && start.isBefore($s.start))
+then
+      insertLogical(new BookableJudge($judgeId, $a.getStart(), Duration.between($a.getStart(), $s.getStart())));
+end
+
+rule "Judge is bookable after last session"
+when
+      $j : Judge($judgeId: id)
+      $a : Availability(judgeId == $judgeId)
+      $s : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && end.isAfter($s.end))
+then
+      insertLogical(new BookableJudge($judgeId, $s.getEnd(), Duration.between($s.getEnd(), $a.getEnd())));
+end
+
+
+rule "Judge is bookable between sessions"
+when
+      $j : Judge($judgeId: id)
+      $a : Availability(judgeId == $judgeId)
+      $s1 : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      $s2 : Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                     && start > $s1.end)
+      not Session(judgeId == $judgeId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && start.isAfter($s1.end)
+                  && start.isBefore($s2.start))
+then
+      insertLogical(new BookableJudge($judgeId, $s1.getEnd(), Duration.between($s1.getEnd(), $s2.getStart())));
+end
+
+/* Room bookable*/
+rule "Room without sessions is always bookable"
+when
+      $j : Room($roomId: id)
+      $a : Availability(roomId == $roomId)
+      not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
+then
+    insertLogical(new BookableRoom($j.getId(), $a.getStart(), $a.getDuration()));
+end
+
+rule "Room is bookable before first session"
+when
+      $j : Room($roomId: id)
+      $a : Availability(roomId == $roomId)
+      $s : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && start.isBefore($s.start))
+then
+      insertLogical(new BookableRoom($roomId, $a.getStart(), Duration.between($a.getStart(), $s.getStart())));
+end
+
+rule "Room is bookable after last session"
+when
+      $j : Room($roomId: id)
+      $a : Availability(roomId == $roomId)
+      $s : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && end.isAfter($s.end))
+then
+      insertLogical(new BookableRoom($roomId, $s.getEnd(), Duration.between($s.getEnd(), $a.getEnd())));
+end
+
+
+rule "Room is bookable between sessions"
+when
+      $j : Room($roomId: id)
+      $a : Availability(roomId == $roomId)
+      $s1 : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end))
+      $s2 : Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                     && start > $s1.end)
+      not Session(roomId == $roomId && DateTimeUtils.contains($a.start, $a.end, start, end)
+                  && start.isAfter($s1.end)
+                  && start.isBefore($s2.start))
+then
+      insertLogical(new BookableRoom($roomId, $s1.getEnd(), Duration.between($s1.getEnd(), $s2.getStart())));
+end
+
+/* search */
+query JudgeAndRoomAvailable(
+      String $judgeId,              // can be null
+      String $roomId,               // can be null
+      Duration $duration,           // mandatory
+      OffsetDateTime $start,        // mandatory
+      OffsetDateTime $end           // mandatory
+      )
+
+      $jb : BookableJudge(
+           judgeId == $judgeId || $judgeId == null,
+           DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
+           DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)) //end >= $start + $duration
+           )
+      $rb : BookableRoom(
+           roomId == $roomId || $roomId == null,
+           DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
+           DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)), //end >= $start + $duration
+           DateTimeUtils.isGreaterOrEquals(end, $jb.start.plus($duration)), //end >= $jb.start + $duration
+           DateTimeUtils.isLessOrEquals(start, $jb.end.minus($duration)) //start <= $jb.end - $duration
+           )
+
+      $bookableStart : OffsetDateTime() from (DateTimeUtils.max($start, $jb.start, $rb.start))
+      $bookableEnd : OffsetDateTime() from (DateTimeUtils.min($end, $jb.end, $rb.end))
+end

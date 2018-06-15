@@ -6,29 +6,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
+import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.Duration;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Problem extends Fact {
+public class BookableRoom extends Fact {
     private String id;
-    private String message;
-    private ProblemTypes type;
-    private ProblemSeverities severity;
-    private List<ProblemReference> references = new ArrayList<>();
+    private String roomId;
+    private OffsetDateTime start;
+    private Duration duration;
 
-    public Problem(ProblemTypes type, ProblemSeverities severity, String message, ProblemReference... references) {
-        this.type = type;
-        this.severity = severity;
-        this.references.addAll(Arrays.asList(references));
+    public BookableRoom(String roomId, OffsetDateTime start, Duration duration) {
+        this.roomId = roomId;
+        this.start = start;
+        this.duration = duration;
         this.id = DigestUtils.md5Hex(this.toString());
-        this.message = message;
+    }
+
+    public OffsetDateTime getEnd() {
+        return start.plus(duration);
     }
 
     @Override public boolean equals(Object o) { //NOPMD
@@ -42,7 +44,7 @@ public class Problem extends Fact {
 
     @Override
     public String toDescription() {
-        return ("Message: " + message + ", type: " + type + ", severity: " + severity)
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
             .replace("null", "N/A");
     }
 }

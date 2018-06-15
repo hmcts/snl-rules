@@ -25,6 +25,11 @@ public class Session extends Fact implements Serializable {
     private Duration duration;
     private String caseType;
 
+    public Session(OffsetDateTime start, Duration duration) {
+        this.start = start;
+        this.duration = duration;
+    }
+
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }

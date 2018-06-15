@@ -6,6 +6,9 @@
   <kbase name="ListingsKB" packages="Listings" equalsBehavior="equality">
     <ksession name="Listings" type="stateful"/>
   </kbase>
+  <kbase name="SearchKB" packages="Search" equalsBehavior="equality">
+    <ksession name="Search" type="stateful"/>
+  </kbase>
   <kbase name="SampleFailingKB" packages="SampleFailing" equalsBehavior="equality">
     <ksession name="SampleFailingKS" type="stateful"/>
   </kbase>

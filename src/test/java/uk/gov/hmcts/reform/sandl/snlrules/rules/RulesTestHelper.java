@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules;
 
+import org.junit.Assert;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
@@ -10,10 +11,14 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
+import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.offsetDateTimeOf;
 
 public final class RulesTestHelper {
     private RulesTestHelper() {
@@ -74,5 +79,18 @@ public final class RulesTestHelper {
         } else {
             rules.update(factHandle, d);
         }
+    }
+
+    public static void assertResults(Map<OffsetDateTime, OffsetDateTime> expectedResults,
+                                     OffsetDateTime bookableStart, OffsetDateTime bookableEnd) {
+        if (expectedResults.containsKey(bookableStart)) {
+            Assert.assertEquals(expectedResults.get(bookableStart), bookableEnd);
+        } else {
+            fail("invalid results");
+        }
+    }
+
+    public static void add(Map<OffsetDateTime, OffsetDateTime> expectedResults, String start, String end) {
+        expectedResults.put(offsetDateTimeOf(start), offsetDateTimeOf(end));
     }
 }
