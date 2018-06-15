@@ -32,7 +32,7 @@ public class SearchController {
     public ResponseEntity<List<SessionProposition>> searchPossibleSessions(
         @RequestParam(value = "from") String from,
         @RequestParam(value = "to") String to,
-        @RequestParam(value = "duration") int duration,
+        @RequestParam(value = "durationInSeconds") int duration,
         @RequestParam(value = "judge", required = false) String judgeId,
         @RequestParam(value = "room", required = false) String roomId) {
         DroolsService droolsService = droolsServiceFactory.getInstance("Search");
