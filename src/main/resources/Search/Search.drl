@@ -118,13 +118,11 @@ query JudgeAndRoomAvailable(
 
       $jb : BookableJudge(
            judgeId == $judgeId || $judgeId == null,
-           duration >= $duration,
            DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
            DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)) //end >= $start + $duration
            )
       $rb : BookableRoom(
            roomId == $roomId || $roomId == null,
-           duration >= $duration,
            DateTimeUtils.isLessOrEquals(start, $end.minus($duration)), //start <= $end - $duration
            DateTimeUtils.isGreaterOrEquals(end, $start.plus($duration)), //end >= $start + $duration
            DateTimeUtils.isGreaterOrEquals(end, $jb.start.plus($duration)), //end >= $jb.start + $duration
