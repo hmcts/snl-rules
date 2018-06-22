@@ -48,7 +48,7 @@ public class Session extends Fact implements Serializable {
     }
 
     @Override public String toDescription() {
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", Case type: " + caseType)
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", Duration " + duration + ", Case type: " + caseType)
             .replace("null", "N/A");
     }
 }

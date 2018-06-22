@@ -24,7 +24,7 @@ rule "Session Time For the Judge not Available"
     when
         $s : Session(judgeId != null)
         $j : Judge(id == $s.judgeId)
-        not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
+        not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.getEnd().compareTo(getEnd()) <= 0))
     then
         insertLogical(new Problem(ProblemTypes.Resource_missing,
                                   ProblemSeverities.Warn,
