@@ -28,15 +28,15 @@ public final class DateTimeUtils {
     }
 
     public static boolean between(OffsetDateTime dateTimeToCheck, OffsetDateTime start, OffsetDateTime end) {
-        dateTimeToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
-        start = start.truncatedTo(ChronoUnit.DAYS);
-        end = end.truncatedTo(ChronoUnit.DAYS);
+        OffsetDateTime daysStart = start.truncatedTo(ChronoUnit.DAYS);
+        OffsetDateTime daysEnd = end.truncatedTo(ChronoUnit.DAYS);
 
-        if (start.isAfter(end)) {
+        if (daysStart.isAfter(daysEnd)) {
             throw new DateComparisonException("Start date cannot be after the end date.");
         }
 
-        return !start.isAfter(dateTimeToCheck) && !end.isBefore(dateTimeToCheck);
+        OffsetDateTime daysToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
+        return !daysStart.isAfter(daysToCheck) && !daysEnd.isBefore(daysToCheck);
     }
 
     public static boolean olderThan(OffsetDateTime dateTimeToCheck,
