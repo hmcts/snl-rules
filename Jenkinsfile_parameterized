@@ -19,9 +19,8 @@ productName = params.PRODUCT
 subscription = params.SUBSCRIPTION
 environment = params.ENVIRONMENT
 planOnly = params.PLAN_ONLY
-vaultName = "snlvault" + environment.replace("snl-","")
 
-echo "vaultName: '${vaultName}'"
+echo "vaultName: 'infra-vault-nonprod'"
 
 echo "Building '${productName}' in '${environment}'"
 
@@ -37,8 +36,6 @@ node {
 
   withSubscription(subscription) {
     env.TF_VAR_product_name = params.PRODUCT
-    env.TF_VAR_jumpbox_username = az "keyvault secret show --vault-name '${vaultName}' --name rulesengine-username --query value -o tsv"
-    env.TF_VAR_jumpbox_password = az "keyvault secret show --vault-name '${vaultName}' --name rulesengine-password --query value -o tsv"
     
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
     env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
