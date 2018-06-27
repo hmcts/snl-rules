@@ -17,7 +17,6 @@ variable "secret_access_key" {}
 #  type = "map"
 #}
 
-variable "ssh_authorized_key" {}
 
 variable "env" {}
 variable "product" {}
