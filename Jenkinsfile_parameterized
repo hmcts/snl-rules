@@ -50,3 +50,4 @@ node {
       spinInfra(productName, environment, planOnly, subscription)
     }
 }
+}
