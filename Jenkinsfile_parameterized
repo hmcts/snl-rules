@@ -44,8 +44,9 @@ node {
  
     stage("spinInfra") {
       env.TF_VAR_netnum = findFreeSubnet(params.SUBSCRIPTION, params.ENVIRONMENT)[1]
-
+dir(Infrastructure) {
       spinInfra(productName, environment, planOnly, subscription)
     }
+}
 }
 }
