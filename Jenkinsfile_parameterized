@@ -19,6 +19,7 @@ productName = params.PRODUCT
 subscription = params.SUBSCRIPTION
 environment = params.ENVIRONMENT
 planOnly = params.PLAN_ONLY
+vaultName = "infra-vault-nonprod"
 
 echo "vaultName: 'infra-vault-nonprod'"
 
