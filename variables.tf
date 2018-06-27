@@ -18,3 +18,9 @@ variable "secret_access_key" {}
 #}
 
 variable "ssh_authorized_key" {}
+
+variable "env" {}
+variable "product" {}
+variable "product_name" {}
+
+variable "jenkins_AAD_objectId" {}
