@@ -23,7 +23,6 @@ resource "random_string" "username" {
 resource "random_string" "password" {
   length = 16
   special = true
-  override_special = "/@\"
 }
 
 resource "azurerm_key_vault_secret" "rulesengine_username" {
