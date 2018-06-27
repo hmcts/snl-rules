@@ -1,4 +1,6 @@
 #!groovy
+import groovy.json.JsonSlurper
+
 @Library("Infrastructure") _
 
 properties([
@@ -7,10 +9,44 @@ properties([
     string(name: 'APP', defaultValue: 'rules', description: ''),
     string(name: 'TYPE', defaultValue: 'java', description: ''),
     string(name: 'ENVIRONMENT', defaultValue: 'saat', description: 'Environment where code should be build and deployed'),
-    choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod', description: 'Azure subscriptions available to build in')
+    choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod', description: 'Azure subscriptions available to build in'),
+	booleanParam(name: 'PLAN_ONLY', defaultValue: false, description: 'set to true for skipping terraform apply')
   ])
 ])
 
-withParameterizedPipeline(params.TYPE, params.PRODUCT_NAME, params.APP, params.ENVIRONMENT, params.SUBSCRIPTION) {
 
+productName = params.PRODUCT
+subscription = params.SUBSCRIPTION
+environment = params.ENVIRONMENT
+planOnly = params.PLAN_ONLY
+vaultName = "snlvault" + environment.replace("snl-","")
+
+echo "vaultName: '${vaultName}'"
+
+echo "Building '${productName}' in '${environment}'"
+
+
+node {
+  env.PATH = "$env.PATH:/usr/local/bin"
+  def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
+
+
+    stage("checkout") {
+      stageCheckout('git@github.com:hmcts/snl-rules.git')
+    }
+
+  withSubscription(subscription) {
+    env.TF_VAR_product_name = params.PRODUCT
+    env.TF_VAR_jumpbox_username = az "keyvault secret show --vault-name '${vaultName}' --name rulesengine-username --query value -o tsv"
+    env.TF_VAR_jumpbox_password = az "keyvault secret show --vault-name '${vaultName}' --name rulesengine-password --query value -o tsv"
+    
+    env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
+    env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
+    env.TF_VAR_FR_vaultname = "${vaultName}"
+ 
+    stage("spinInfra") {
+      env.TF_VAR_netnum = findFreeSubnet(params.SUBSCRIPTION, params.ENVIRONMENT)[1]
+
+      spinInfra(productName, environment, planOnly, subscription)
+    }
 }
