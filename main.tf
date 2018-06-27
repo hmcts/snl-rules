@@ -26,13 +26,13 @@ resource "random_string" "password" {
 }
 
 resource "azurerm_key_vault_secret" "rulesengine_username" {
-  name      = "rulesengine_username"
+  name      = "rulesengine-username"
   value     = "${random_string.username.result}"
   vault_uri = "${module.snl-key-vault.key_vault_uri}"
 }
 
 resource "azurerm_key_vault_secret" "rulesengine_password" {
-  name      = "rulesengine_password"
+  name      = "rulesengine-password"
   value     = "${random_string.password.result}"
   vault_uri = "${module.snl-key-vault.key_vault_uri}"
 }
