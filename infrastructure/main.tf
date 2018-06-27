@@ -10,6 +10,7 @@ module "snl-rules" {
   is_frontend          = false
   subscription         = "${var.subscription}"
   additional_host_name = "${var.external_host_name}"
+  capacity             = "1"
 
   app_settings = {
     # REDIS_HOST                   = "${module.redis-cache.host_name}"
