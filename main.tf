@@ -78,7 +78,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
   os_profile {
     computer_name  = "${var.env}-rulesengine1"
     admin_username = "${random_string.username.result}"
-    admin_password = "${random_string.username.password}"
+    admin_password = "${random_string.username.result}"
 //    admin_password = "xohpheetahl2aeXa"
   }
 
