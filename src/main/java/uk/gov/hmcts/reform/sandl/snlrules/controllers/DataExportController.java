@@ -38,6 +38,13 @@ public class DataExportController {
         return ok(toPlainHtml(droolsService));
     }
 
+    @RequestMapping(value = "/exportcounts")
+    public ResponseEntity<String> counts(
+        @RequestParam(value = "rulesDefinition", required = false) String rulesDefinition) {
+        DroolsService droolsService = droolsServiceFactory.getInstance(rulesDefinition);
+        return ok(toCountsPlainHtml(droolsService));
+    }
+
     private String toPlainHtml(DroolsService droolsService) {
         StringBuilder builder = new StringBuilder();
 
@@ -64,5 +71,30 @@ public class DataExportController {
         for (Object obj : objs) {
             builder.append("<br>     " + obj.toString());
         }
+    }
+
+    private String toCountsPlainHtml(DroolsService droolsService) {
+        StringBuilder builder = new StringBuilder();
+
+        countFacts(builder, droolsService, Problem.class, "PROBLEM");
+        countFacts(builder, droolsService, Room.class, "ROOM");
+        countFacts(builder, droolsService, Availability.class, "AVAILABILITY");
+        countFacts(builder, droolsService, Judge.class, "JUDGE");
+        countFacts(builder, droolsService, Session.class, "SESSION");
+        countFacts(builder, droolsService, HearingPart.class, "HEARING PART");
+        countFacts(builder, droolsService, BookableJudge.class, "BOOKABLE JUDGE");
+        countFacts(builder, droolsService, BookableRoom.class, "BOOKABLE ROOM");
+        countFacts(builder, droolsService, Year.class, "YEAR");
+        countFacts(builder, droolsService, Month.class, "MONTH");
+        countFacts(builder, droolsService, Day.class, "DAY");
+        countFacts(builder, droolsService, Hour.class, "HOUR");
+        countFacts(builder, droolsService, Minute.class, "MINUTE");
+
+        return builder.toString();
+    }
+
+    private void countFacts(StringBuilder builder, DroolsService droolsService, Class filter, String name) {
+        Collection<? extends Object> objs = droolsService.getRulesSession().getObjects(new ClassObjectFilter(filter));
+        builder.append(objs.size() + " " + name + "<br>");
     }
 }
