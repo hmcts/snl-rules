@@ -20,3 +20,6 @@ variable "product" {}
 variable "product_name" {}
 
 variable "jenkins_AAD_objectId" {}
+
+variable "name" {}
+variable "resource_group" {}
