@@ -6,6 +6,6 @@ module "vnet" {
   source_range          = "${cidrsubnet("${var.root_address_space}", 6, "${var.netnum}")}"
   env                   = "${replace(var.env, "-packer", "" )}"
   lb_private_ip_address = "${cidrhost(cidrsubnet(cidrsubnet("${var.root_address_space}", 6, "${var.netnum}"),6,1),-2)}"
-  subnet_count          = "16"
+  subnet_count          = "1"
   subnet_prefix_length  = "6"
 }
