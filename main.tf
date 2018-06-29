@@ -10,7 +10,9 @@ resource "random_string" "username" {
 
 resource "random_string" "password" {
   length = 16
-  special = true
+  special = false
+  min_lower = 2
+  min_numeric = 2
 }
 
 resource "azurerm_network_interface" "rulesengine-nic1" {
