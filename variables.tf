@@ -2,9 +2,6 @@ variable "location" {
   default = "UK South"
 }
 
-variable "netnum" {}
-variable "root_address_space" {}
-
 variable "tenant_id" {}
 variable "subscription_id" {}
 variable "client_id" {}

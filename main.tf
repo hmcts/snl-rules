@@ -18,12 +18,12 @@ resource "random_string" "password" {
 resource "azurerm_network_interface" "rulesengine-nic1" {
   name                      = "rulesengine-nic1"
   location                  = "${var.location}"
-  resource_group_name       = "${module.vnet.resourcegroup_name}"
+  resource_group_name       = "core-infra-snl"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "${module.vnet.subnet_ids[15]}"
+    subnet_id                     = "resource/subscriptions/bf308a5c-0624-4334-8ff8-8dca9fd43783/resourceGroups/core-infra-snl/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snl-rules/subnets/core-infra-subnet-0-snl"
     private_ip_address_allocation = "dynamic"
   }
 
@@ -35,7 +35,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 resource "azurerm_virtual_machine" "rulesengine-vm1" {
   name                  = "${var.env}-rulesengine1"
   location              = "${var.location}"
-  resource_group_name   = "${module.vnet.resourcegroup_name}"
+  resource_group_name   = "core-infra-snl"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
   vm_size               = "Standard_DS1_v2"
 
@@ -72,5 +72,5 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.product_name}-${var.env}-rulesengine1-nsg"
   location            = "${var.location}"
-  resource_group_name = "${module.vnet.resourcegroup_name}"
+  resource_group_name = "core-infra-snl"
 }
