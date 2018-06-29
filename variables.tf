@@ -15,8 +15,8 @@ variable "secret_access_key" {}
 #}
 
 
-variable "env" {}
-variable "product" {}
+variable "name" {}
+variable "resource_group" {}
 variable "product_name" {}
 
 variable "jenkins_AAD_objectId" {}
