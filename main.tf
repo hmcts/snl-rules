@@ -22,7 +22,7 @@ resource "random_string" "username" {
 
 resource "random_string" "password" {
   length = 16
-  special = false
+  special = true
 }
 
 resource "azurerm_key_vault_secret" "rulesengine_username" {
