@@ -3,18 +3,6 @@ locals {
   vaultName              = "${var.product}-rules-engine"
 }
 
-module "snl-key-vault" {
-  source              = "git@github.com:hmcts/moj-module-key-vault?ref=master"
-  name                = "${local.vaultName}"
-  product             = "${var.product}"
-  env                 = "${var.env}"
-  tenant_id           = "${var.tenant_id}"
-  object_id           = "${var.jenkins_AAD_objectId}"
-  resource_group_name = "${module.vnet.resourcegroup_name}"
-  # dcd_cc-dev group object ID
-  product_group_object_id = "38f9dea6-e861-4a50-9e73-21e64f563537"
-}
-
 resource "random_string" "username" {
   length = 16
   special = false
@@ -23,18 +11,6 @@ resource "random_string" "username" {
 resource "random_string" "password" {
   length = 16
   special = true
-}
-
-resource "azurerm_key_vault_secret" "rulesengine_username" {
-  name      = "rulesengine-username"
-  value     = "${random_string.username.result}"
-  vault_uri = "${module.snl-key-vault.key_vault_uri}"
-}
-
-resource "azurerm_key_vault_secret" "rulesengine_password" {
-  name      = "rulesengine-password"
-  value     = "${random_string.password.result}"
-  vault_uri = "${module.snl-key-vault.key_vault_uri}"
 }
 
 resource "azurerm_network_interface" "rulesengine-nic1" {
