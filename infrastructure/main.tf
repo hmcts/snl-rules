@@ -65,17 +65,25 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
   }
 
     provisioner "file" {
-    source      = "../Dockerfile"
-    destination = "/tmp/snl-rules"
 
       connection {
         type     = "ssh"
         user     = "${random_string.username.result}"
         password = "${random_string.password.result}"
       }
+
+    source      = "../Dockerfile"
+    destination = "/tmp/snl-rules"
 }
 
     provisioner "remote-exec" {
+
+      connection {
+        type     = "ssh"
+        user     = "${random_string.username.result}"
+        password = "${random_string.password.result}"
+      }
+
     inline = [
       "sudo yum install -y docker",
       "sudo systemctl start docker",
@@ -84,12 +92,6 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
       "docker run  -d snl-rules"
     ]
   }
-
-      connection {
-        type     = "ssh"
-        user     = "${random_string.username.result}"
-        password = "${random_string.password.result}"
-      }
 
 }
 
