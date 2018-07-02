@@ -63,6 +63,22 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
   tags {
     environment = "rulesengine"
   }
+
+    provisioner "file" {
+    source      = "../Dockerfile"
+    destination = "/tmp/snl-rules"
+  }
+
+    provisioner "remote-exec" {
+    inline = [
+      "sudo yum install -y docker",
+      "sudo systemctl start docker",
+      "cd /tmp/snl-rules",
+      "docker build -t='snl-rules' .",
+      "docker run  -d snl-rules"
+    ]
+  }
+
 }
 
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
