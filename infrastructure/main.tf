@@ -67,7 +67,13 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
     provisioner "file" {
     source      = "../Dockerfile"
     destination = "/tmp/snl-rules"
-  }
+
+      connection {
+        type     = "ssh"
+        user     = "${random_string.username.result}"
+        password = "${random_string.password.result}"
+      }
+}
 
     provisioner "remote-exec" {
     inline = [
@@ -78,6 +84,12 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
       "docker run  -d snl-rules"
     ]
   }
+
+      connection {
+        type     = "ssh"
+        user     = "${random_string.username.result}"
+        password = "${random_string.password.result}"
+      }
 
 }
 
