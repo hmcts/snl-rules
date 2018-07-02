@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snl/subnets/core-infra-subnet-3-snl"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snl/subnets/core-infra-subnet-3-snl"
     private_ip_address_allocation = "dynamic"
   }
 
