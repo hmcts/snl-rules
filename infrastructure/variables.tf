@@ -4,4 +4,4 @@ variable "location" {
 
 variable "name" {}
 variable "resource_group" {}
-variable "subscription" {}
+variable "subscription_id" {}
