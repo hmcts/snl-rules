@@ -68,6 +68,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
         type     = "ssh"
         user     = "${random_string.username.result}"
         password = "${random_string.password.result}"
+        host = "${azurerm_network_interface.rulesengine-nic1.private_ip_address}"
       }
 
     provisioner "file" {
