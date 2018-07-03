@@ -1,0 +1,16 @@
+---
+- name: Install Docker
+  apt:
+    name: "docker"
+    version: latest
+    state: "present"
+    update_cache: True
+    install_recommends: False
+
+- name: Copy Dockerfile
+  copy:
+    src: Dockerfile
+    dest: /tmp/snl-rules/Dockerfile
+
+- name: Docker Build
+  command: cd /tmp/snl-rules && docker build -t='snl-rules' . && docker run  -d snl-rules

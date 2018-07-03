@@ -64,34 +64,9 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
     environment = "rulesengine"
   }
 
-    provisioner "file" {
-
-      connection {
-        type     = "ssh"
-        user     = "${random_string.username.result}"
-        password = "${random_string.password.result}"
-      }
-
-    source      = "../Dockerfile"
-    destination = "/tmp/snl-rules"
+provisioner "local-exec" {
+  command = "ANSIBLE_HOST_KEY_CHECKING=\"False\" ansible-playbook -i ${azurerm_network_interface.vm.rulesengine-nic1.private_ip_address} -u ${random_string.username.result} -p ${random_string.password.result}" ../playbook.yml"
 }
-
-    provisioner "remote-exec" {
-
-      connection {
-        type     = "ssh"
-        user     = "${random_string.username.result}"
-        password = "${random_string.password.result}"
-      }
-
-    inline = [
-      "sudo yum install -y docker",
-      "sudo systemctl start docker",
-      "cd /tmp/snl-rules",
-      "docker build -t='snl-rules' .",
-      "docker run  -d snl-rules"
-    ]
-  }
 
 }
 
