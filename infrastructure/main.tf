@@ -65,7 +65,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
   }
 
 provisioner "local-exec" {
-  command = "ANSIBLE_HOST_KEY_CHECKING=\"False\" ansible-playbook -i ${azurerm_network_interface.vm.rulesengine-nic1.private_ip_address} -u ${random_string.username.result} --extra-vars "ansible_sudo_pass=${random_string.password.result}" ../playbook.yml"
+  command = "ANSIBLE_HOST_KEY_CHECKING=\"False\" ansible-playbook -i ${azurerm_network_interface.vm.rulesengine-nic1.private_ip_address} -u ${random_string.username.result} --extra-vars \"ansible_sudo_pass=${random_string.password.result}\" ../playbook.yml"
 }
 
 }
