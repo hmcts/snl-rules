@@ -72,7 +72,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
       }
 
     provisioner "file" {
-    source      = "../Dockerfile"
+    source      = "Dockerfile"
     destination = "/tmp/snl-rules"
 }
 
