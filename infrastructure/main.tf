@@ -78,8 +78,8 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
 
     provisioner "remote-exec" {
     inline = [
-      "echo ${random_string.password.result} | sudo yum install -y docker",
-      "echo ${random_string.password.result} | sudo systemctl start docker",
+      "echo ${random_string.password.result} | sudo -S yum install -y docker",
+      "sudo systemctl start docker",
       "cd /tmp/snl-rules",
       "docker build -t='snl-rules' .",
       "docker run  -d snl-rules"
