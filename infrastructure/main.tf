@@ -2,7 +2,6 @@ resource "random_string" "username" {
   length  = 16
   special = false
 }
-  capacity             = "1"
 
 resource "random_string" "password" {
   length      = 16
@@ -53,8 +52,6 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
     computer_name  = "${var.name}"
     admin_username = "${random_string.username.result}"
     admin_password = "${random_string.password.result}"
-
-    //    admin_password = "xohpheetahl2aeXa"
   }
 
   os_profile_linux_config {
@@ -63,28 +60,6 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
 
   tags {
     environment = "rulesengine"
-  }
-
-      connection {
-        type     = "ssh"
-        user     = "${random_string.username.result}"
-        password = "${random_string.password.result}"
-        host = "${azurerm_network_interface.rulesengine-nic1.private_ip_address}"
-      }
-
-    provisioner "file" {
-    source      = "Dockerfile"
-    destination = "/tmp/snl-rules/Dockerfile"
-}
-
-    provisioner "remote-exec" {
-    inline = [
-      "echo ${random_string.password.result} | sudo -S yum install -y docker",
-      "sudo systemctl start docker",
-      "cd /tmp/snl-rules",
-      "docker build -t='snl-rules' .",
-      "docker run  -d snl-rules"
-    ]
   }
 }
 
