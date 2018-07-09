@@ -2,6 +2,7 @@ resource "random_string" "username" {
   length  = 16
   special = false
 }
+  capacity             = "1"
 
 resource "random_string" "password" {
   length      = 16
