@@ -18,7 +18,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snlrules/subnets/core-infra-subnet-2-snlrules"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snlperf/subnets/core-infra-subnet-2-snlperf"
     private_ip_address_allocation = "dynamic"
   }
 
@@ -66,5 +66,5 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.name}-nsg"
   location            = "${var.location}"
-  resource_group_name = "core-infra-snlrules"
+  resource_group_name = "core-infra-snlperf"
 }

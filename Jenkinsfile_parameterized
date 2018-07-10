@@ -39,7 +39,7 @@ node {
     env.TF_VAR_env = params.ENVIRONMENT
     env.TF_VAR_product = params.PRODUCT
     env.TF_VAR_product_name = params.PRODUCT
-    env.TF_VAR_resource_group = "core-infra-snlrules"
+    env.TF_VAR_resource_group = "core-infra-snlperf"
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
     env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
