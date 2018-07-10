@@ -66,5 +66,5 @@ resource "azurerm_virtual_machine" "rulesengine-vm1" {
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.name}-nsg"
   location            = "${var.location}"
-  resource_group_name = "core-infra-snl"
+  resource_group_name = "core-infra-snlrules"
 }
