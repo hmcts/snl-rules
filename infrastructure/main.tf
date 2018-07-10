@@ -11,6 +11,7 @@ module "snl-rules" {
   subscription         = "${var.subscription}"
   additional_host_name = "${var.external_host_name}"
   capacity             = "1"
+  common_tags          = "${var.common_tags}"
 
   app_settings = {
     # REDIS_HOST                   = "${module.redis-cache.host_name}"
