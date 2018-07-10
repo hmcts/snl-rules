@@ -36,3 +36,7 @@ variable "external_host_name" {
   default = "snl-rules.reform.hmcts.net"
 }
 variable "subscription" {}
+
+variable "common_tags" {
+  type = "map"
+}
