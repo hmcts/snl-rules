@@ -48,11 +48,10 @@ jacocoTestReport {
 project.tasks['sonarqube'].dependsOn test
 sonarqube {
   properties {
-    property "sonar.projectName", "SNL RULES"
+    property "sonar.projectName", "Reform :: Scheduling & Listing :: snl-rules POC build extension"
     property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integration.exec"
-    property 'sonar.coverage.exclusions', "/**/*"
-    property 'sonar.exclusions', '/**/*'
+    property 'sonar.coverage.exclusions', "/**/config/**"
   }
 }
 
@@ -105,8 +104,6 @@ dependencies {
   compile group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
 
   compile group: 'com.microsoft.azure', name: 'applicationinsights-logging-logback', version: '2.0.+'
-  compile group: 'com.microsoft.azure', name: 'applicationinsights-web', version: '2.+'
-  compile group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '1.0.0-BETA'
 
 
   compile group: 'io.springfox', name: 'springfox-swagger2', version: versions.springfoxSwagger
