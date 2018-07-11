@@ -1,4 +1,0 @@
-{
-  "type": "insert-session",
-  "data": "{\"id\":\"${sessionId}\",\"judgeId\":\"j1\",\"start\":\"2018-06-12T14:04:05.255+01:00\",\"duration\": 3600,\"caseType\":\"SCLAIMS\"}"
-}
