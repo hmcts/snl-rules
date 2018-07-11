@@ -12,6 +12,7 @@ module "snl-rules" {
   additional_host_name = "${var.external_host_name}"
   capacity             = "1"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
+  common_tags          = "${var.common_tags}"
 
   app_settings = {
     # REDIS_HOST                   = "${module.redis-cache.host_name}"
