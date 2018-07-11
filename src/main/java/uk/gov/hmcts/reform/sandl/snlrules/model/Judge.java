@@ -12,8 +12,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Judge extends Fact {
-    private String id;
     private String name;
+
+    public Judge(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override public boolean equals(Object o) { //NOPMD
         return super.equals(o);
