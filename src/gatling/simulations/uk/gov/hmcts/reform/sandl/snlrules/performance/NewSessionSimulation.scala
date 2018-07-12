@@ -20,7 +20,7 @@ class NewSessionSimulation extends Simulation {
     .exec(http("insert session")
     .post("/msg?rulesDefinition=Listings")
     .headers(headers_json)
-    .body(ElFileBody("data/insert-session.json")).asJSON
+    .body(ElFileBody("insert-session.json")).asJSON
     .check(status.is(session => 200)))
 
   setUp(

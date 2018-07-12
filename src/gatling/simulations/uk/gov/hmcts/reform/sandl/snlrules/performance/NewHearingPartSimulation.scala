@@ -21,7 +21,7 @@ class NewHearingPartSimulation extends Simulation {
       .exec(http("insert hearing")
       .post("/msg?rulesDefinition=Listings")
       .headers(headers_json)
-      .body(ElFileBody("data/insert-hearingPartProblem.json")).asJSON
+      .body(ElFileBody("insert-hearingPartProblem.json")).asJSON
       .check(status.is(session => 200)))
   )
 

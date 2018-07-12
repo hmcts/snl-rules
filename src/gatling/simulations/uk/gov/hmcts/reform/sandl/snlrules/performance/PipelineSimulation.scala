@@ -23,27 +23,27 @@ class PipelineSimulation extends Simulation {
         .exec(http("insert session to listings")
           .post("/msg?rulesDefinition=Listings")
           .headers(headers_json)
-          .body(ElFileBody("data/insert-session.json")).asJSON
+          .body(ElFileBody("insert-session.json")).asJSON
           .check(status.is(session => 200)))
 
 
         .exec(http("insert session to sessions")
           .post("/msg?rulesDefinition=Sessions")
           .headers(headers_json)
-          .body(ElFileBody("data/insert-session.json")).asJSON
+          .body(ElFileBody("insert-session.json")).asJSON
           .check(status.is(session => 200)))
 
 
         .exec(http("insert hearing to listings")
           .post("/msg?rulesDefinition=Listings")
           .headers(headers_json)
-          .body(ElFileBody("data/insert-hearingPartProblem.json")).asJSON
+          .body(ElFileBody("insert-hearingPartProblem.json")).asJSON
           .check(status.is(session => 200)))
 
         .exec(http("insert hearing with session to listings")
           .post("/msg?rulesDefinition=Listings")
           .headers(headers_json)
-          .body(ElFileBody("data/insert-hearingPartWithSession.json")).asJSON
+          .body(ElFileBody("insert-hearingPartWithSession.json")).asJSON
           .check(status.is(session => 200)))
 
         )
