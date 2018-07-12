@@ -51,7 +51,10 @@ sonarqube {
     property "sonar.projectName", "Reform :: Scheduling & Listing :: snl-rules POC build extension"
     property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
     property "sonar.jacoco.itReportPath", "${project.buildDir}/jacoco/integration.exec"
-    property 'sonar.coverage.exclusions', "/**/config/**"
+    property "sonar.dependencyCheck.reportPath", "${project.buildDir}/reports/dependency-check-report.xml"
+    property "sonar.exclusions", ""
+    property "sonar.test.exclusions", ""
+    property 'sonar.coverage.exclusions', "**/config/**"
   }
 }
 
