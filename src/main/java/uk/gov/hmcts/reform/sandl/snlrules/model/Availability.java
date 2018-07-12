@@ -18,22 +18,32 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
 public class Availability extends Fact {
-    private String id;
+
     private String judgeId;
     private String roomId;
     private OffsetDateTime start;
     private Duration duration;
+
+    public Availability(String id, String judgeId, String roomId, OffsetDateTime start, Duration duration) {
+        this.id = id;
+        this.judgeId = judgeId;
+        this.roomId = roomId;
+        this.start = start;
+        this.duration = duration;
+    }
 
     @JsonIgnore
     public OffsetDateTime getEnd() {
         return start.plus(duration);
     }
 
-    @Override public boolean equals(Object o) { //NOPMD
+    @Override
+    public boolean equals(Object o) { //NOPMD
         return super.equals(o);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         final int prime = 59;
         return prime + super.hashCode();
     }

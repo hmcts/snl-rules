@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.model;
 
+@SuppressWarnings("squid:S00115")
 public enum ProblemTypes {
     Resource_missing,
     Listing_policy_violation,

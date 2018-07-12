@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Problem extends Fact {
-    private String id;
+
     private String message;
     private ProblemTypes type;
     private ProblemSeverities severity;
