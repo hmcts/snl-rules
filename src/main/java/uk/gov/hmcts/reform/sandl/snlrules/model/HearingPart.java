@@ -17,17 +17,13 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @SuppressWarnings("squid:S3437")
 public class HearingPart extends Fact {
-    private String id;
+
     private String sessionId;
     private String caseType;
     private Duration duration;
     private OffsetDateTime scheduleStart;
     private OffsetDateTime scheduleEnd;
     private OffsetDateTime createdAt;
-
-    @Override public boolean equals(Object o) { //NOPMD
-        return super.equals(o);
-    }
 
     public HearingPart(String id, String sessionId, String caseType, Duration duration) {
         this.id = id;
@@ -44,12 +40,30 @@ public class HearingPart extends Fact {
         this.createdAt = createdAt;
     }
 
-    @Override public int hashCode() {
+    public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime scheduleStart,
+                       OffsetDateTime scheduleEnd, OffsetDateTime createdAt) {
+        this.id = id;
+        this.sessionId = sessionId;
+        this.caseType = caseType;
+        this.duration = duration;
+        this.scheduleStart = scheduleStart;
+        this.scheduleEnd = scheduleEnd;
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public boolean equals(Object o) { //NOPMD
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
         final int prime = 59;
         return prime + super.hashCode();
     }
 
-    @Override public String toDescription() {
+    @Override
+    public String toDescription() {
         return ("Duration: " + duration + ", Case type: " + caseType + ", Scheduled start: "
             + DateTimeUtils.humanizeDate(scheduleStart) + ", Scheduled end: " + DateTimeUtils.humanizeDate(scheduleEnd)
             + ", Created at: " + createdAt).replace("null", "N/A");
