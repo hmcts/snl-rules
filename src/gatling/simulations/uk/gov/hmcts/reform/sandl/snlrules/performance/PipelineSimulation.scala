@@ -56,7 +56,8 @@ class PipelineSimulation extends Simulation {
     .maxDuration(15 seconds)
     .protocols(httpConf)
     .assertions(
-      global.failedRequests.count.is(0)
+      global.failedRequests.count.is(0),
+      global.responseTime.max.lt(2000)
     )
 
 }
