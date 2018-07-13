@@ -11,21 +11,13 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@SuppressWarnings("squid:S2160") // S2160 - because Fact controls identity distinction
 public class Room extends Fact {
     private String name;
 
     public Room(String id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    @Override public boolean equals(Object o) { //NOPMD
-        return super.equals(o);
-    }
-
-    @Override public int hashCode() {
-        final int prime = 59;
-        return prime + super.hashCode();
     }
 
     @Override public String toDescription() {
