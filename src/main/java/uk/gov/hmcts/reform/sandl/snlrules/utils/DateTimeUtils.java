@@ -43,7 +43,7 @@ public final class DateTimeUtils {
                                     int currentYear, int currentMonth, int currentDay,
                                     int olderThan) {
         if (dateTimeToCheck == null) {
-            throw new NullPointerException("Date time to check cannot be null");
+            throw new IllegalArgumentException("Date time to check cannot be null");
         }
 
         OffsetDateTime dateToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);

@@ -2,18 +2,23 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.io.IOException;
 import java.util.List;
-import javax.ws.rs.WebApplicationException;
 
 import static com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES;
 import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_BEANS;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class FactCommand {
     private Class factType;
 
@@ -29,7 +34,7 @@ public abstract class FactCommand {
         try {
             return objectMapper.readValue(message, messageClass);
         } catch (IOException e) {
-            throw new WebApplicationException("Incorrect JSON data, cannot deserialize.", e);
+            throw new RuntimeException("Incorrect JSON data, cannot deserialize.", e);
         }
     }
 }

@@ -126,6 +126,13 @@ public class DateTimeUtilsTests {
             dateToBeChecked, 2018, 05, 20, 10));
     }
 
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_exception_when_date_null() {
+        DateTimeUtils.olderThan(
+            null, 2018, 05, 20, 10);
+    }
+
     @Test
     public void should_be_between_two_dates() {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 16, 9, 0, 0, 0, ZoneOffset.UTC);
@@ -136,8 +143,17 @@ public class DateTimeUtilsTests {
     }
 
     @Test
-    public void should_not_be_between_two_dates() {
+    public void should_not_be_between_two_dates_when_after() {
         OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 30, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
+
+        Assert.assertFalse(DateTimeUtils.between(dateToBeChecked, after, before));
+    }
+
+    @Test
+    public void should_not_be_between_two_dates_when_before() {
+        OffsetDateTime dateToBeChecked = OffsetDateTime.of(2018, 05, 04, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime after = OffsetDateTime.of(2018, 05, 10, 9, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime before = OffsetDateTime.of(2018, 05, 21, 9, 0, 0, 0, ZoneOffset.UTC);
 

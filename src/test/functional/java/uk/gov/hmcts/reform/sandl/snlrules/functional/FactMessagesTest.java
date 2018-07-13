@@ -4,7 +4,6 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +16,6 @@ public class FactMessagesTest {
     }
 
     @Test
-    @Category(SmokeTest.class)
     public void session_insert_generates_problem() {
 
         String sessionId = "486ecc4c-61e6-4f79-bd5d-1eb71d999316";
