@@ -31,7 +31,7 @@ public class DeleteFactCommandTests {
     private KieSession kieSession;
 
     @InjectMocks
-    private UpdateFactCommand updateFactCommand;
+    private DeleteFactCommand deleteFactCommand;
 
     @Before
     public void setup() {
@@ -46,14 +46,14 @@ public class DeleteFactCommandTests {
     public void should_work_when_fact_found() {
         FactHandle factHandle = mock(FactHandle.class);
         when(kieSession.getFactHandle(any())).thenReturn(factHandle);
-        updateFactCommand.setFactType(Room.class);
-        assertThat(updateFactCommand.execute(droolsService, roomFactJson)).isEmpty();
+        deleteFactCommand.setFactType(Room.class);
+        assertThat(deleteFactCommand.execute(droolsService, roomFactJson)).isEmpty();
     }
 
     @Test(expected = RuntimeException.class)
     public void should_not_when_fact_not_found() {
         when(kieSession.getFactHandle(any())).thenReturn(null);
-        updateFactCommand.setFactType(Room.class);
-        updateFactCommand.execute(droolsService, roomFactJson);
+        deleteFactCommand.setFactType(Room.class);
+        deleteFactCommand.execute(droolsService, roomFactJson);
     }
 }
