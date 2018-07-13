@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@SuppressWarnings("squid:S3437")
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) // S2160 - because Fact controls identity distinction
 public class HearingPart extends Fact {
 
     private String sessionId;
@@ -49,17 +49,6 @@ public class HearingPart extends Fact {
         this.scheduleStart = scheduleStart;
         this.scheduleEnd = scheduleEnd;
         this.createdAt = createdAt;
-    }
-
-    @Override
-    public boolean equals(Object o) { //NOPMD
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 59;
-        return prime + super.hashCode();
     }
 
     @Override
