@@ -18,7 +18,6 @@ import static com.fasterxml.jackson.databind.SerializationFeature.FAIL_ON_EMPTY_
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public abstract class FactCommand {
     private Class factType;
 
