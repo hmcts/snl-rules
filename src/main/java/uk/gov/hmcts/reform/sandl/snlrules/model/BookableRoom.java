@@ -15,7 +15,7 @@ import java.time.OffsetDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
-@SuppressWarnings("squid:S3437")
+@SuppressWarnings({"squid:S3437", "squid:S2160"}) // S2160 - because Fact controls identity distinction
 public class BookableRoom extends Fact implements Serializable {
 
     private String roomId;
@@ -31,17 +31,6 @@ public class BookableRoom extends Fact implements Serializable {
 
     public OffsetDateTime getEnd() {
         return start.plus(duration);
-    }
-
-    @Override
-    public boolean equals(Object o) { //NOPMD
-        return super.equals(o);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 59;
-        return prime + super.hashCode();
     }
 
     @Override
