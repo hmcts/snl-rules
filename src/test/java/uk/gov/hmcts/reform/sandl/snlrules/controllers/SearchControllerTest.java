@@ -68,7 +68,10 @@ public class SearchControllerTest {
         List<QueryResultsRow> queryResultsRows = new ArrayList<>();
         when(queryResults.spliterator()).thenReturn(queryResultsRows.spliterator());
 
-        MvcResult response = mockMvc.perform(get("/search?from=2018-06-20 10:00&to=2018-06-22 12:00&durationInSeconds=600&judge=b5bc80ec-8306-4f0f-8c6e-af218bb116c2&room=30bcf571-45ca-4528-9d05-ce51b5e3fcde")
+        MvcResult response = mockMvc.perform(get(
+            "/search?from=2018-06-20 10:00&to=2018-06-22 12:00"
+                + "&durationInSeconds=600"
+                + "&judge=b5bc80ec-8306-4f0f-8c6e-af218bb116c2&room=30bcf571-45ca-4528-9d05-ce51b5e3fcde")
             .contentType(APPLICATION_JSON_UTF8))
             .andExpect(status().isOk()).andReturn();
 
@@ -78,18 +81,22 @@ public class SearchControllerTest {
     @Test
     public void should_return_first_100_result() throws Exception {
         List<QueryResultsRow> queryResultsRows = new ArrayList<>();
-        for(int i = 0; i < 112; i++) {
+        for (int i = 0; i < 112; i++) {
             QueryResultsRow qrr = Mockito.mock(QueryResultsRow.class);
             when(qrr.get("$bookableStartId")).thenReturn(OffsetDateTime.now());
             when(qrr.get("$bookableEnd")).thenReturn(OffsetDateTime.now());
-            when(qrr.get("$jb")).thenReturn(new BookableJudge(UUID.randomUUID().toString(), OffsetDateTime.now(), Duration.ofMinutes(30)));
-            when(qrr.get("$rb")).thenReturn(new BookableRoom(UUID.randomUUID().toString(), OffsetDateTime.now(), Duration.ofMinutes(30)));
+            when(qrr.get("$jb")).thenReturn(new BookableJudge(UUID.randomUUID().toString(),//NOPMD
+                OffsetDateTime.now(), Duration.ofMinutes(30)));
+            when(qrr.get("$rb")).thenReturn(new BookableRoom(UUID.randomUUID().toString(),//NOPMD
+                OffsetDateTime.now(), Duration.ofMinutes(30)));
             queryResultsRows.add(qrr);
         }
 
         when(queryResults.spliterator()).thenReturn(queryResultsRows.spliterator());
 
-        MvcResult response = mockMvc.perform(get("/search?from=2018-06-20 10:00&to=2018-06-22 12:00&durationInSeconds=600&judge=b5bc80ec-8306-4f0f-8c6e-af218bb116c2&room=30bcf571-45ca-4528-9d05-ce51b5e3fcde")
+        MvcResult response = mockMvc.perform(get("/search?from=2018-06-20 10:00&to=2018-06-22 12:00"
+            + "&durationInSeconds=600"
+            + "&judge=b5bc80ec-8306-4f0f-8c6e-af218bb116c2&room=30bcf571-45ca-4528-9d05-ce51b5e3fcde")
             .contentType(APPLICATION_JSON_UTF8))
             .andExpect(status().isOk()).andReturn();
 

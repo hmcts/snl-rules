@@ -2,7 +2,6 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages.commands;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.InjectMocks;
