@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.DeleteFactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.FactCommand;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
@@ -21,7 +22,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.ws.rs.WebApplicationException;
 
 @Component
 public class FactMessageHandlerFactory {
@@ -57,19 +57,19 @@ public class FactMessageHandlerFactory {
         String[] typeSplit = type.split("-");
 
         if (typeSplit.length != 2) {
-            throw new WebApplicationException("Type of the message is not supported: " + type);
+            throw new FactCommandException("Type of the message is not supported: " + type);
         }
 
         String cmd = typeSplit[0];
 
         if (!availableCommands.containsKey(cmd)) {
-            throw new WebApplicationException("Unsupported command in message: " + cmd);
+            throw new FactCommandException("Unsupported command in message: " + cmd);
         }
 
         String dataType = typeSplit[1];
 
         if (!availableFacts.containsKey(dataType)) {
-            throw new WebApplicationException("Unsupported data type in message: " + dataType);
+            throw new FactCommandException("Unsupported data type in message: " + dataType);
         }
 
         FactCommand factCommand = (FactCommand) context.getBean(availableCommands.get(cmd));
