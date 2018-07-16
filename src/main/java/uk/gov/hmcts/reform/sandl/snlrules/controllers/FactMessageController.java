@@ -2,9 +2,8 @@ package uk.gov.hmcts.reform.sandl.snlrules.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
@@ -26,7 +25,7 @@ public class FactMessageController {
     @Autowired
     private DroolsServiceFactory droolsServiceFactory;
 
-    @RequestMapping(value = "/msg", method = RequestMethod.POST)
+    @PostMapping(value = "/msg")
     public ResponseEntity<List<FactModification>> handleMessage(
         @RequestParam(value = "rulesDefinition", required = false) String rulesDefinition,
         @RequestBody FactMessage factMessage) {
