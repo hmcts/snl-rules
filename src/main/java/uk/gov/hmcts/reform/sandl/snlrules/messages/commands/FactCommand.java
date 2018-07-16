@@ -2,11 +2,11 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public abstract class FactCommand {
         try {
             return objectMapper.readValue(message, messageClass);
         } catch (IOException e) {
-            throw new RuntimeException("Incorrect JSON data, cannot deserialize.", e);
+            throw new FactCommandException("Incorrect JSON data, cannot deserialize.", e);
         }
     }
 }
