@@ -5,8 +5,12 @@ import io.restassured.path.json.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.ws.rs.core.Response;
+
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.AnyOf.anyOf;
 
 public class FactMessagesTest {
 
@@ -44,7 +48,7 @@ public class FactMessagesTest {
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
-            .statusCode(200);
+            .statusCode(anyOf(is(Response.Status.NOT_FOUND.getStatusCode()), is(Response.Status.OK.getStatusCode())));
 
         // this should trigger "Session Time For the Judge not Available" rule
         JsonPath retrievedFactList = given()
@@ -53,7 +57,7 @@ public class FactMessagesTest {
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
-            .statusCode(200)
+            .statusCode(Response.Status.OK.getStatusCode())
             .and()
             .extract().jsonPath();
 

@@ -5,7 +5,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.FactModification;
-import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.FactNotFoundException;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class DeleteFactCommand extends FactCommand {
         FactHandle factHandle = session.getFactHandle(fact);
 
         if (factHandle == null) {
-            throw new FactCommandException("Fact not found " + fact.toString());
+            throw new FactNotFoundException("Fact not found " + fact.toString());
         }
 
         session.delete(factHandle);

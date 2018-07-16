@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.FactNotFoundException;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
@@ -51,7 +52,7 @@ public class UpdateFactCommandTests {
         assertThat(updateFactCommand.execute(droolsService, roomFactJson)).isEmpty();
     }
 
-    @Test(expected = FactCommandException.class)
+    @Test(expected = FactNotFoundException.class)
     public void should_not_when_fact_not_found() {
         when(kieSession.getFactHandle(any())).thenReturn(null);
         updateFactCommand.setFactType(Room.class);
