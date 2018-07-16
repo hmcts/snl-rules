@@ -7,6 +7,7 @@ import org.kie.api.runtime.KieSession;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
+import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
@@ -49,7 +50,7 @@ public class InsertFactCommandTests {
         assertThat(insertFactCommand.execute(droolsService, roomFactJson)).isEmpty();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = FactCommandException.class)
     public void should_fail_when_json_is_incorrect() {
         insertFactCommand.setFactType(Room.class);
         assertThat(insertFactCommand.execute(droolsService, incorrectFactJson)).isEmpty();
