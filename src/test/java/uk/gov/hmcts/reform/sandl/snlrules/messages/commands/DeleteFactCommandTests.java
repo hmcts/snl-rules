@@ -8,7 +8,6 @@ import org.kie.api.runtime.rule.FactHandle;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
-import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.FactNotFoundException;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
