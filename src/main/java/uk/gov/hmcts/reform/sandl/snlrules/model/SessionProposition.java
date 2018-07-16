@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import java.time.OffsetDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class SessionProposition {
     private String judgeId;
