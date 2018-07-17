@@ -6,7 +6,7 @@ def product = "snl"
 def component = "rules"
 
 withPipeline("java", product, component) {
-  //enablePerformanceTest()
+  enablePerformanceTest()
   after('checkout') {
     echo 'sln-rules checked out'
   }
