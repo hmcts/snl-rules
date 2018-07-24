@@ -7,6 +7,9 @@ drools:
 management:
   security:
     enabled: ${MANAGEMENT_SECURITY_ENABLED:true}
+    rules:
+      jwtSecret: "nieWiedzialaJak"
+      jwtExpirationInMs: 5000
 
 azure:
   application-insights:
