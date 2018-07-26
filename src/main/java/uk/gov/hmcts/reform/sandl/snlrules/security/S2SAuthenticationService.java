@@ -6,7 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,28 +19,24 @@ public class S2SAuthenticationService {
     static final String HEADER_NAME = "Authorization";
     static final String HEADER_CONTENT_PREFIX = "Bearer ";
     private static final Set<String> approvedServicesNames = Collections.singleton("snl-events");
-    private final String localJwtSecret;
-    private final int localJwtExpirationInMs;
+    private final S2SAuthenticationConfig config;
 
-    public S2SAuthenticationService(
-        @Value("${management.security.rules.jwtSecret}") final String localJwtSecret,
-        @Value("${management.security.rules.jwtExpirationInMs}") final int localJwtExpirationInMs
-    ) {
-        this.localJwtSecret = localJwtSecret;
-        this.localJwtExpirationInMs = localJwtExpirationInMs;
+    @Autowired
+    S2SAuthenticationService(S2SAuthenticationConfig config) {
+        this.config = config;
     }
 
     public boolean validateToken(String authToken) {
         try {
             final Claims claims = Jwts.parser()
-                .setSigningKey(localJwtSecret)
+                .setSigningKey(config.getRules().getJwtSecret())
                 .parseClaimsJws(authToken)
                 .getBody();
             final String serviceName = (String) claims
                 .get("service");
             boolean valid = approvedServicesNames.contains(serviceName);
             long millisDifference = claims.getExpiration().getTime() - claims.getIssuedAt().getTime();
-            return valid && localJwtExpirationInMs == millisDifference;
+            return valid && config.getRules().getJwtExpirationInMs() == millisDifference;
         } catch (MalformedJwtException ex) {
             log.error("Invalid JWT token", ex);
         } catch (ExpiredJwtException ex) {
