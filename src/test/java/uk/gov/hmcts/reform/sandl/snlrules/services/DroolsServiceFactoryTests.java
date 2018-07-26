@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.config.DroolsConfiguration;
+import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -20,6 +21,10 @@ public class DroolsServiceFactoryTests {
 
     @Autowired
     private DroolsServiceFactory droolsServiceFactory;
+
+    @MockBean
+    @SuppressWarnings("PMD.UnusedPrivateField")
+    S2SAuthenticationService s2SAuthenticationService;
 
     @Before
     public void before() {

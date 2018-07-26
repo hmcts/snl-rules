@@ -26,7 +26,7 @@ public class S2SJwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     public S2SJwtAuthenticationFilter(S2SAuthenticationService s2sauth) {
         this.s2sAuth = s2sauth;
-        this.jwtFreeEndpoints = Arrays.asList("/health", "/error", "/info");
+        this.jwtFreeEndpoints = Arrays.asList("/health", "/error", "/info", "");
     }
 
     @Override

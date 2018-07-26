@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
+import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 
@@ -38,21 +39,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(SearchController.class)
 public class SearchControllerTest {
 
+    @MockBean
+    @SuppressWarnings("PMD.UnusedPrivateField")
+    S2SAuthenticationService s2SAuthenticationService;
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private DroolsServiceFactory droolsServiceFactory;
-
     @MockBean
     private DroolsService droolsService;
-
     @MockBean
     private KieSession kieSession;
-
     @MockBean
     private QueryResults queryResults;
-
     private ObjectMapper objectMapper;
 
     @Before
@@ -100,7 +99,7 @@ public class SearchControllerTest {
             .contentType(APPLICATION_JSON_UTF8))
             .andExpect(status().isOk()).andReturn();
 
-        JsonNode nodes =  objectMapper.readTree(response.getResponse().getContentAsString());
+        JsonNode nodes = objectMapper.readTree(response.getResponse().getContentAsString());
 
         assertThat(Iterators.size(nodes.elements())).isEqualTo(100);
     }
