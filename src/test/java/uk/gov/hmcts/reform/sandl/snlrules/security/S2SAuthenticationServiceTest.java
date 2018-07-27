@@ -18,8 +18,8 @@ import static org.mockito.Mockito.when;
 public class S2SAuthenticationServiceTest {
 
     static final String SERVICE_NAME = "snl-events";
-    static final String SECRET_RULES = "SecretR";
-    static final int DEFAULT_EXPIRY = 3000;
+    static final String SECRET_RULES = "FakeTestSecret";
+    static final int DEFAULT_EXPIRY = 5000;
     private S2SAuthenticationConfig config;
     private S2SAuthenticationService s2SAuthenticationService;
 
@@ -67,14 +67,16 @@ public class S2SAuthenticationServiceTest {
         assertThat(result).isFalse();
     }
 
-    @Test(expected = SignatureException.class)
-    public void validateToken_throwsException_forInValidSecretAndWrongTimeout() {
+    @Test
+    public void validateToken_returnsFalse_forInValidSecretAndWrongTimeout() {
         final String token = createToken(SECRET_RULES, DEFAULT_EXPIRY, SERVICE_NAME);
 
         when(config.getRules())
             .thenReturn(new S2SAuthenticationConfig
                 .JwtCredentials(SECRET_RULES + "A", DEFAULT_EXPIRY - 1));
-        this.s2SAuthenticationService.validateToken(token);
+        boolean result = this.s2SAuthenticationService.validateToken(token);
+
+        assertThat(result).isFalse();
     }
 
     @Test(expected = SignatureException.class)
@@ -82,7 +84,7 @@ public class S2SAuthenticationServiceTest {
         final String token = createToken(SECRET_RULES, DEFAULT_EXPIRY, SERVICE_NAME);
 
         when(config.getRules())
-            .thenReturn(new S2SAuthenticationConfig.JwtCredentials(SECRET_RULES + "A", DEFAULT_EXPIRY));
+            .thenReturn(new S2SAuthenticationConfig.JwtCredentials(SECRET_RULES + "AAAA", DEFAULT_EXPIRY));
         this.s2SAuthenticationService.validateToken(token);
     }
 

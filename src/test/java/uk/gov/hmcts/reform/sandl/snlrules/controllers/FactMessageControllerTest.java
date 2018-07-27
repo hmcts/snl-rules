@@ -54,6 +54,8 @@ public class FactMessageControllerTest {
 
         when(droolsServiceFactory.getInstance(testingRule))
             .thenReturn(droolsService);
+
+        when(s2SAuthenticationService.validateToken(any())).thenReturn(true);
     }
 
     @Test

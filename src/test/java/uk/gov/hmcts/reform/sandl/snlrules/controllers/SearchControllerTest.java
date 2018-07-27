@@ -60,6 +60,7 @@ public class SearchControllerTest {
         when(kieSession.getQueryResults(any(), any(), any(), any(), any(), any())).thenReturn(queryResults);
         when(droolsService.getRulesSession()).thenReturn(kieSession);
         when(droolsServiceFactory.getInstance("Search")).thenReturn(droolsService);
+        when(s2SAuthenticationService.validateToken(any())).thenReturn(true);
     }
 
     @Test

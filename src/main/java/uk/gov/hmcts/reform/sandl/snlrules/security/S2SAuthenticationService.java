@@ -8,6 +8,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Set;
@@ -16,8 +17,8 @@ import java.util.Set;
 @Service
 public class S2SAuthenticationService {
 
-    static final String HEADER_NAME = "Authorization";
-    static final String HEADER_CONTENT_PREFIX = "Bearer ";
+    public static final String HEADER_NAME = "Authorization";
+    public static final String HEADER_CONTENT_PREFIX = "Bearer ";
     private static final Set<String> approvedServicesNames = Collections.singleton("snl-events");
     private final S2SAuthenticationConfig config;
 
@@ -27,6 +28,9 @@ public class S2SAuthenticationService {
     }
 
     public boolean validateToken(String authToken) {
+        if (!StringUtils.hasText(authToken)) {
+            return false;
+        }
         try {
             final Claims claims = Jwts.parser()
                 .setSigningKey(config.getRules().getJwtSecret())
