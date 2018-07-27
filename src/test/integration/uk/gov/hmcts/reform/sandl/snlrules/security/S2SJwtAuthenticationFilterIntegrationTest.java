@@ -2,25 +2,17 @@ package uk.gov.hmcts.reform.sandl.snlrules.security;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
-import uk.gov.hmcts.reform.sandl.snlrules.Application;
+import uk.gov.hmcts.reform.sandl.snlrules.BaseIntegrationTest;
 import uk.gov.hmcts.reform.sandl.snlrules.JwtTokenHelper;
 
-@DirtiesContext
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    classes = Application.class)
-public class S2SJwtAuthenticationFilterIntegrationTest {
+public class S2SJwtAuthenticationFilterIntegrationTest extends BaseIntegrationTest {
 
     @LocalServerPort
     private int port;
@@ -88,3 +80,4 @@ public class S2SJwtAuthenticationFilterIntegrationTest {
 
 
 }
+

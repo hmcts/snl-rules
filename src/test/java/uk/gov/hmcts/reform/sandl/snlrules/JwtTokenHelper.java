@@ -8,11 +8,15 @@ import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 import java.util.Date;
 
 public class JwtTokenHelper {
+
+    private JwtTokenHelper() {
+    }
+
     public static HttpHeaders createRulesAuthenticationHeader() {
         HttpHeaders headers = new HttpHeaders();
         headers.add(S2SAuthenticationService.HEADER_NAME,
-            S2SAuthenticationService.HEADER_CONTENT_PREFIX +
-                createToken("FakeTestSecret", 5000, "snl-events")
+            S2SAuthenticationService.HEADER_CONTENT_PREFIX
+                + createToken("FakeTestSecret", 5000, "snl-events")
         );
         return headers;
     }
