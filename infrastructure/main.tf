@@ -61,12 +61,13 @@ resource "azurerm_network_interface" "rulesengine-nic3" {
   }
 }
 
+/*
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
   name                  = "${var.name}01"
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
-  vm_size               = "Standard_E16-8s_v3"
+  vm_size               = "Standard_E8-4s_v3"
 
   storage_os_disk {
     name              = "${var.name}01-storage"
@@ -102,7 +103,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm02" {
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic2.id}"]
-  vm_size               = "Standard_E16-8s_v3"
+  vm_size               = "Standard_E8-4s_v3"
 
   storage_os_disk {
     name              = "${var.name}02-storage"
@@ -138,7 +139,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm03" {
   location              = "${var.location}"
   resource_group_name   = "${var.resource_group}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic3.id}"]
-  vm_size               = "Standard_E16-8s_v3"
+  vm_size               = "Standard_E8-4s_v3"
 
   storage_os_disk {
     name              = "${var.name}03-storage"
@@ -168,6 +169,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm03" {
     environment = "rulesengine"
   }
 }
+*/
 
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.name}-nsg"
