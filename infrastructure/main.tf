@@ -61,7 +61,6 @@ resource "azurerm_network_interface" "rulesengine-nic3" {
   }
 }
 
-/*
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
   name                  = "${var.name}01"
   location              = "${var.location}"
@@ -169,7 +168,6 @@ resource "azurerm_virtual_machine" "rulesengine-vm03" {
     environment = "rulesengine"
   }
 }
-*/
 
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.name}-nsg"
