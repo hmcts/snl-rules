@@ -88,6 +88,13 @@ public class S2SAuthenticationServiceTest {
         this.s2SAuthenticationService.validateToken(token);
     }
 
+    @Test
+    public void validateToken_returnsFalse_forMissingToken() {
+        final String token = "";
+        boolean result = this.s2SAuthenticationService.validateToken(token);
+        assertThat(result).isFalse();
+    }
+
     private String createToken(String secret, long expiryInMs, String serviceName) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiryInMs);
