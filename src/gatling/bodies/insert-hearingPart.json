@@ -1,0 +1,4 @@
+{
+  "type": "insert-hearingPart",
+  "data": "{\"id\":\"${hearingPartId}\",\"sessionId\":null,\"caseType\":\"SCLAIMS\",\"duration\": 1800 ,\"createdAt\":\"2018-06-12T14:04:05.255+01:00\"}"
+}

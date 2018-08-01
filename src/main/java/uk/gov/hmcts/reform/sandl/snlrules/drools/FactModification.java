@@ -13,7 +13,11 @@ public class FactModification {
 
     @JsonIgnore
     public Class getFactClass() {
-        return oldFact != null ? oldFact.getClass() : newFact != null ? newFact.getClass() : null;
+        if (oldFact != null) {
+            return oldFact.getClass();
+        } else {
+            return newFact != null ? newFact.getClass() : null;
+        }
     }
 
     public String getType() {

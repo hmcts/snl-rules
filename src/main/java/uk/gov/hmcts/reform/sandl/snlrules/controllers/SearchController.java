@@ -49,14 +49,15 @@ public class SearchController {
         QueryResults queryResults = session.getQueryResults("JudgeAndRoomAvailable",
             judgeId, roomId, duration, from, to);
 
+        final String bookableStartId = "$bookableStartId";
         return StreamSupport.stream(queryResults.spliterator(), false)
             .sorted((row1, row2) -> {
-                OffsetDateTime bookableStart1 = (OffsetDateTime) row1.get("$bookableStart");
-                OffsetDateTime bookableStart2 = (OffsetDateTime) row2.get("$bookableStart");
+                OffsetDateTime bookableStart1 = (OffsetDateTime) row1.get(bookableStartId);
+                OffsetDateTime bookableStart2 = (OffsetDateTime) row2.get(bookableStartId);
 
                 return bookableStart1.compareTo(bookableStart2);
             }).limit(100).map(row -> {
-                OffsetDateTime bookableStart = (OffsetDateTime) row.get("$bookableStart");
+                OffsetDateTime bookableStart = (OffsetDateTime) row.get(bookableStartId);
                 OffsetDateTime bookableEnd = (OffsetDateTime) row.get("$bookableEnd");
 
                 BookableJudge bj = (BookableJudge) row.get("$jb");

@@ -8,6 +8,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Fact;
 @Getter
 @Setter
 @ToString(callSuper = true)
+@SuppressWarnings("squid:S2160") // S2160 - because Fact controls identity distinction
 public class Minute extends Fact {
     private int value;
 
@@ -23,16 +24,6 @@ public class Minute extends Fact {
     @Override
     public void setId(String id) {
         this.id = "70edd84a-0722-43fd-9e5f-5b5b40d3322f";
-    }
-
-
-    @Override public boolean equals(Object o) { //NOPMD
-        return super.equals(o);
-    }
-
-    @Override public int hashCode() {
-        final int prime = 59;
-        return prime + super.hashCode();
     }
 
     @Override
