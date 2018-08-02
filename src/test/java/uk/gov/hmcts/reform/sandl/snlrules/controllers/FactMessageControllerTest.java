@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
+import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 
@@ -28,15 +29,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(FactMessageController.class)
 public class FactMessageControllerTest {
 
+    @MockBean
+    @SuppressWarnings("PMD.UnusedPrivateField")
+    S2SAuthenticationService s2SAuthenticationService;
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private FactMessageHandlerFactory factMessageHandlerFactory;
-
     @MockBean
     private DroolsServiceFactory droolsServiceFactory;
-
     @MockBean
     private InsertFactCommand insertFactCommand;
 
@@ -53,6 +54,8 @@ public class FactMessageControllerTest {
 
         when(droolsServiceFactory.getInstance(testingRule))
             .thenReturn(droolsService);
+
+        when(s2SAuthenticationService.validateToken(any())).thenReturn(true);
     }
 
     @Test

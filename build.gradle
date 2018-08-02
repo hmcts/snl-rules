@@ -130,6 +130,8 @@ dependencies {
   compile "org.jbpm:jbpm-test:${versions.kieApi}"
   compile "org.drools:drools-compiler:${versions.kieApi}"
 
+  compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
+
   testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot
   testCompile group: 'io.rest-assured', name: 'rest-assured', version: '3.0.6'
 }
@@ -152,11 +154,19 @@ sourceSets {
     compileClasspath += main.output + test.output
     runtimeClasspath += main.output + test.output
   }
+  integrationSources {
+    java.srcDir 'src/test/integration'
+    resources.srcDir 'src/test/resources'
+    compileClasspath += main.output + test.output
+    runtimeClasspath += main.output + test.output
+  }
 }
 
 configurations {
   functionalCompile.extendsFrom testCompile
   functionalRuntime.extendsFrom testRuntime
+  integrationSourcesCompile.extendsFrom testCompile
+  integrationSourcesRuntime.extendsFrom testRuntime
 }
 
 task smoke(type: Test, description: 'Runs the smoke tests.', group: 'Verification') {
@@ -172,3 +182,14 @@ task functional(type: Test, description: 'Runs the functional tests.', group: 'V
   testClassesDirs = sourceSets.functional.output.classesDirs
   classpath = sourceSets.functional.runtimeClasspath
 }
+
+task integrationTests(type: Test, description: 'Runs the integration tests.', group: 'Verification') {
+  testClassesDirs = sourceSets.integrationSources.output.classesDirs
+  classpath = sourceSets.integrationSources.runtimeClasspath
+
+  useJUnit {
+    includeCategories 'uk.gov.hmcts.reform.sandl.snlrules.testcategories.IntegrationTest'
+  }
+}
+
+test.finalizedBy integrationTests

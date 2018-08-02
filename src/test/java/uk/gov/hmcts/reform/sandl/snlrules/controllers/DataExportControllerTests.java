@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
+import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 
@@ -29,15 +30,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(DataExportController.class)
 public class DataExportControllerTests {
+    @MockBean
+    @SuppressWarnings("PMD.UnusedPrivateField")
+    S2SAuthenticationService s2SAuthenticationService;
     @Autowired
     private MockMvc mockMvc;
-
     @MockBean
     private DroolsServiceFactory droolsServiceFactory;
-
     @MockBean
     private DroolsService droolsService;
-
     @MockBean
     private KieSession kieSession;
 
@@ -45,6 +46,7 @@ public class DataExportControllerTests {
     public void setupMock() {
         when(droolsService.getRulesSession()).thenReturn(kieSession);
         when(droolsServiceFactory.getInstance(any())).thenReturn(droolsService);
+        when(s2SAuthenticationService.validateToken(any())).thenReturn(true);
     }
 
     @Test

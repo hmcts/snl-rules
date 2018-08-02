@@ -8,6 +8,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.FactCommandException;
 import uk.gov.hmcts.reform.sandl.snlrules.messages.commands.InsertFactCommand;
+import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -20,6 +21,10 @@ public class FactMessageHandlerFactoryTests {
 
     @Autowired
     private FactMessageHandlerFactory factMessageHandlerFactory;
+
+    @MockBean
+    @SuppressWarnings("PMD.UnusedPrivateField")
+    S2SAuthenticationService s2SAuthenticationService;
 
     @Test
     public void should_return_valid_command_when_known_command_and_fact() {
