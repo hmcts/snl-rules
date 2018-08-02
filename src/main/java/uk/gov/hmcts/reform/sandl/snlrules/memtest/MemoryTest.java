@@ -127,15 +127,15 @@ public class MemoryTest
 	public int createSessions()
 	{
 		int nextId = 0;
-		for (Room room : ROOMS)
-		{
-			nextId = createSessionsForRoom(room.getId(), nextId);
-		}
-		return nextId;
-	}
-
-	public int createSessionsForRoom(String roomId, int nextId)
-	{
+//		for (Room room : ROOMS)
+//		{
+//			nextId = createSessionsForRoom(room.getId(), nextId);
+//		}
+//		return nextId;
+//	}
+//
+//	public int createSessionsForRoom(String roomId, int nextId)
+//	{
 		OffsetDateTime start = AVAILABILITY_START;
 		for (int i = 0; i < PERIOD_DAYS; ++i)
 		{
