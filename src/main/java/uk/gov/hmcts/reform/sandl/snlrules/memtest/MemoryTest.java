@@ -52,10 +52,15 @@ public class MemoryTest
 
 	public void createAll()
 	{
+		System.out.println("Adding Judges");
 		createJudges();
+		System.out.println("Adding Judge Availability");
 		createJudgesAvailability();
+		System.out.println("Adding Rooms");
 		createRooms();
+		System.out.println("Adding Room Availability");
 		createRoomsAvailability();
+		System.out.println("Adding Sessions");
 		SESSION_COUNT = createSessions();
 	}
 
