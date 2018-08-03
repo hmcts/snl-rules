@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.memtest;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
@@ -59,28 +60,28 @@ public class MemoryTest
 
 	public void createAll()
 	{
-		System.out.println("Adding Judges");
+		log("Adding Judges");
 		createJudges();
-		System.out.println("Adding Judge Availability");
+		log("Adding Judge Availability");
 		createJudgesAvailability();
-		System.out.println("Adding Rooms");
+		log("Adding Rooms");
 		createRooms();
-		System.out.println("Adding Room Availability");
+		log("Adding Room Availability");
 		createRoomsAvailability();
-		System.out.println("Adding Sessions");
+		log("Adding Sessions");
 		SESSION_COUNT = createSessions();
 	}
 
 	public void report()
 	{
-		System.out.println("ADDED " + JUDGES_ADDED + " judges.");
-		System.out.println("ADDED " + ROOMS_ADDED + " rooms.");
-		System.out.println("ADDED " + AVAILABILITY_ADDED + " availabilities.");
-		System.out.println("ADDED " + SESSIONS_ADDED + " sessions.");
-		System.out.println("ADDED " + HEARING_PARTS_ADDED + " hearing parts.");
+		log("ADDED " + JUDGES_ADDED + " judges.");
+		log("ADDED " + ROOMS_ADDED + " rooms.");
+		log("ADDED " + AVAILABILITY_ADDED + " availabilities.");
+		log("ADDED " + SESSIONS_ADDED + " sessions.");
+		log("ADDED " + HEARING_PARTS_ADDED + " hearing parts.");
 		if (drools != null)
 		{
-			System.out.println("CREATED " + drools.getRulesSession().getObjects(o -> o instanceof Problem).size() + " problems");
+			log("CREATED " + drools.getRulesSession().getObjects(o -> o instanceof Problem).size() + " problems");
 		}
 	}
 
@@ -271,7 +272,7 @@ public class MemoryTest
 
 	public void run()
 	{
-		System.out.println("Waiting 2 minutes...");
+		log("Waiting 2 minutes...");
 		try
 		{
 //			Thread.sleep(0);
@@ -281,17 +282,17 @@ public class MemoryTest
 		{
 			//discard
 		}
-		System.out.println("Creating domain entities.");
-		System.out.println("Creating domain entities.");
+		log("Creating domain entities.");
+		log("Creating domain entities.");
 		createAll();
-		System.out.println("Firing all rules.");
+		log("Firing all rules.");
 		report();
 		if (drools != null)
 		{
 			drools.getRulesSession().fireAllRules();
 		}
-		System.out.println("Finished.");
-		System.out.println("Waiting 30 seconds ...");
+		log("Finished.");
+		log("Waiting 30 seconds ...");
 		try
 		{
 			Thread.sleep(30 * 1000);
@@ -300,12 +301,12 @@ public class MemoryTest
 		{
 			//discard
 		}
-		System.out.println("Clearing fact modifications.");
+		log("Clearing fact modifications.");
 		if (drools != null)
 		{
 			drools.clearFactModifications();
 		}
-		System.out.println("Waiting 30 seconds ...");
+		log("Waiting 30 seconds ...");
 		try
 		{
 			Thread.sleep(30 * 1000);
@@ -315,6 +316,11 @@ public class MemoryTest
 			//discard
 		}
 		report();
+	}
+
+	public static void log(String message)
+	{
+		System.out.println(new Date() + " : " + message);
 	}
 
 	public static void main(String[] args)
