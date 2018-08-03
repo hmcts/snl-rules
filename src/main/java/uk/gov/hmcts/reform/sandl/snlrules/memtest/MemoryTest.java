@@ -8,6 +8,7 @@ import java.util.UUID;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
@@ -77,6 +78,10 @@ public class MemoryTest
 		System.out.println("ADDED " + AVAILABILITY_ADDED + " availabilities.");
 		System.out.println("ADDED " + SESSIONS_ADDED + " sessions.");
 		System.out.println("ADDED " + HEARING_PARTS_ADDED + " hearing parts.");
+		if (drools != null)
+		{
+			System.out.println("CREATED " + drools.getRulesSession().getObjects(o -> o instanceof Problem).size() + " problems");
+		}
 	}
 
 	public void createJudges()
@@ -280,11 +285,35 @@ public class MemoryTest
 		System.out.println("Creating domain entities.");
 		createAll();
 		System.out.println("Firing all rules.");
+		report();
 		if (drools != null)
 		{
 			drools.getRulesSession().fireAllRules();
 		}
 		System.out.println("Finished.");
+		System.out.println("Waiting 30 seconds ...");
+		try
+		{
+			Thread.sleep(30 * 1000);
+		}
+		catch (InterruptedException e)
+		{
+			//discard
+		}
+		System.out.println("Clearing fact modifications.");
+		if (drools != null)
+		{
+			drools.clearFactModifications();
+		}
+		System.out.println("Waiting 30 seconds ...");
+		try
+		{
+			Thread.sleep(30 * 1000);
+		}
+		catch (InterruptedException e)
+		{
+			//discard
+		}
 		report();
 	}
 
