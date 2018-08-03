@@ -28,7 +28,7 @@ public class MemoryTestRunner
     	System.err.println("**************************************");
     	System.err.println("**************************************");
     	System.err.println("Running memory test");
-    	new MemoryTest(droolsServiceFactory.getInstance(DROOLS_SERVICE)).run();
+    	new MemoryTest(droolsServiceFactory).run();
     	try
     	{
     		Thread.sleep(10000);

@@ -11,9 +11,14 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
+import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 
 public class MemoryTest
 {
+	// If it's not sessions it must be listings
+	public final static boolean SESSIONS_RULES = true;
+	public final static boolean LISTINGS_RULES = false;
+
 	public final static int JUDGE_TYPE = 0;
 	public final static int ROOM_TYPE = 1;
 	public final static int AVAILABILITY_TYPE = 2;
@@ -45,9 +50,10 @@ public class MemoryTest
 	public final DroolsService drools;
 	public int nextHearingId = 0;
 
-	public MemoryTest(DroolsService drools)
+	public MemoryTest(DroolsServiceFactory droolsServiceFactory)
 	{
-		this.drools = drools;
+		String droolsService = SESSIONS_RULES ? "Sessions" : "Listings";
+		this.drools = droolsServiceFactory == null ? null : droolsServiceFactory.getInstance(droolsService);
 	}
 
 	public void createAll()
@@ -93,54 +99,51 @@ public class MemoryTest
 
 	public void createJudgesAvailability()
 	{
-		int id = 0;
-		OffsetDateTime start = AVAILABILITY_START;
-		for (int i = 0; i < PERIOD_DAYS; ++i)
+		if (SESSIONS_RULES)
 		{
-			if (start.getDayOfWeek() != DayOfWeek.SATURDAY && start.getDayOfWeek() != DayOfWeek.SUNDAY)
+			int id = 0;
+			OffsetDateTime start = AVAILABILITY_START;
+			for (int i = 0; i < PERIOD_DAYS; ++i)
 			{
-				for (int j = 0; j < JUDGE_COUNT; ++j)
+				if (start.getDayOfWeek() != DayOfWeek.SATURDAY && start.getDayOfWeek() != DayOfWeek.SUNDAY)
 				{
-					Duration duration = Duration.ofMinutes(AVAILABILITY_DURATION);
-					Availability a = new Availability(id(AVAILABILITY_TYPE, id++), JUDGES[j].getId(), null, start, duration);
-					addAvailability(a);
+					for (int j = 0; j < JUDGE_COUNT; ++j)
+					{
+						Duration duration = Duration.ofMinutes(AVAILABILITY_DURATION);
+						Availability a = new Availability(id(AVAILABILITY_TYPE, id++), JUDGES[j].getId(), null, start, duration);
+						addAvailability(a);
+					}
 				}
+				start = start.plusDays(1L);
 			}
-			start = start.plusDays(1L);
 		}
 	}
 
 	public void createRoomsAvailability()
 	{
-		int id = 0;
-		OffsetDateTime start = AVAILABILITY_START;
-		for (int i = 0; i < PERIOD_DAYS; ++i)
+		if (SESSIONS_RULES)
 		{
-			if (start.getDayOfWeek() != DayOfWeek.SATURDAY && start.getDayOfWeek() != DayOfWeek.SUNDAY)
+			int id = 0;
+			OffsetDateTime start = AVAILABILITY_START;
+			for (int i = 0; i < PERIOD_DAYS; ++i)
 			{
-				for (int j = 0; j < ROOM_COUNT; ++j)
+				if (start.getDayOfWeek() != DayOfWeek.SATURDAY && start.getDayOfWeek() != DayOfWeek.SUNDAY)
 				{
-					Duration duration = Duration.ofMinutes(AVAILABILITY_DURATION);
-					Availability a = new Availability(id(AVAILABILITY_TYPE, id++), null, ROOMS[j].getId(), start, duration);
-					addAvailability(a);
+					for (int j = 0; j < ROOM_COUNT; ++j)
+					{
+						Duration duration = Duration.ofMinutes(AVAILABILITY_DURATION);
+						Availability a = new Availability(id(AVAILABILITY_TYPE, id++), null, ROOMS[j].getId(), start, duration);
+						addAvailability(a);
+					}
 				}
+				start = start.plusDays(1L);
 			}
-			start = start.plusDays(1L);
 		}
 	}
 
 	public int createSessions()
 	{
 		int nextId = 0;
-//		for (Room room : ROOMS)
-//		{
-//			nextId = createSessionsForRoom(room.getId(), nextId);
-//		}
-//		return nextId;
-//	}
-//
-//	public int createSessionsForRoom(String roomId, int nextId)
-//	{
 		OffsetDateTime start = AVAILABILITY_START;
 		for (int i = 0; i < PERIOD_DAYS; ++i)
 		{
@@ -165,42 +168,44 @@ public class MemoryTest
 
 	public void createHearingsForSession(Session s)
 	{
-		for (int i = 0; i < SESSION_HEARING_COUNT; ++i)
+		if (LISTINGS_RULES)
 		{
-			if (Math.random() < HEARING_PROBABILITY)
+			for (int i = 0; i < SESSION_HEARING_COUNT; ++i)
 			{
-				Duration duration = Duration.ofMinutes(HEARING_DURATION);
-			    //public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime createdAt) {
-				OffsetDateTime start = s.getStart().minusDays(15);
-				OffsetDateTime end = s.getStart().plusDays(15);
-				OffsetDateTime created = s.getStart().minusDays(30);
+				if (Math.random() < HEARING_PROBABILITY)
+				{
+					Duration duration = Duration.ofMinutes(HEARING_DURATION);
+				    //public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime createdAt) {
+					OffsetDateTime start = s.getStart().minusDays(15);
+					OffsetDateTime end = s.getStart().plusDays(15);
+					OffsetDateTime created = s.getStart().minusDays(30);
+					HearingPart h = new HearingPart(
+							id(HEARING_PART_TYPE, nextHearingId++),
+							s.getId(),
+							s.getCaseType(),
+							duration,
+							start,
+							end,
+							created);
+					addHearingPart(h);
+				}
+			}
+			if (Math.random() < RANDOM_HEARING_PROBABILITY)
+			{
+				Duration duration = Duration.ofMinutes((int)(Math.random() * 3 * HEARING_DURATION));
+				OffsetDateTime start = s.getStart().minusDays((int)(Math.random() * 100) - 50);
+				OffsetDateTime end = start.plusDays(30);
+				OffsetDateTime created = start.minusDays(30);
 				HearingPart h = new HearingPart(
 						id(HEARING_PART_TYPE, nextHearingId++),
 						s.getId(),
-						s.getCaseType(),
+						CASE_TYPES[(int)(Math.random() * CASE_TYPES.length)],
 						duration,
 						start,
 						end,
 						created);
 				addHearingPart(h);
 			}
-		}
-		if (Math.random() < RANDOM_HEARING_PROBABILITY)
-		{
-			Duration duration = Duration.ofMinutes((int)(Math.random() * 3 * HEARING_DURATION));
-		    //public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime createdAt) {
-			OffsetDateTime start = s.getStart().minusDays((int)(Math.random() * 100) - 50);
-			OffsetDateTime end = start.plusDays(30);
-			OffsetDateTime created = start.minusDays(30);
-			HearingPart h = new HearingPart(
-					id(HEARING_PART_TYPE, nextHearingId++),
-					s.getId(),
-					CASE_TYPES[(int)(Math.random() * CASE_TYPES.length)],
-					duration,
-					start,
-					end,
-					created);
-			addHearingPart(h);
 		}
 	}
 
@@ -229,8 +234,11 @@ public class MemoryTest
 
 	public void addAvailability(Availability a)
 	{
-		addFact(a);
-		++AVAILABILITY_ADDED;
+		if (SESSIONS_RULES)
+		{
+			addFact(a);
+			++AVAILABILITY_ADDED;
+		}
 	}
 
 	public void addSession(Session s)
@@ -241,8 +249,11 @@ public class MemoryTest
 
 	public void addHearingPart(HearingPart h)
 	{
-		addFact(h);
-		++HEARING_PARTS_ADDED;
+		if (LISTINGS_RULES)
+		{
+			addFact(h);
+			++HEARING_PARTS_ADDED;
+		}
 	}
 
 	public void addFact(Object f)
@@ -258,6 +269,7 @@ public class MemoryTest
 		System.out.println("Waiting 2 minutes...");
 		try
 		{
+//			Thread.sleep(0);
 			Thread.sleep(60 * 2 * 1000);
 		}
 		catch (InterruptedException e)
