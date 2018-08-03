@@ -255,6 +255,16 @@ public class MemoryTest
 
 	public void run()
 	{
+		System.out.println("Waiting 2 minutes...");
+		try
+		{
+			Thread.sleep(60 * 2 * 1000);
+		}
+		catch (InterruptedException e)
+		{
+			//discard
+		}
+		System.out.println("Creating domain entities.");
 		System.out.println("Creating domain entities.");
 		createAll();
 		System.out.println("Firing all rules.");
