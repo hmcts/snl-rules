@@ -18,7 +18,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory;
 public class MemoryTest
 {
 	// If it's not sessions it must be listings
-	public final static boolean SESSIONS_RULES = false;
+	public final static boolean SESSIONS_RULES = true;
 	public final static boolean LISTINGS_RULES = true;
 
 	public final static int JUDGE_TYPE = 0;
