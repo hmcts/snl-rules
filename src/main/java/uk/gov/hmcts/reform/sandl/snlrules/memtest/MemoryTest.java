@@ -62,14 +62,23 @@ public class MemoryTest
 	{
 		log("Adding Judges");
 		createJudges();
-		log("Adding Judge Availability");
-		createJudgesAvailability();
 		log("Adding Rooms");
 		createRooms();
+		log("Sleeping for 1 minute");
+		try
+		{
+			Thread.sleep(60 * 1000);
+		}
+		catch (InterruptedException e)
+		{
+			// discard
+		}
+		log("Adding Judge Availability");
+		createJudgesAvailability();
 		log("Adding Room Availability");
 		createRoomsAvailability();
-		log("Adding Sessions");
-		SESSION_COUNT = createSessions();
+//		log("Adding Sessions");
+//		SESSION_COUNT = createSessions();
 	}
 
 	public void report()
