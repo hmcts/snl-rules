@@ -1,0 +1,26 @@
+Mon Aug 06 14:08:21 UTC 2018 : Waiting 2 minutes...
+Mon Aug 06 14:10:21 UTC 2018 : Creating domain entities.
+Mon Aug 06 14:10:21 UTC 2018 : Creating domain entities.
+Mon Aug 06 14:10:21 UTC 2018 : Adding Judges
+Mon Aug 06 14:10:21 UTC 2018 : Adding Rooms
+Mon Aug 06 14:10:21 UTC 2018 : Sleeping for 1 minute
+Mon Aug 06 14:11:21 UTC 2018 : Adding Judge Availability
+Mon Aug 06 14:11:21 UTC 2018 : Adding Room Availability
+Mon Aug 06 14:11:21 UTC 2018 : Firing all rules.
+Mon Aug 06 14:11:21 UTC 2018 : ADDED 50000 judges.
+Mon Aug 06 14:11:21 UTC 2018 : ADDED 5000 rooms.
+Mon Aug 06 14:11:21 UTC 2018 : ADDED 0 availabilities.
+Mon Aug 06 14:11:21 UTC 2018 : ADDED 0 sessions.
+Mon Aug 06 14:11:21 UTC 2018 : ADDED 0 hearing parts.
+Mon Aug 06 14:11:21 UTC 2018 : CREATED 0 problems
+Mon Aug 06 14:11:21 UTC 2018 : Finished.
+Mon Aug 06 14:11:21 UTC 2018 : Waiting 30 seconds ...
+Mon Aug 06 14:11:51 UTC 2018 : Clearing fact modifications.
+Mon Aug 06 14:11:51 UTC 2018 : Waiting 30 seconds ...
+Mon Aug 06 14:12:21 UTC 2018 : ADDED 50000 judges.
+Mon Aug 06 14:12:21 UTC 2018 : ADDED 5000 rooms.
+Mon Aug 06 14:12:21 UTC 2018 : ADDED 0 availabilities.
+Mon Aug 06 14:12:21 UTC 2018 : ADDED 0 sessions.
+Mon Aug 06 14:12:21 UTC 2018 : ADDED 0 hearing parts.
+Mon Aug 06 14:12:21 UTC 2018 : CREATED 0 problems
+
