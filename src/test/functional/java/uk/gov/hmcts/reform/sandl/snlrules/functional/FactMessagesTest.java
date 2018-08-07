@@ -4,6 +4,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpHeaders;
 
 import javax.ws.rs.core.Response;
 
@@ -43,6 +44,7 @@ public class FactMessagesTest {
 
         // ensure there is no fact with the id already
         given()
+            .headers(JwtTokenHelper.createRulesAuthenticationHeader().toSingleValueMap())
             .contentType(ContentType.JSON)
             .body(msgSessionDelete)
             .when()
@@ -52,6 +54,7 @@ public class FactMessagesTest {
 
         // this should trigger "Session Time For the Judge not Available" rule
         JsonPath retrievedFactList = given()
+            .headers(JwtTokenHelper.createRulesAuthenticationHeader().toSingleValueMap())
             .contentType(ContentType.JSON)
             .body(msgSessionInsert)
             .when()
