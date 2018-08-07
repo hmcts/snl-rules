@@ -20,7 +20,6 @@ public class JwtTokenHelper {
             S2SAuthenticationService.HEADER_CONTENT_PREFIX
                 + createToken("nieWiedzialaJak", 5000, "snl-events")
         );
-        headers.values().forEach(System.out::println);
         return headers;
     }
 

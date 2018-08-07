@@ -4,7 +4,6 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.http.HttpHeaders;
 
 import javax.ws.rs.core.Response;
 
