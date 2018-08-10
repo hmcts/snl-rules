@@ -43,6 +43,7 @@ public class FactMessagesTest {
 
         // ensure there is no fact with the id already
         given()
+            .headers(JwtTokenHelper.createRulesAuthenticationHeader().toSingleValueMap())
             .contentType(ContentType.JSON)
             .body(msgSessionDelete)
             .when()
@@ -52,6 +53,7 @@ public class FactMessagesTest {
 
         // this should trigger "Session Time For the Judge not Available" rule
         JsonPath retrievedFactList = given()
+            .headers(JwtTokenHelper.createRulesAuthenticationHeader().toSingleValueMap())
             .contentType(ContentType.JSON)
             .body(msgSessionInsert)
             .when()

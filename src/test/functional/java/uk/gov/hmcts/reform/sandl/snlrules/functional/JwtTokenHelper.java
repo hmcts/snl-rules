@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.sandl.snlrules;
+package uk.gov.hmcts.reform.sandl.snlrules.functional;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,7 +18,7 @@ public class JwtTokenHelper {
         HttpHeaders headers = new HttpHeaders();
         headers.add(S2SAuthenticationService.HEADER_NAME,
             S2SAuthenticationService.HEADER_CONTENT_PREFIX
-                + createToken("FakeTestSecret", 5000, "snl-events")
+                + createToken("nieWiedzialaJak", 5000, "snl-events")
         );
         return headers;
     }

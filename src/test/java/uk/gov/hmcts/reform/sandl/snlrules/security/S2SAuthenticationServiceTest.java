@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -96,13 +98,13 @@ public class S2SAuthenticationServiceTest {
     }
 
     private String createToken(String secret, long expiryInMs, String serviceName) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiryInMs);
+        Instant now = Instant.now();
+        Instant expiryDate = now.plus(expiryInMs, ChronoUnit.MILLIS);
 
         return Jwts.builder()
             .claim("service", serviceName)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
+            .setIssuedAt(new Date(now.toEpochMilli()))
+            .setExpiration(new Date(expiryDate.toEpochMilli()))
             .signWith(SignatureAlgorithm.HS512, secret)
             .compact();
     }
