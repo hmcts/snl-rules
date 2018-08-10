@@ -5,6 +5,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpHeaders;
 import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class JwtTokenHelper {
@@ -22,13 +24,13 @@ public class JwtTokenHelper {
     }
 
     public static String createToken(String secret, long expiryInMs, String serviceName) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiryInMs);
+        Instant now = Instant.now();
+        Instant expiryDate = now.plus(expiryInMs, ChronoUnit.MILLIS);
 
         return Jwts.builder()
             .claim("service", serviceName)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
+            .setIssuedAt(new Date(now.toEpochMilli()))
+            .setExpiration(new Date(expiryDate.toEpochMilli()))
             .signWith(SignatureAlgorithm.HS512, secret)
             .compact();
     }

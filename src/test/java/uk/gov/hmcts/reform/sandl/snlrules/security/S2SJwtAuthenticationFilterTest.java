@@ -90,16 +90,4 @@ public class S2SJwtAuthenticationFilterTest {
 
         verify(response).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), anyString());
     }
-
-    private String createToken(String secret, long expiryInMs, String serviceName) {
-        Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + expiryInMs);
-
-        return Jwts.builder()
-            .claim("service", serviceName)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact();
-    }
 }
