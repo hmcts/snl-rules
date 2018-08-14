@@ -1,0 +1,17 @@
+tasks gatling -v
+tasks gatling
+lastReport
+exit
+help tasks
+gatling -v
+tasks gatling
+tasks gatling -v
+tasks gatling -V
+gatling
+compile
+tasks gatling -v
+tasks gatling
+help tasks gatling
+help gatling
+gatling startRecorder
+gatling:startRecorder

@@ -1,0 +1,4 @@
+[0m[[0minfo[0m] [0m:: delivering :: uk.gov.hmcts.reform#gatling-snl-rules_2.12;0.1.0 :: 0.1.0 :: release :: Fri Aug 10 14:42:28 CEST 2018[0m
+[0m[[0mdebug[0m] [0m	options = status=release pubdate=Fri Aug 10 14:42:28 CEST 2018 validate=true resolveDynamicRevisions=true merge=true resolveId=null pubBranch=null[0m
+[0m[[0minfo[0m] [0m	delivering ivy file to /Users/leszekgu/kainos/hmcts/snl-rules/src/gatling/target/scala-2.12/ivy-0.1.0.xml[0m
+[0m[[0mdebug[0m] [0m	deliver done (23ms)[0m

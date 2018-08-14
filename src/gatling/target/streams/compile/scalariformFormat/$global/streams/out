@@ -1,0 +1,2 @@
+[0m[[0minfo[0m] [0mFormatting 3 Scala sources {file:/Users/leszekgu/kainos/hmcts/snl-rules/src/gatling/}gatling-snl-rules(compile) ...[0m
+[0m[[33mwarn[0m] [0mScalariform parser error for /Users/leszekgu/kainos/hmcts/snl-rules/src/gatling/simulations/it/scala/uk/gov/hmcts/reform/sandl/snlrules/performance/PipelineSimulation.scala: illegal start of simple expression: Token(RPAREN,),2064,))[0m

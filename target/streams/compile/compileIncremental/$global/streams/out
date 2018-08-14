@@ -1,0 +1,267 @@
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Initial source changes: [0m
+[0m[[0mdebug[0m] [0m[naha] 	removed:Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	added: Set(/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/SearchController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemReference.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/SessionProposition.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Day.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemTypes.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/DeleteFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Judge.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemSeverities.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpdateFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/utils/DateTimeUtils.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/InsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/DateComparisonException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/RootController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Problem.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactCommandException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactNotFoundException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Availability.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SJwtAuthenticationFilter.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableRoom.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/HearingPart.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Month.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Session.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Minute.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/RulesMatchEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationConfig.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Room.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Hour.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Year.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableJudge.java)[0m
+[0m[[0mdebug[0m] [0m[naha] 	modified: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Invalidated products: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] External API changes: API Changes: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Modified binary dependencies: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] Initial directly invalidated sources: Set(/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/SearchController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemReference.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/SessionProposition.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Day.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemTypes.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/DeleteFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Judge.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemSeverities.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpdateFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/utils/DateTimeUtils.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/InsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/DateComparisonException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/RootController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Problem.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactCommandException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactNotFoundException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Availability.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SJwtAuthenticationFilter.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableRoom.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/HearingPart.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Month.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Session.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Minute.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/RulesMatchEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationConfig.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Room.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Hour.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Year.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableJudge.java)[0m
+[0m[[0mdebug[0m] [0m[naha] [0m
+[0m[[0mdebug[0m] [0m[naha] Sources indirectly invalidated by:[0m
+[0m[[0mdebug[0m] [0m[naha] 	product: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	binary dep: Set()[0m
+[0m[[0mdebug[0m] [0m[naha] 	external source: Set()[0m
+[0m[[0mdebug[0m] [0mAll initially invalidated sources: Set(/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/SearchController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemReference.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/SessionProposition.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Day.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemTypes.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/DeleteFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Judge.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemSeverities.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpdateFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/utils/DateTimeUtils.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/InsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/DateComparisonException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/RootController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Problem.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactCommandException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactNotFoundException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Availability.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SJwtAuthenticationFilter.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableRoom.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/HearingPart.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Month.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Session.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Minute.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/RulesMatchEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationConfig.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Room.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Hour.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Year.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableJudge.java)[0m
+[0m[[0mdebug[0m] [0m[naha] Initial set of included nodes: Set(/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/SearchController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemReference.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/SessionProposition.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Day.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemTypes.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/DeleteFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Judge.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/ProblemSeverities.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/UpdateFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/utils/DateTimeUtils.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationService.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/InsertFactCommand.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/DateComparisonException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/RootController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Problem.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactCommandException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/exception/FactNotFoundException.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Availability.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SJwtAuthenticationFilter.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableRoom.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/HearingPart.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Month.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Session.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Minute.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/RulesMatchEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/security/S2SAuthenticationConfig.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Room.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Hour.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/now/Year.java, /Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/BookableJudge.java)[0m
+[0m[[0mdebug[0m] [0m[naha] Recompiling all 44 sources: invalidated sources (44) exceeded 50.0% of all sources[0m
+[0m[[0minfo[0m] [0mCompiling 44 Java sources to /Users/leszekgu/kainos/hmcts/snl-rules/target/scala-2.10/classes...[0m
+[0m[[0mdebug[0m] [0mAttempting to call com.sun.tools.javac.api.JavacTool@6d77253f directly...[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:3: package org.springframework.boot does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.boot.SpringApplication;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:4: package org.springframework.boot.autoconfigure does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.boot.autoconfigure.SpringBootApplication;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:5: package org.springframework.cloud.client.circuitbreaker does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:6: package org.springframework.cloud.netflix.hystrix.dashboard does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:8: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class SpringBootApplication[0m
+[0m[[31merror[0m] [0m@SpringBootApplication[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:9: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class EnableCircuitBreaker[0m
+[0m[[31merror[0m] [0m@EnableCircuitBreaker[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/Application.java:10: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class EnableHystrixDashboard[0m
+[0m[[31merror[0m] [0m@EnableHystrixDashboard[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:3: package org.springframework.boot.context.properties does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.boot.context.properties.ConfigurationProperties;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:4: package org.springframework.boot.context.properties does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.boot.context.properties.EnableConfigurationProperties;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:5: package org.springframework.stereotype does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.stereotype.Component;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:6: package org.springframework.validation.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.validation.annotation.Validated;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:8: package javax.validation does not exist[0m
+[0m[[31merror[0m] [0mimport javax.validation.Valid;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:9: package javax.validation.constraints does not exist[0m
+[0m[[31merror[0m] [0mimport javax.validation.constraints.NotNull;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:11: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Component[0m
+[0m[[31merror[0m] [0m@Component[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:12: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class EnableConfigurationProperties[0m
+[0m[[31merror[0m] [0m@EnableConfigurationProperties[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:13: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class ConfigurationProperties[0m
+[0m[[31merror[0m] [0m@ConfigurationProperties("drools")[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/DroolsConfiguration.java:14: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Validated[0m
+[0m[[31merror[0m] [0m@Validated[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:3: package org.springframework.context.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.context.annotation.Bean;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:4: package org.springframework.context.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.context.annotation.Configuration;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:5: package springfox.documentation.builders does not exist[0m
+[0m[[31merror[0m] [0mimport springfox.documentation.builders.PathSelectors;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:6: package springfox.documentation.builders does not exist[0m
+[0m[[31merror[0m] [0mimport springfox.documentation.builders.RequestHandlerSelectors;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:7: package springfox.documentation.spi does not exist[0m
+[0m[[31merror[0m] [0mimport springfox.documentation.spi.DocumentationType;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:8: package springfox.documentation.spring.web.plugins does not exist[0m
+[0m[[31merror[0m] [0mimport springfox.documentation.spring.web.plugins.Docket;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:9: package springfox.documentation.swagger2.annotations does not exist[0m
+[0m[[31merror[0m] [0mimport springfox.documentation.swagger2.annotations.EnableSwagger2;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:12: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Configuration[0m
+[0m[[31merror[0m] [0m@Configuration[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:13: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class EnableSwagger2[0m
+[0m[[31merror[0m] [0m@EnableSwagger2[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/config/SwaggerConfiguration.java:17: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class Docket[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.config.SwaggerConfiguration[0m
+[0m[[31merror[0m] [0m    public Docket api() {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:3: package org.kie.api.runtime does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.runtime.ClassObjectFilter;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:4: package org.springframework.beans.factory.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.beans.factory.annotation.Autowired;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:5: package org.springframework.http does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.http.ResponseEntity;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:6: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RequestMapping;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:7: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RequestParam;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:8: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RestController;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:27: package org.springframework.http does not exist[0m
+[0m[[31merror[0m] [0mimport static org.springframework.http.ResponseEntity.ok;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:27: static import only from classes and interfaces[0m
+[0m[[31merror[0m] [0mimport static org.springframework.http.ResponseEntity.ok;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:29: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class RestController[0m
+[0m[[31merror[0m] [0m@RestController[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:3: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.Logger;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:4: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.LoggerFactory;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:5: package org.springframework.beans.factory.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.beans.factory.annotation.Autowired;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:6: package org.springframework.stereotype does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.stereotype.Service;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:7: package org.springframework.web.context.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.context.annotation.ApplicationScope;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:13: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Service[0m
+[0m[[31merror[0m] [0m@Service[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:14: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class ApplicationScope[0m
+[0m[[31merror[0m] [0m@ApplicationScope[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:35: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ResponseEntity[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.controllers.DataExportController[0m
+[0m[[31merror[0m] [0m    public ResponseEntity<String> state([0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/DataExportController.java:42: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ResponseEntity[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.controllers.DataExportController[0m
+[0m[[31merror[0m] [0m    public ResponseEntity<String> counts([0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:3: package org.kie.api does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.KieServices;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:4: package org.kie.api.runtime does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.runtime.KieContainer;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:5: package org.kie.api.runtime does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.runtime.KieSession;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:6: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.Logger;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:7: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.LoggerFactory;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:13: package javax.ws.rs does not exist[0m
+[0m[[31merror[0m] [0mimport javax.ws.rs.WebApplicationException;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsServiceFactory.java:17: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class Logger[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.services.DroolsServiceFactory[0m
+[0m[[31merror[0m] [0m    private static final Logger logger = LoggerFactory.getLogger(DroolsServiceFactory.class);[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:16: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class Logger[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService[0m
+[0m[[31merror[0m] [0m    private static final Logger logger = LoggerFactory.getLogger(DroolsService.class);[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:3: package org.drools.core.event does not exist[0m
+[0m[[31merror[0m] [0mimport org.drools.core.event.DefaultRuleRuntimeEventListener;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:4: package org.kie.api.event.rule does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.event.rule.ObjectDeletedEvent;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:5: package org.kie.api.event.rule does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.event.rule.ObjectInsertedEvent;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:6: package org.kie.api.event.rule does not exist[0m
+[0m[[31merror[0m] [0mimport org.kie.api.event.rule.ObjectUpdatedEvent;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:7: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.Logger;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:8: package org.slf4j does not exist[0m
+[0m[[31merror[0m] [0mimport org.slf4j.LoggerFactory;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:15: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class DefaultRuleRuntimeEventListener[0m
+[0m[[31merror[0m] [0mpublic class FactsChangedEventListener extends DefaultRuleRuntimeEventListener {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:20: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class KieSession[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService[0m
+[0m[[31merror[0m] [0m    private KieSession rulesSession;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/services/DroolsService.java:43: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class KieSession[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService[0m
+[0m[[31merror[0m] [0m    public KieSession getRulesSession() {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java:3: package com.fasterxml.jackson.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport com.fasterxml.jackson.annotation.JsonIgnore;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java:4: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.AllArgsConstructor;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java:5: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Data;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java:8: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Data[0m
+[0m[[31merror[0m] [0m@Data[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactModification.java:9: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class AllArgsConstructor[0m
+[0m[[31merror[0m] [0m@AllArgsConstructor[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:16: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class Logger[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener[0m
+[0m[[31merror[0m] [0m    private static final Logger logger = LoggerFactory.getLogger(FactsChangedEventListener.class);[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:22: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ObjectInsertedEvent[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener[0m
+[0m[[31merror[0m] [0m    public void objectInserted(final ObjectInsertedEvent event) {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:30: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ObjectUpdatedEvent[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener[0m
+[0m[[31merror[0m] [0m    public void objectUpdated(final ObjectUpdatedEvent event) {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/drools/FactsChangedEventListener.java:39: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ObjectDeletedEvent[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener[0m
+[0m[[31merror[0m] [0m    public void objectDeleted(final ObjectDeletedEvent event) {[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:3: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Getter;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:4: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Setter;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:5: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.ToString;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:9: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Getter[0m
+[0m[[31merror[0m] [0m@Getter[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:10: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Setter[0m
+[0m[[31merror[0m] [0m@Setter[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/model/Fact.java:11: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class ToString[0m
+[0m[[31merror[0m] [0m@ToString[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:3: package org.springframework.beans.factory.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.beans.factory.annotation.Autowired;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:4: package org.springframework.http does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.http.ResponseEntity;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:5: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.PostMapping;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:6: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RequestBody;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:7: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RequestParam;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:8: package org.springframework.web.bind.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.web.bind.annotation.RestController;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:17: package org.springframework.http does not exist[0m
+[0m[[31merror[0m] [0mimport static org.springframework.http.ResponseEntity.ok;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:17: static import only from classes and interfaces[0m
+[0m[[31merror[0m] [0mimport static org.springframework.http.ResponseEntity.ok;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:19: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class RestController[0m
+[0m[[31merror[0m] [0m@RestController[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java:3: package org.springframework.beans.factory.annotation does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.beans.factory.annotation.Autowired;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java:4: package org.springframework.context does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.context.ApplicationContext;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java:5: package org.springframework.stereotype does not exist[0m
+[0m[[31merror[0m] [0mimport org.springframework.stereotype.Component;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java:26: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Component[0m
+[0m[[31merror[0m] [0m@Component[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java:3: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Data;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessage.java:5: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol: class Data[0m
+[0m[[31merror[0m] [0m@Data[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/controllers/FactMessageController.java:29: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ResponseEntity[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.controllers.FactMessageController[0m
+[0m[[31merror[0m] [0m    public ResponseEntity<List<FactModification>> handleMessage([0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/FactMessageHandlerFactory.java:33: cannot find symbol[0m
+[0m[[31merror[0m] [0m  symbol:   class ApplicationContext[0m
+[0m[[31merror[0m] [0m  location: class uk.gov.hmcts.reform.sandl.snlrules.messages.FactMessageHandlerFactory[0m
+[0m[[31merror[0m] [0m    private ApplicationContext context;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:3: package com.fasterxml.jackson.databind does not exist[0m
+[0m[[31merror[0m] [0mimport com.fasterxml.jackson.databind.ObjectMapper;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:4: package com.fasterxml.jackson.databind does not exist[0m
+[0m[[31merror[0m] [0mimport com.fasterxml.jackson.databind.SerializationFeature;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:5: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Getter;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:6: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.NoArgsConstructor;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:7: package lombok does not exist[0m
+[0m[[31merror[0m] [0mimport lombok.Setter;[0m
+[0m[[31merror[0m] [0m/Users/leszekgu/kainos/hmcts/snl-rules/src/main/java/uk/gov/hmcts/reform/sandl/snlrules/messages/commands/FactCommand.java:15: package com.fasterxml.jackson.databind does not exist[0m
+[0m[[31merror[0m] [0mimport static com.fasterxml.jackson.databind.MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES;[0m
+[0m[[31merror[0m] [0m(compile:[31mcompileIncremental[0m) javac returned nonzero exit code[0m
