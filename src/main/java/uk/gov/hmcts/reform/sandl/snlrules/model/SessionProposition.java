@@ -2,10 +2,12 @@ package uk.gov.hmcts.reform.sandl.snlrules.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.OffsetDateTime;
 
 @AllArgsConstructor
+@Getter
 public class SessionProposition {
     private String judgeId;
     private String roomId;
