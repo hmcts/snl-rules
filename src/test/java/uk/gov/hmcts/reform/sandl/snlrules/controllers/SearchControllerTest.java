@@ -83,7 +83,7 @@ public class SearchControllerTest {
         List<QueryResultsRow> queryResultsRows = new ArrayList<>();
         for (int i = 0; i < 112; i++) {
             QueryResultsRow qrr = Mockito.mock(QueryResultsRow.class);
-            when(qrr.get("$bookableStartId")).thenReturn(OffsetDateTime.now());
+            when(qrr.get("$bookableStart")).thenReturn(OffsetDateTime.now());
             when(qrr.get("$bookableEnd")).thenReturn(OffsetDateTime.now());
             when(qrr.get("$jb")).thenReturn(new BookableJudge(UUID.randomUUID().toString(),//NOPMD
                 OffsetDateTime.now(), Duration.ofMinutes(30)));
