@@ -1,0 +1,1 @@
+{"id":"6fb9af23-3809-49cb-9b27-2efda84c7979","caseNumber":"987654321","caseTitle":"Numbers vs Letters","caseType":"SCLAIMS","hearingType":"Preliminary Hearing","duration":"PT1H","scheduleStart":"2018-09-02T23:00:00.000Z","scheduleEnd":"2018-09-27T23:00:00.000Z","createdAt":"2018-07-20T13:46:19.446Z"}

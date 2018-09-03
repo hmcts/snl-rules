@@ -1,0 +1,1 @@
+{"userTransactionId":"3ad7ea8b-e339-46a2-b7df-55e961c23aea","id":"d6dc50d2-8e9c-44a0-a4ad-6f67ebbf0b80","start":"2018-08-20T13:00:00.000Z","duration":1800,"roomId":"30bcf571-45ca-4528-9d05-ce51b5e3fcde","personId":"b5bc80ec-8306-4f0f-8c6e-af218bb116c2","caseType":"SCLAIMS"}
