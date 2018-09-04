@@ -11,18 +11,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
-rule "Hearing case type does not match the session case type"
-    when
-    	$hearingPart : HearingPart()
-    	$session : Session(id == $hearingPart.sessionId && caseType != $hearingPart.caseType)
-    then
-        insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
-                                  ProblemSeverities.Warn,
-                                  "Hearing case type does not match the session case type",
-                                  new ProblemReference($hearingPart),
-                                  new ProblemReference($session)));
-end
-
 rule "Listing request target schedule has not been adhered to when listed"
     when
         $hearingPart: HearingPart(scheduleEnd != null && scheduleStart != null)
