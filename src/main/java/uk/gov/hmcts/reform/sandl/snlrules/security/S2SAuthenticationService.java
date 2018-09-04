@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Set;
 
 @Slf4j
@@ -39,8 +40,11 @@ public class S2SAuthenticationService {
             final String serviceName = (String) claims
                 .get("service");
             boolean valid = approvedServicesNames.contains(serviceName);
-            long millisDifference = claims.getExpiration().getTime() - claims.getIssuedAt().getTime();
-            return valid && config.getRules().getJwtExpirationInMs() == millisDifference;
+            Date now = new Date();
+            long millisDifference = now.getTime() - claims.getIssuedAt().getTime();
+
+            boolean notExpired = millisDifference <= config.getRules().getJwtExpirationInMs();
+            return valid && notExpired;
         } catch (MalformedJwtException ex) {
             log.error("Invalid JWT token", ex);
         } catch (ExpiredJwtException ex) {

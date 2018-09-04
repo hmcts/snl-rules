@@ -63,7 +63,7 @@ public class S2SAuthenticationServiceTest {
         final String token = createToken(SECRET_RULES, DEFAULT_EXPIRY, SERVICE_NAME);
 
         when(config.getRules())
-            .thenReturn(new S2SAuthenticationConfig.JwtCredentials(SECRET_RULES, DEFAULT_EXPIRY - 1));
+            .thenReturn(new S2SAuthenticationConfig.JwtCredentials(SECRET_RULES, -10));
         boolean result = this.s2SAuthenticationService.validateToken(token);
 
         assertThat(result).isFalse();
@@ -75,7 +75,7 @@ public class S2SAuthenticationServiceTest {
 
         when(config.getRules())
             .thenReturn(new S2SAuthenticationConfig
-                .JwtCredentials(SECRET_RULES + "A", DEFAULT_EXPIRY - 1));
+                .JwtCredentials(SECRET_RULES + "A", -10));
         boolean result = this.s2SAuthenticationService.validateToken(token);
 
         assertThat(result).isFalse();
