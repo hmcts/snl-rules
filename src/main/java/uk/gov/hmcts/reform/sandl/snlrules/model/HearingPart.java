@@ -20,31 +20,37 @@ public class HearingPart extends Fact {
 
     private String sessionId;
     private String caseType;
+    private String hearingType;
     private Duration duration;
     private OffsetDateTime scheduleStart;
     private OffsetDateTime scheduleEnd;
     private OffsetDateTime createdAt;
 
-    public HearingPart(String id, String sessionId, String caseType, Duration duration) {
+    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration) {
         this.id = id;
         this.sessionId = sessionId;
         this.caseType = caseType;
+        this.hearingType = hearingType;
         this.duration = duration;
     }
 
-    public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime createdAt) {
+    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration,
+                       OffsetDateTime createdAt) {
         this.id = id;
         this.sessionId = sessionId;
         this.caseType = caseType;
+        this.hearingType = hearingType;
         this.duration = duration;
         this.createdAt = createdAt;
     }
 
-    public HearingPart(String id, String sessionId, String caseType, Duration duration, OffsetDateTime scheduleStart,
+    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration,
+                       OffsetDateTime scheduleStart,
                        OffsetDateTime scheduleEnd, OffsetDateTime createdAt) {
         this.id = id;
         this.sessionId = sessionId;
         this.caseType = caseType;
+        this.hearingType = hearingType;
         this.duration = duration;
         this.scheduleStart = scheduleStart;
         this.scheduleEnd = scheduleEnd;
@@ -53,7 +59,8 @@ public class HearingPart extends Fact {
 
     @Override
     public String toDescription() {
-        return ("Duration: " + duration + ", Case type: " + caseType + ", Scheduled start: "
+        return ("Duration: " + duration + ", Case type: " + caseType + ", Hearing type: "
+            + hearingType + ", Scheduled start: "
             + DateTimeUtils.humanizeDate(scheduleStart) + ", Scheduled end: " + DateTimeUtils.humanizeDate(scheduleEnd)
             + ", Created at: " + createdAt).replace("null", "N/A");
     }

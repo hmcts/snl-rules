@@ -14,6 +14,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.SessionType;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
@@ -51,6 +52,7 @@ public class FactMessageHandlerFactory {
         this.availableFacts.put("day", Day.class);
         this.availableFacts.put("hour", Hour.class);
         this.availableFacts.put("minute", Minute.class);
+        this.availableFacts.put("sessionType", SessionType.class);
     }
 
     public FactCommand create(String type) {

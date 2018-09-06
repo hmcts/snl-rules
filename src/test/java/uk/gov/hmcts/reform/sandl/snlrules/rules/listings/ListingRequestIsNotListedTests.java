@@ -26,6 +26,9 @@ public class ListingRequestIsNotListedTests {
     private static final String LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY = "Listing request "
         + "target schedule to date is 4 weeks or nearer from today and it has not been listed yet";
 
+    private static final String hearingTypeSmallClaims = "small-claims";
+    private static final String caseTypeSmallClaims = "small-claims";
+
     private DroolsService droolsService;
     private KieSession rules;
 
@@ -41,7 +44,8 @@ public class ListingRequestIsNotListedTests {
     public void should_be_no_problem_when_listing_request_is_not_older_than_60_days() {
         setDateInRules(rules,2018, 05, 31);
 
-        rules.insert(new HearingPart(listingRequestId, null, "FTRACK", Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+            Duration.ofMinutes(60),
             OffsetDateTime.of(2018, 05, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
@@ -54,7 +58,8 @@ public class ListingRequestIsNotListedTests {
     public void should_be_a_problem_when_listing_request_is_older_than_60_days() {
         setDateInRules(rules,2018, 05, 31);
 
-        rules.insert(new HearingPart(listingRequestId, null, "FTRACK", Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+            Duration.ofMinutes(60),
             OffsetDateTime.of(2018, 01, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
@@ -71,7 +76,8 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, "FTRACK", Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+            Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
 
         droolsService.clearFactModifications();
@@ -88,7 +94,7 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, "FTRACK", Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, caseTypeSmallClaims, hearingTypeSmallClaims, Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
 
         droolsService.clearFactModifications();
@@ -112,7 +118,7 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 8, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, "FTRACK", Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, caseTypeSmallClaims, hearingTypeSmallClaims, Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
 
         droolsService.clearFactModifications();

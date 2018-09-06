@@ -6,5 +6,6 @@ public enum ProblemTypes {
     Listing_policy_violation,
     Resource_contention,
     Session_utilisation_overlisted,
-    Session_utilisation_underlisted
+    Session_utilisation_underlisted,
+    Listing_request_types_violation,
 }
