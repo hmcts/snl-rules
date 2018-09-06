@@ -123,7 +123,7 @@ rule "The case type on the listing request does not match a case type associated
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $session : Session()
+        $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
         $sessionType : SessionType(code == $session.sessionType && !this.containsCaseTypeByCode($hearingPart.caseType))
     then
@@ -139,7 +139,7 @@ rule "The hearing type on the listing request does not match a hearing type asso
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $session : Session()
+        $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
         $sessionType : SessionType(code == $session.sessionType && !this.containsHearingTypeByCode($hearingPart.hearingType))
     then

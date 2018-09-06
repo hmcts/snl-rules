@@ -97,4 +97,15 @@ public class CaseTypeDoesNotMatchCaseTypeOnSessionTypeTests {
             ProblemTypes.Listing_request_types_violation).size())
             .isEqualTo(1);
     }
+
+    @Test
+    public void should_be_no_problem_when_hearing_caseType_doesnot_match_sessionType_caseType_in_the_past() {
+        should_be_problem_when_hearing_caseType_doesnot_match_sessionType_caseType();
+        setDateInRules(rules,2018, 9, 5);
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(CASE_TYPE_DOES_NOT_MATCH_CASE_TYPE_ON_SESSION_TYPE));
+
+        assertProblems(droolsService,0, 0, 1);
+    }
 }
