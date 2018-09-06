@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules.listings;
 
+import lombok.val;
 import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,9 +82,12 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
-            Duration.ofMinutes(60),
-            scheduleStart, scheduleEnd, createdAt));
+        val hearingPart = new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60));
+        hearingPart.setScheduleStart(scheduleStart);
+        hearingPart.setScheduleEnd(scheduleEnd);
+        hearingPart.setCreatedAt(createdAt);
+        rules.insert(hearingPart);
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY));
@@ -99,8 +103,12 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
-            Duration.ofMinutes(60), scheduleStart, scheduleEnd, createdAt));
+        val hearingPart = new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60));
+        hearingPart.setScheduleStart(scheduleStart);
+        hearingPart.setScheduleEnd(scheduleEnd);
+        hearingPart.setCreatedAt(createdAt);
+        rules.insert(hearingPart);
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY));

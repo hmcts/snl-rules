@@ -44,19 +44,6 @@ public class HearingPart extends Fact {
         this.createdAt = createdAt;
     }
 
-    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration,
-                       OffsetDateTime scheduleStart,
-                       OffsetDateTime scheduleEnd, OffsetDateTime createdAt) {
-        this.id = id;
-        this.sessionId = sessionId;
-        this.caseType = caseType;
-        this.hearingType = hearingType;
-        this.duration = duration;
-        this.scheduleStart = scheduleStart;
-        this.scheduleEnd = scheduleEnd;
-        this.createdAt = createdAt;
-    }
-
     @Override
     public String toDescription() {
         return ("Duration: " + duration + ", Case type: " + caseType + ", Hearing type: "
