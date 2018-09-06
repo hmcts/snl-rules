@@ -15,13 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @SuppressWarnings("squid:S2160") // S2160 - because Fact controls identity distinction
 public class SessionType extends Fact {
-    private String description;
     private List<CaseType> caseTypes;
     private List<HearingType> hearingTypes;
 
     public SessionType(String code, String description, List<CaseType> caseTypes, List<HearingType> hearingTypes) {
         this.setCode(code);
-        this.description = description;
         this.caseTypes = caseTypes;
         this.hearingTypes = hearingTypes;
     }
@@ -35,7 +33,7 @@ public class SessionType extends Fact {
     }
 
     @Override public String toDescription() {
-        return ("Name: " + description).replace("null", "N/A");
+        return ("Code: " + getCode()).replace("null", "N/A");
     }
 
     public boolean containsCaseTypeByCode(String code) {
