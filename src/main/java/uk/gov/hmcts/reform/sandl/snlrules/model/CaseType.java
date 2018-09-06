@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CaseType{
+public class CaseType {
     private String code;
     private String description;
 }

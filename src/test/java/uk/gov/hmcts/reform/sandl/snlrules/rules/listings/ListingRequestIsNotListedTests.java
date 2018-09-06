@@ -7,13 +7,17 @@ import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.assertProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.getInsertedProblems;
+import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.insertSessionTypesToRules;
 import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.setDateInRules;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,8 +30,8 @@ public class ListingRequestIsNotListedTests {
     private static final String LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY = "Listing request "
         + "target schedule to date is 4 weeks or nearer from today and it has not been listed yet";
 
-    private static final String hearingTypeSmallClaims = "small-claims";
-    private static final String caseTypeSmallClaims = "small-claims";
+    private static final String hearingTypeFastTrack = "fast-track-ht";
+    private static final String caseTypeFastTrack = "fast-track-ct";
 
     private DroolsService droolsService;
     private KieSession rules;
@@ -38,13 +42,14 @@ public class ListingRequestIsNotListedTests {
         droolsService.init();
 
         rules = droolsService.getRulesSession();
+        insertSessionTypesToRules(rules);
     }
 
     @Test
     public void should_be_no_problem_when_listing_request_is_not_older_than_60_days() {
         setDateInRules(rules,2018, 05, 31);
 
-        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
             Duration.ofMinutes(60),
             OffsetDateTime.of(2018, 05, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
@@ -58,7 +63,7 @@ public class ListingRequestIsNotListedTests {
     public void should_be_a_problem_when_listing_request_is_older_than_60_days() {
         setDateInRules(rules,2018, 05, 31);
 
-        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
             Duration.ofMinutes(60),
             OffsetDateTime.of(2018, 01, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
@@ -76,7 +81,7 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, null, caseTypeSmallClaims, hearingTypeSmallClaims,
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
             Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
 
@@ -87,20 +92,23 @@ public class ListingRequestIsNotListedTests {
     }
 
     @Test
-    public void should_be_a_problem_when_listing_is_4_weeks_or_nearer_not_listed_then_dissaper() {
+    public void should_be_a_problem_when_listing_target_schedule_is_4_weeks_or_nearer_not_listed_then_disappear() {
         setDateInRules(rules,2018, 05, 31);
 
         OffsetDateTime scheduleStart = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, caseTypeSmallClaims, hearingTypeSmallClaims, Duration.ofMinutes(60),
-            scheduleStart, scheduleEnd, createdAt));
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60), scheduleStart, scheduleEnd, createdAt));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY));
 
         assertProblems(droolsService, 1, 0, 0);
+        assertThat(getInsertedProblems(droolsService,
+            ProblemTypes.Listing_policy_violation).size())
+            .isEqualTo(1);
 
         setDateInRules(rules,2018, 03, 31);
 
@@ -118,7 +126,7 @@ public class ListingRequestIsNotListedTests {
         OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 8, 15, 0, 0, 0, 0, ZoneOffset.UTC);
         OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
 
-        rules.insert(new HearingPart(listingRequestId, caseTypeSmallClaims, hearingTypeSmallClaims, Duration.ofMinutes(60),
+        rules.insert(new HearingPart(listingRequestId, caseTypeFastTrack, hearingTypeFastTrack, Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
 
         droolsService.clearFactModifications();

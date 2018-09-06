@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.SessionType;
 import uk.gov.hmcts.reform.sandl.snlrules.model.CaseType;
+import uk.gov.hmcts.reform.sandl.snlrules.model.HearingType;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
@@ -47,7 +48,7 @@ rule "Listing request target schedule to date is 4 weeks or nearer from today an
         Month($month: value)
         Day($day: value)
         $hearingPart: HearingPart(sessionId == null && scheduleEnd != null && scheduleStart != null
-        && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
+         && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
                                   ProblemSeverities.Warn,
@@ -125,7 +126,6 @@ rule "The case type on the listing request does not match a case type associated
         $session : Session()
         $hearingPart : HearingPart(sessionId == $session.id)
         $sessionType : SessionType(code == $session.sessionType && !this.containsCaseTypeByCode($hearingPart.caseType))
-        // session type is missing completly
     then
         insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
                                   ProblemSeverities.Warn,
@@ -134,16 +134,19 @@ rule "The case type on the listing request does not match a case type associated
                                   new ProblemReference($session)));
 end
 
-//rule "The hearing type on the listing request does not match a hearing type associated to the session type of the session"
-//    when
-//        Year($year: value)
-//        Month($month: value)
-//        Day($day: value)
-//        $hearingPart : HearingPart()
-//        $session : Session(id == $hearingPart.sessionId && caseType != $hearingPart.caseType)
-//    then
-//        insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
-//                                  ProblemSeverities.Warn,
-//                                  "The hearing type on the listing request does not match a hearing type associated to the session type of the session",
-//                                  new ProblemReference($s)));
-//end
+rule "The hearing type on the listing request does not match a hearing type associated to the session type of the session"
+    when
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $session : Session()
+        $hearingPart : HearingPart(sessionId == $session.id)
+        $sessionType : SessionType(code == $session.sessionType && !this.containsHearingTypeByCode($hearingPart.hearingType))
+    then
+        insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
+                                  ProblemSeverities.Warn,
+                                  "The hearing type on the listing request does not match a hearing type associated to the session type of the session",
+                                  new ProblemReference($hearingPart),
+                                  new ProblemReference($session)));
+end
+
