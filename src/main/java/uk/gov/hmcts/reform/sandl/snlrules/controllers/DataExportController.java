@@ -57,12 +57,12 @@ public class DataExportController {
         listFacts(builder, droolsService, HearingPart.class, "HEARING PART");
         listFacts(builder, droolsService, BookableJudge.class, "BOOKABLE JUDGE");
         listFacts(builder, droolsService, BookableRoom.class, "BOOKABLE ROOM");
+        listFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
         listFacts(builder, droolsService, Year.class, "YEAR");
         listFacts(builder, droolsService, Month.class, "MONTH");
         listFacts(builder, droolsService, Day.class, "DAY");
         listFacts(builder, droolsService, Hour.class, "HOUR");
         listFacts(builder, droolsService, Minute.class, "MINUTE");
-        listFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
 
         return builder.toString();
     }
@@ -86,6 +86,7 @@ public class DataExportController {
         countFacts(builder, droolsService, HearingPart.class, "HEARING PART");
         countFacts(builder, droolsService, BookableJudge.class, "BOOKABLE JUDGE");
         countFacts(builder, droolsService, BookableRoom.class, "BOOKABLE ROOM");
+        countFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
         countFacts(builder, droolsService, Year.class, "YEAR");
         countFacts(builder, droolsService, Month.class, "MONTH");
         countFacts(builder, droolsService, Day.class, "DAY");
