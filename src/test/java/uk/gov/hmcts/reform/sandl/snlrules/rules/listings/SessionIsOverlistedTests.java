@@ -81,9 +81,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 24, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", Duration.ofMinutes(30)));
-        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", Duration.ofMinutes(30)));
-        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_OVERLISTED_AND_1_DAY_OR_LESS_BEFORE_START));
@@ -100,9 +100,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 24, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", Duration.ofMinutes(20)));
-        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", Duration.ofMinutes(30)));
-        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(25)));
+        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(20)));
+        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(25)));
         addSomeDummySessionsAndHearings();
 
         droolsService.clearFactModifications();
@@ -128,9 +128,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 25, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", Duration.ofMinutes(20)));
-        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", Duration.ofMinutes(30)));
-        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(15)));
+        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(20)));
+        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(15)));
 
         //some other sessions and hearings so we have something else in the rules
         addSomeDummySessionsAndHearings();
@@ -157,7 +157,7 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 25, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK",
+        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK", "FTRACK",
             Duration.ofMinutes(100)));
 
         // 2 days before
@@ -165,11 +165,11 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 26, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(20)));
-        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(30)));
-        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(45)));
 
         //some other sessions and hearings so we have something else in the rules
@@ -200,9 +200,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 28, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", Duration.ofMinutes(20)));
-        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", Duration.ofMinutes(30)));
-        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(50)));
+        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(20)));
+        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(30)));
+        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(50)));
 
         //some other sessions and hearings so we have something else in the rules
         addSomeDummySessionsAndHearings();
@@ -228,7 +228,7 @@ public class SessionIsOverlistedTests {
                 ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK",
+        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK", "FTRACK",
             Duration.ofMinutes(200)));
 
         // 5 days before
@@ -236,11 +236,11 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 28, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(40)));
-        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK","FTRACK",
             Duration.ofMinutes(50)));
-        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(45)));
 
         // 6 days before
@@ -248,9 +248,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 29, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId3, "FTRACK",
+        rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId3, "FTRACK", "FTRACK",
             Duration.ofMinutes(70)));
-        rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId3, "FTRACK",
+        rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId3, "FTRACK", "FTRACK",
             Duration.ofMinutes(60)));
 
         //some other sessions and hearings so we have something else in the rules
@@ -281,9 +281,9 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 28, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", Duration.ofMinutes(20)));
-        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", Duration.ofMinutes(15)));
-        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", Duration.ofMinutes(5)));
+        rules.insert(new HearingPart(hearingPartId1, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(20)));
+        rules.insert(new HearingPart(hearingPartId2, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(15)));
+        rules.insert(new HearingPart(hearingPartId3, sessionId1, "FTRACK", "FTRACK", Duration.ofMinutes(5)));
 
         //some other sessions and hearings so we have something else in the rules
         addSomeDummySessionsAndHearings();
@@ -303,7 +303,7 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 27, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK",
+        rules.insert(new HearingPart("b8146183-1032-4015-8104-c4f38802b19a", sessionId1, "FTRACK", "FTRACK",
             Duration.ofMinutes(20)));
 
         // 5 days before
@@ -311,11 +311,11 @@ public class SessionIsOverlistedTests {
             OffsetDateTime.of(2018, 5, 28, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("96527c3d-a41f-42ab-b907-1607d644b77a", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(10)));
-        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("5f928573-5601-40ee-97f4-42a03eb9a0b5", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(7)));
-        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK",
+        rules.insert(new HearingPart("2fbbf624-c38e-49d3-99f8-df4f29a78a05", sessionId2, "FTRACK", "FTRACK",
             Duration.ofMinutes(5)));
 
         // 6 days before
@@ -324,9 +324,9 @@ public class SessionIsOverlistedTests {
                 ZoneOffset.UTC),
             Duration.ofMinutes(60), "FTRACK"));
 
-        rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId3, "FTRACK",
+        rules.insert(new HearingPart("15e461e7-a846-41e5-bb99-fd6c780e82d3", sessionId3, "FTRACK", "FTRACK",
             Duration.ofMinutes(10)));
-        rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId3, "FTRACK",
+        rules.insert(new HearingPart("03756aa6-2be7-4dd6-a636-dafe694cc23c", sessionId3, "FTRACK", "FTRACK",
             Duration.ofMinutes(19)));
 
         //some other sessions and hearings so we have something else in the rules
@@ -354,6 +354,6 @@ public class SessionIsOverlistedTests {
                 ZoneOffset.UTC),
             Duration.ofMinutes(60), "MTRACK"));
         rules.insert(new HearingPart("1abb32b7-9d90-484a-beeb-857d1ce9143a", "422b74f5-8645-4355-8570-3142348ff299",
-            "MTRACK", Duration.ofMinutes(20)));
+            "MTRACK", "MTRACK", Duration.ofMinutes(20)));
     }
 }

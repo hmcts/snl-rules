@@ -21,7 +21,6 @@ public final class DateTimeUtils {
             currentYear, currentMonth, currentDay,
             0, 0, 0, 0, ZoneOffset.UTC);
 
-
         long days = ChronoUnit.DAYS.between(currentDate, dateToCheck);
 
         return greaterOrEqualsDays <= days && days < lessDays;
