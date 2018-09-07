@@ -63,7 +63,7 @@ public class HearingTypeDoesNotMatchHearingTypeOnSessionTypeTests {
     }
 
     @Test
-    public void should_be_problem_when_hearingType_missing_in_sessionType_hearingType() {
+    public void should_be_no_problem_when_hearingType_missing_in_sessionType_hearingType() {
         rules.insert(new Session(sessionId, judgeId, roomId,
             OffsetDateTime.of(2018, 9, 4, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "fast-track-st"));

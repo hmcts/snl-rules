@@ -125,7 +125,7 @@ rule "The case type on the listing request does not match a case type associated
         Day($day: value)
         $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
-        $sessionType : SessionType(code == $session.sessionType && !this.containsCaseTypeByCode($hearingPart.caseType))
+        $sessionType : SessionType(code == $session.sessionType && this.hasCaseTypes() && !this.containsCaseTypeByCode($hearingPart.caseType))
     then
         insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
                                   ProblemSeverities.Warn,
@@ -141,7 +141,7 @@ rule "The hearing type on the listing request does not match a hearing type asso
         Day($day: value)
         $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
-        $sessionType : SessionType(code == $session.sessionType && !this.containsHearingTypeByCode($hearingPart.hearingType))
+        $sessionType : SessionType(code == $session.sessionType && hasHearingTypes() && !this.containsHearingTypeByCode($hearingPart.hearingType))
     then
         insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
                                   ProblemSeverities.Warn,
