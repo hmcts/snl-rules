@@ -141,7 +141,8 @@ rule "The hearing type on the listing request does not match a hearing type asso
         Day($day: value)
         $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
-        $sessionType : SessionType(code == $session.sessionType && hasHearingTypes() && !this.containsHearingTypeByCode($hearingPart.hearingType))
+        $sessionType : SessionType(code == $session.sessionType && this.hasHearingTypes() && this.hasCaseTypes()
+          && !this.containsHearingTypeByCode($hearingPart.hearingType) && this.containsCaseTypeByCode($hearingPart.caseType))
     then
         insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
                                   ProblemSeverities.Warn,

@@ -74,19 +74,16 @@ public class HearingTypeDoesNotMatchHearingTypeOnSessionTypeTests {
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(HEARING_TYPE_DOES_NOT_MATCH_HEARING_TYPE_ON_SESSION_TYPE));
 
-        assertProblems(droolsService, 1, 0, 0);
-        assertThat(getInsertedProblems(droolsService,
-            ProblemTypes.Listing_request_types_violation).size())
-            .isEqualTo(1);
+        assertProblems(droolsService, 0, 0, 0);
     }
 
     @Test
-    public void should_be_problem_when_hearing_hearingType_doesnot_match_sessionType_hearingType() {
+    public void should_be_problem_when_hearing_hearingType_doesnot_match_sessionType_hearingType_and_there_is_no_case_type_problem() {
         rules.insert(new Session(sessionId, judgeId, roomId,
             OffsetDateTime.of(2018, 9, 4, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), "fast-track-st"));
 
-        rules.insert(new HearingPart(hearingPartId, sessionId, "other-track-ct", "multi-track-ht",
+        rules.insert(new HearingPart(hearingPartId, sessionId, "fast-track-ct", "multi-track-ht",
             Duration.ofMinutes(60)));
 
         droolsService.clearFactModifications();
@@ -100,7 +97,7 @@ public class HearingTypeDoesNotMatchHearingTypeOnSessionTypeTests {
 
     @Test
     public void should_be_problem_when_hearing_hearingType_doesnot_match_sessionType_hearingType_in_past() {
-        should_be_problem_when_hearing_hearingType_doesnot_match_sessionType_hearingType();
+        should_be_problem_when_hearing_hearingType_doesnot_match_sessionType_hearingType_and_there_is_no_case_type_problem();
         setDateInRules(rules,2018, 9, 5);
 
         droolsService.clearFactModifications();
