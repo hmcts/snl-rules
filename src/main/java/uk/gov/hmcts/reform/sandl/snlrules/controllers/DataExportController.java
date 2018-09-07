@@ -14,6 +14,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.model.SessionType;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Day;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
@@ -61,6 +62,7 @@ public class DataExportController {
         listFacts(builder, droolsService, Day.class, "DAY");
         listFacts(builder, droolsService, Hour.class, "HOUR");
         listFacts(builder, droolsService, Minute.class, "MINUTE");
+        listFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
 
         return builder.toString();
     }
