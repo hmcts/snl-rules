@@ -27,8 +27,9 @@ public class Problem extends Fact {
         this.type = type;
         this.severity = severity;
         this.references.addAll(Arrays.asList(references));
-        this.id = DigestUtils.md5Hex(this.toString());
         this.message = message;
+        // the line below has to be the last one as hash is generated from object values
+        this.id = DigestUtils.md5Hex(this.toString());
     }
 
     @Override public boolean equals(Object o) { //NOPMD
