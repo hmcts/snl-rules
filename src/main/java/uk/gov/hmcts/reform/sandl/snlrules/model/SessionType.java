@@ -41,7 +41,7 @@ public class SessionType extends Fact {
     }
 
     public boolean containsHearingTypeByCode(String code) {
-        return hearingTypes!= null && hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
+        return hearingTypes != null && hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
     }
 
     public boolean hasCaseTypes() {
@@ -49,7 +49,7 @@ public class SessionType extends Fact {
     }
 
     public boolean hasHearingTypes() {
-        return hearingTypes!= null && !hearingTypes.isEmpty();
+        return hearingTypes != null && !hearingTypes.isEmpty();
     }
 
 }
