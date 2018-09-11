@@ -37,19 +37,19 @@ public class SessionType extends Fact {
     }
 
     public boolean containsCaseTypeByCode(String code) {
-        return caseTypes.stream().anyMatch(ct -> ct.getCode().equalsIgnoreCase(code));
+        return caseTypes != null && caseTypes.stream().anyMatch(ct -> ct.getCode().equalsIgnoreCase(code));
     }
 
     public boolean containsHearingTypeByCode(String code) {
-        return hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
+        return hearingTypes!= null && hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
     }
 
     public boolean hasCaseTypes() {
-        return !caseTypes.isEmpty();
+        return caseTypes != null && !caseTypes.isEmpty();
     }
 
     public boolean hasHearingTypes() {
-        return !hearingTypes.isEmpty();
+        return hearingTypes!= null && !hearingTypes.isEmpty();
     }
 
 }
