@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @SuppressWarnings("squid:S2160") // S2160 - because Fact controls identity distinction
@@ -37,10 +37,19 @@ public class SessionType extends Fact {
     }
 
     public boolean containsCaseTypeByCode(String code) {
-        return caseTypes.stream().anyMatch(ct -> ct.getCode().equalsIgnoreCase(code));
+        return caseTypes != null && caseTypes.stream().anyMatch(ct -> ct.getCode().equalsIgnoreCase(code));
     }
 
     public boolean containsHearingTypeByCode(String code) {
-        return hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
+        return hearingTypes != null && hearingTypes.stream().anyMatch(ht -> ht.getCode().equalsIgnoreCase(code));
     }
+
+    public boolean hasCaseTypes() {
+        return caseTypes != null && !caseTypes.isEmpty();
+    }
+
+    public boolean hasHearingTypes() {
+        return hearingTypes != null && !hearingTypes.isEmpty();
+    }
+
 }
