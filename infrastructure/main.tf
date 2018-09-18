@@ -27,40 +27,6 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
   }
 }
 
-resource "azurerm_network_interface" "rulesengine-nic2" {
-  name                      = "${var.name}-nic2"
-  location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group}"
-  network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
-
-  ip_configuration {
-    name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snlperf/subnets/core-infra-subnet-2-snlperf"
-    private_ip_address_allocation = "dynamic"
-  }
-
-  tags {
-    environment = "rulesengine"
-  }
-}
-
-resource "azurerm_network_interface" "rulesengine-nic3" {
-  name                      = "${var.name}-nic3"
-  location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group}"
-  network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
-
-  ip_configuration {
-    name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snlperf/subnets/core-infra-subnet-2-snlperf"
-    private_ip_address_allocation = "dynamic"
-  }
-
-  tags {
-    environment = "rulesengine"
-  }
-}
-
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
   name                  = "${var.name}01"
   location              = "${var.location}"
