@@ -1,24 +1,69 @@
-locals {
-  app_full_name = "${var.product}-${var.component}"
+variable "username" {
+  default     = "admin"
 }
-module "snl-rules" {
-  source               = "git@github.com:hmcts/moj-module-webapp"
-  product              = "${var.product}-${var.component}"
-  location             = "${var.location}"
-  env                  = "${var.env}"
-  ilbIp                = "${var.ilbIp}"
-  is_frontend          = false
-  subscription         = "${var.subscription}"
-  additional_host_name = "${var.external_host_name}"
-  capacity             = "1"
-  appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
-  common_tags          = "${var.common_tags}"
 
-  app_settings = {
-    # REDIS_HOST                   = "${module.redis-cache.host_name}"
-    # REDIS_PORT                   = "${module.redis-cache.redis_port}"
-    # REDIS_PASSWORD               = "${module.redis-cache.access_key}"
-    # RECIPE_BACKEND_URL = "http://snl-recipe-backend-${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
+resource "random_string" "password" {
+  length      = 16
+  special     = false
+  min_lower   = 2
+  min_numeric = 2
+}
 
+resource "azurerm_network_interface" "rulesengine-nic1" {
+  name                      = "${var.name}-nic1"
+  location                  = "${var.location}"
+  resource_group_name       = "${var.resource_group}"
+  network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
+
+  ip_configuration {
+    name                          = "IPConfiguration"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/core-infra-vnet-snlperf/subnets/core-infra-subnet-2-snlperf"
+    private_ip_address_allocation = "dynamic"
   }
+
+  tags {
+    environment = "rulesengine"
+  }
+}
+
+resource "azurerm_virtual_machine" "rulesengine-vm01" {
+  name                  = "${var.name}01"
+  location              = "${var.location}"
+  resource_group_name   = "${var.resource_group}"
+  network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
+  vm_size               = "Standard_E2s_v3"
+
+  storage_os_disk {
+    name              = "${var.name}01-storage"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+
+  storage_image_reference {
+    publisher = "OpenLogic"
+    offer     = "CentOS"
+    sku       = "7.3"
+    version   = "latest"
+  }
+
+  os_profile {
+    computer_name  = "${var.name}01"
+    admin_username = "${var.username}"
+    admin_password = "${random_string.password.result}"
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+
+  tags {
+    environment = "rulesengine"
+  }
+}
+
+resource "azurerm_network_security_group" "rulesengine-nsg1" {
+  name                = "${var.name}-nsg"
+  location            = "${var.location}"
+  resource_group_name = "core-infra-snlperf"
 }
