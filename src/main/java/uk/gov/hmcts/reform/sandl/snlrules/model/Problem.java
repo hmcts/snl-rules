@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,12 +23,14 @@ public class Problem extends Fact {
     private ProblemTypes type;
     private ProblemSeverities severity;
     private List<ProblemReference> references = new ArrayList<>();
+    private OffsetDateTime createdAt;
 
     public Problem(ProblemTypes type, ProblemSeverities severity, String message, ProblemReference... references) {
         this.type = type;
         this.severity = severity;
         this.references.addAll(Arrays.asList(references));
         this.message = message;
+        this.createdAt = OffsetDateTime.now();
         // the line below has to be the last one as hash is generated from object values
         this.id = DigestUtils.md5Hex(this.toString());
     }
