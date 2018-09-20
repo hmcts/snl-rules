@@ -31,8 +31,7 @@ public class Problem extends Fact {
         this.references.addAll(Arrays.asList(references));
         this.message = message;
         this.createdAt = OffsetDateTime.now();
-        // the line below has to be the last one as hash is generated from object values
-        this.id = DigestUtils.md5Hex(this.toString());
+        this.id = DigestUtils.md5Hex(type.toString() + severity + references.toString() + message);
     }
 
     @Override public boolean equals(Object o) { //NOPMD
@@ -46,7 +45,7 @@ public class Problem extends Fact {
 
     @Override
     public String toDescription() {
-        return ("Message: " + message + ", type: " + type + ", severity: " + severity)
+        return ("Message: " + message + ", type: " + type + ", severity: " + severity + "created at: " + createdAt)
             .replace("null", "N/A");
     }
 }
