@@ -31,7 +31,7 @@ public class Problem extends Fact {
         this.references.addAll(Arrays.asList(references));
         this.message = message;
         this.createdAt = OffsetDateTime.now();
-        this.id = DigestUtils.md5Hex(type.toString() + severity + references.toString() + message);
+        this.id = DigestUtils.md5Hex(type.toString() + severity + this.references.toString() + message);
     }
 
     @Override public boolean equals(Object o) { //NOPMD
