@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.messages.commands;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public abstract class FactCommand {
             .findAndRegisterModules()
             .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
             .configure(FAIL_ON_EMPTY_BEANS, false)
+            .setDateFormat(new ISO8601DateFormat())
             .configure(ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
 
     public abstract List<FactModification> execute(DroolsService droolsService, String data);
