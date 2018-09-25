@@ -56,4 +56,8 @@ public class S2SAuthenticationService {
         }
         return false;
     }
+
+    public boolean isDisabled() {
+        return !this.config.enabled;
+    }
 }
