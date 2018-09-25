@@ -134,5 +134,20 @@ public final class RulesTestHelper {
         otherTrackHt.add(new HearingType("other_3-track-ht", "a description"));
 
         rules.insert(new SessionType("other-track-st", "a description", otherTrackCt, otherTrackHt));
+
+        rules.insert(new SessionType("no_association-st", "a description", new ArrayList<>(), new ArrayList<>()));
+
+        List<HearingType> onlyTrackHt = new ArrayList<>();
+        onlyTrackHt.add(new HearingType("only-track-ht", "a description"));
+        onlyTrackHt.add(new HearingType("only_2-track-ht", "a description"));
+
+        rules.insert(new SessionType("onlyHT-st", "a description", new ArrayList<>(), onlyTrackHt));
+
+        List<CaseType> onlyTrackCt = new ArrayList<>();
+        onlyTrackCt.add(new CaseType("only-track-ct", "a description"));
+        onlyTrackCt.add(new CaseType("only_2-track-ct", "a description"));
+        onlyTrackCt.add(new CaseType("only_3-track-ct", "a description"));
+
+        rules.insert(new SessionType("onlyCT-st", "a description", onlyTrackCt, new ArrayList<>()));
     }
 }

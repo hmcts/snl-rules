@@ -21,7 +21,7 @@ rule "Listing request target schedule has not been adhered to when listed"
          !DateTimeUtils.between(start, $hearingPart.scheduleStart, $hearingPart.scheduleEnd))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Listing request target schedule has not been adhered to when listed",
                                   new ProblemReference($hearingPart),
                                   new ProblemReference($session)));
@@ -36,7 +36,7 @@ rule "Listing request is more than 60 days old, and it has not been listed yet"
         DateTimeUtils.olderThan(createdAt, $year, $month, $day, 60))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Listing request is more than 60 days old, and it has not been listed yet",
                                   new ProblemReference($hearingPart)));
 
@@ -51,7 +51,7 @@ rule "Listing request target schedule to date is 4 weeks or nearer from today an
          && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Listing request target schedule to date is 4 weeks or nearer from today "
                                  + "and it has not been listed yet",
                                  new ProblemReference($hearingPart)));
@@ -67,7 +67,7 @@ rule "Session is overlisted and 1 day or less before start"
         Session(this == $s && $hpSumMinutes > duration.toMinutes && DateTimeUtils.between(start, $year, $month, $day, 0, 2))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session is overlisted and 1 day or less before start",
                                   new ProblemReference($s)));
 end
@@ -82,7 +82,7 @@ rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before s
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 1.5 && DateTimeUtils.between(start, $year, $month, $day, 2, 4))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session is overlisted greater or equal 50 percent and 1 to 3 days before start",
                                   new ProblemReference($s)));
 end
@@ -97,7 +97,7 @@ rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before 
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 2 && DateTimeUtils.between(start, $year, $month, $day, 4, 7))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session is overlisted greater or equal 100 percent and 3 to 7 days before start",
                                   new ProblemReference($s)));
 end
@@ -112,40 +112,31 @@ rule "Session is listed less or equal 50 percent 7 days before start"
         Session(this == $s && $hpSumMinutes <= duration.toMinutes / 2 && DateTimeUtils.between(start, $year, $month, $day, 0, 7))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_underlisted,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session is listed less or equal 50 percent 7 days before start",
                                   new ProblemReference($s)));
 end
 
-
-rule "The case type on the listing request does not match a case type associated to the session type of the session"
+rule "The session type is not suitable for this listing request"
     when
         Year($year: value)
         Month($month: value)
         Day($day: value)
         $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
         $hearingPart : HearingPart(sessionId == $session.id)
-        $sessionType : SessionType(code == $session.sessionType && !this.containsCaseTypeByCode($hearingPart.caseType))
+        $sessionType : SessionType(code == $session.sessionType
+          && (
+               (this.hasHearingTypes() && this.hasCaseTypes()
+                && !this.containsHearingTypeByCode($hearingPart.hearingType) && !this.containsCaseTypeByCode($hearingPart.caseType))
+            || (this.hasHearingTypes() && !this.hasCaseTypes()
+                && !this.containsHearingTypeByCode($hearingPart.hearingType))
+            || (!this.hasHearingTypes() && this.hasCaseTypes()
+                && !this.containsCaseTypeByCode($hearingPart.caseType)))
+          )
     then
         insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
-                                  ProblemSeverities.Warn,
-                                  "The case type on the listing request does not match a case type associated to the session type of the session",
-                                  new ProblemReference($hearingPart),
-                                  new ProblemReference($session)));
-end
-
-rule "The hearing type on the listing request does not match a hearing type associated to the session type of the session"
-    when
-        Year($year: value)
-        Month($month: value)
-        Day($day: value)
-        $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
-        $hearingPart : HearingPart(sessionId == $session.id)
-        $sessionType : SessionType(code == $session.sessionType && !this.containsHearingTypeByCode($hearingPart.hearingType))
-    then
-        insertLogical(new Problem(ProblemTypes.Listing_request_types_violation,
-                                  ProblemSeverities.Warn,
-                                  "The hearing type on the listing request does not match a hearing type associated to the session type of the session",
+                                  ProblemSeverities.Warning,
+                                  String.format("Session of type %s is not suitable for this listing request", $sessionType.getCode()),
                                   new ProblemReference($hearingPart),
                                   new ProblemReference($session)));
 end

@@ -27,7 +27,7 @@ rule "Session Time For the Judge not Available"
         not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
     then
         insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session Time For the Judge not Available",
                                   new ProblemReference($s),
                                   new ProblemReference($j)));
@@ -41,7 +41,7 @@ rule "Session does not have a judge 4 weeks or less before start"
         $s : Session(judgeId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session does not have a judge 4 weeks or less before start",
                                   new ProblemReference($s)));
 end
@@ -54,7 +54,7 @@ rule "Session does not have a room 4 weeks or less before start"
         $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Session does not have a room 4 weeks or less before start",
                                   new ProblemReference($s)));
 end
@@ -69,7 +69,7 @@ rule "Double booking of judge (includes any overlapping)"
         $s2 : Session(this != $s && id <= $s.id && judgeId != null && $s.judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
     then
         insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Double booking of judge",
                                   new ProblemReference($s),
                                   new ProblemReference($s2),
@@ -87,7 +87,7 @@ rule "Double booking of room (includes any overlapping) 2 weeks before start"
                         && DateTimeUtils.between(start, $year, $month, $day, 0, 14))
     then
         insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warn,
+                                  ProblemSeverities.Warning,
                                   "Double booking of room",
                                   new ProblemReference($s),
                                   new ProblemReference($s2),
