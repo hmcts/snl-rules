@@ -21,7 +21,7 @@ vaultName = "infra-vault-nonprod"
 
 echo "vaultName: '${vaultName}'"
 
-echo "Building '${productName}'-'${appName} in '${environment}'"
+echo "Building '${productName}-${appName}' in '${environment}'"
 
 
 node {
