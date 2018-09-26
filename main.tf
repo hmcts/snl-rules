@@ -1,11 +1,3 @@
-variable "name" {
-  default     = "iaas-vnet-sandbox-rulesengine"
-}
-
-variable "username" {
-  default     = "admin"
-}
-
 resource "random_string" "password" {
   length      = 16
   special     = false
@@ -30,7 +22,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.rulesengine-rg.name}/providers/Microsoft.Network/virtualNetworks/iaas-vnet-sandbox/subnets/snl-rulesengine"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.virtual_network_resource_group}/providers/Microsoft.Network/virtualNetworks/${var.virtual_network_name}/subnets/${var.virtual_network_subnet}"
     private_ip_address_allocation = "dynamic"
   }
 
