@@ -35,7 +35,8 @@ public class BookableRoom extends Fact implements Serializable {
 
     @Override
     public String toDescription() {
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
+        String readableDuration = DateTimeUtils.readableDuration(this.duration);
+        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + readableDuration)
             .replace("null", "N/A");
     }
 }
