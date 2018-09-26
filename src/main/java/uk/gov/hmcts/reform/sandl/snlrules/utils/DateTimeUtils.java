@@ -1,7 +1,9 @@
 package uk.gov.hmcts.reform.sandl.snlrules.utils;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -109,5 +111,15 @@ public final class DateTimeUtils {
 
     public static boolean isLessOrEquals(OffsetDateTime v1, OffsetDateTime v2) {
         return !v1.isAfter(v2);
+    }
+
+    /**
+     * Returns time duration in a format: HH:mm ex: Duration of '1hour 5minutes' gives '01:05'.
+     *
+     * @param duration - object to transform
+     * @return transformed duration in HH:mm format
+     */
+    public static String readableDuration(Duration duration) {
+        return DurationFormatUtils.formatDuration(duration.toMillis(), "HH:mm");
     }
 }

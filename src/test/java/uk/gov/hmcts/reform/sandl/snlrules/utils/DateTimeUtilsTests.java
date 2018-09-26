@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -315,6 +316,19 @@ public class DateTimeUtilsTests {
         Assert.assertEquals("26/09/2018 15:06", DateTimeUtils.humanizeDate(utcParsedString));
 
         DateTimeUtils.zone = ZoneOffset.systemDefault();
+    }
+
+    @Test
+    public void readableDuration_should_returnProperlyFormattedString() {
+        Duration hoursAndMinutes = Duration.ofHours(11).plusMinutes(15);
+        Duration onlyMinutes = Duration.ofHours(0).plusMinutes(30);
+        Duration onlyHours = Duration.ofHours(1).plusMinutes(0);
+        Duration days = Duration.ofHours(131).plusMinutes(15);
+
+        Assert.assertEquals("11:15", DateTimeUtils.readableDuration(hoursAndMinutes));
+        Assert.assertEquals("00:30", DateTimeUtils.readableDuration(onlyMinutes));
+        Assert.assertEquals("01:00", DateTimeUtils.readableDuration(onlyHours));
+        Assert.assertEquals("131:15", DateTimeUtils.readableDuration(days));
     }
 
 }
