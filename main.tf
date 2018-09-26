@@ -25,12 +25,12 @@ resource "azurerm_resource_group" "rulesengine-rg" {
 resource "azurerm_network_interface" "rulesengine-nic1" {
   name                      = "${var.name}-nic1"
   location                  = "${var.location}"
-  resource_group_name       = "${var.resource_group}"
+  resource_group_name       = "${azurerm_resource_group.rulesengine-rg.name}"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group}/providers/Microsoft.Network/virtualNetworks/iaas-vnet-sandbox/subnets/snl-rulesengine"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${azurerm_resource_group.rulesengine-rg.name}/providers/Microsoft.Network/virtualNetworks/iaas-vnet-sandbox/subnets/snl-rulesengine"
     private_ip_address_allocation = "dynamic"
   }
 
@@ -42,7 +42,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
   name                  = "${var.name}01"
   location              = "${var.location}"
-  resource_group_name   = "${var.resource_group}"
+  resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
   vm_size               = "Standard_E2s_v3"
 
@@ -78,5 +78,5 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
 resource "azurerm_network_security_group" "rulesengine-nsg1" {
   name                = "${var.name}-nsg"
   location            = "${var.location}"
-  resource_group_name = "${var.resource_group}"
+  resource_group_name = "${azurerm_resource_group.rulesengine-rg.name}"
 }
