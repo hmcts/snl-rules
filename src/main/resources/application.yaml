@@ -6,7 +6,7 @@ drools:
 
 management:
   security:
-    enabled: ${MANAGEMENT_SECURITY_ENABLED:false}
+    enabled: ${MANAGEMENT_SECURITY_ENABLED:true}
     rules:
       jwtSecret: "nieWiedzialaJak"
       jwtExpirationInMs: 5000
