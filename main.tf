@@ -13,6 +13,15 @@ resource "random_string" "password" {
   min_numeric = 2
 }
 
+resource "azurerm_resource_group" "rulesengine-rg" {
+  name                      = "${var.resource_group}"
+  location                  = "${var.location}"
+
+  tags {
+    environment = "rulesengine"
+  }
+}
+
 resource "azurerm_network_interface" "rulesengine-nic1" {
   name                      = "${var.name}-nic1"
   location                  = "${var.location}"
