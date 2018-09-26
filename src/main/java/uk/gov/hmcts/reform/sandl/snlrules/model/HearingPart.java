@@ -46,6 +46,7 @@ public class HearingPart extends Fact {
 
     @Override
     public String toDescription() {
+        //TODO Humanize duration
         return ("Duration: " + duration + ", Case type: " + caseType + ", Hearing type: "
             + hearingType + ", Scheduled start: "
             + DateTimeUtils.humanizeDate(scheduleStart) + ", Scheduled end: " + DateTimeUtils.humanizeDate(scheduleEnd)

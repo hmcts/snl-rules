@@ -21,7 +21,7 @@ public class Session extends Fact implements Serializable {
     private String roomId;
     private OffsetDateTime start;
     private Duration duration;
-    private String sessionType;
+    public String sessionType;
 
     public Session(OffsetDateTime start, Duration duration) {
         this.start = start;
@@ -36,6 +36,10 @@ public class Session extends Fact implements Serializable {
         this.start = start;
         this.duration = duration;
         this.sessionType = sessionType;
+    }
+
+    public OffsetDateTime getStart() {
+        return start;
     }
 
     public OffsetDateTime getEnd() {

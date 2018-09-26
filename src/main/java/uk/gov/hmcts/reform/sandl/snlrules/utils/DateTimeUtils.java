@@ -4,11 +4,15 @@ import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 public final class DateTimeUtils {
+
+    public static ZoneId zone = ZoneOffset.systemDefault();
+
     private DateTimeUtils() {
     }
 
@@ -67,7 +71,9 @@ public final class DateTimeUtils {
         if (dateTime == null) {
             return "N/A";
         }
-        return dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+        return dateTime
+            .atZoneSameInstant(DateTimeUtils.zone)
+            .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
 
     public static boolean contains(OffsetDateTime biggerStart, OffsetDateTime biggerEnd,
@@ -79,13 +85,13 @@ public final class DateTimeUtils {
     }
 
     public static OffsetDateTime max(OffsetDateTime v1, OffsetDateTime v2, OffsetDateTime v3) {
-        OffsetDateTime win1 =  v1.isAfter(v2) ? v1 : v2;
-        return  v3.isAfter(win1) ? v3 : win1;
+        OffsetDateTime win1 = v1.isAfter(v2) ? v1 : v2;
+        return v3.isAfter(win1) ? v3 : win1;
     }
 
     public static OffsetDateTime min(OffsetDateTime v1, OffsetDateTime v2, OffsetDateTime v3) {
-        OffsetDateTime win1 =  v1.isAfter(v2) ? v2 : v1;
-        return  v3.isAfter(win1) ? win1 : v3;
+        OffsetDateTime win1 = v1.isAfter(v2) ? v2 : v1;
+        return v3.isAfter(win1) ? win1 : v3;
     }
 
     public static OffsetDateTime offsetDateTimeOf(String date) {
@@ -98,10 +104,10 @@ public final class DateTimeUtils {
     }
 
     public static boolean isGreaterOrEquals(OffsetDateTime v1, OffsetDateTime v2) {
-        return  !v1.isBefore(v2);
+        return !v1.isBefore(v2);
     }
 
     public static boolean isLessOrEquals(OffsetDateTime v1, OffsetDateTime v2) {
-        return  !v1.isAfter(v2);
+        return !v1.isAfter(v2);
     }
 }
