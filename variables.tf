@@ -10,11 +10,11 @@ variable "name" {
 }
 
 variable "virtual_network_name" {
-  default     = "iaas_vnet_sandbox"
+  default     = "iaas-vnet-sandbox"
 }
 
 variable "virtual_network_resource_group" {
-  default     = "iaas_infra_sandbox"
+  default     = "iaas-infra-sandbox"
 }
 
 variable "virtual_network_subnet" {
