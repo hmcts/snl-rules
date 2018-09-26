@@ -22,6 +22,6 @@ variable "virtual_network_subnet" {
 }
 
 variable "username" {
-  default     = "admin"
+  default     = "snladmin"
 }
 
