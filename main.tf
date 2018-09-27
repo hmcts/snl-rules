@@ -1,13 +1,8 @@
-resource "random_string" "password" {
+resource "random_string" "pwd" {
   length      = 16
   special     = false
   min_lower   = 2
   min_numeric = 2
-
-keepers = {
-    # Generate new password whenever we have a different version number
-    version = "${var.version}"
-  }
 }
 
 resource "azurerm_resource_group" "rulesengine-rg" {
@@ -37,7 +32,7 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
-  name                  = "${var.name}-${random_string.password.keepers.version}-vm01"
+  name                  = "${var.name}-vm01"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
@@ -58,9 +53,9 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
   }
 
   os_profile {
-    computer_name  = "${var.name}-${random_string.password.keepers.version}-vm01"
+    computer_name  = "${var.name}-vm01"
     admin_username = "${var.username}"
-    admin_password = "${random_string.password.result}"
+    admin_password = "${random_string.pwd.result}"
   }
 
   os_profile_linux_config {
