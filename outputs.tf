@@ -1,4 +1,4 @@
 
 output "password" {
-  value = "${random_string.password.result}"
+  value = "${random_string.passwd.result}"
 }
