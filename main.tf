@@ -1,4 +1,4 @@
-resource "random_string" "pwd" {
+resource "random_string" "passwd" {
   length      = 16
   special     = false
   min_lower   = 2
@@ -55,12 +55,15 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
   os_profile {
     computer_name  = "${var.name}-vm01"
     admin_username = "${var.username}"
-    admin_password = "${random_string.pwd.result}"
+    admin_password = "${random_string.passwd.result}"
   }
 
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
+  delete_os_disk_on_termination = true
+  delete_data_disks_on_termination = true
 
   tags {
     environment = "rulesengine"
