@@ -13,9 +13,13 @@ import java.time.temporal.ChronoUnit;
 
 public final class DateTimeUtils {
 
-    public static ZoneId zone = ZoneOffset.systemDefault();
+    private static ZoneId zone = ZoneOffset.systemDefault();
 
     private DateTimeUtils() {
+    }
+
+    public static void setZone(ZoneId zone) {
+        DateTimeUtils.zone = zone;
     }
 
     public static boolean between(OffsetDateTime dateTimeToCheck,
@@ -122,4 +126,5 @@ public final class DateTimeUtils {
     public static String readableDuration(Duration duration) {
         return DurationFormatUtils.formatDuration(duration.toMillis(), "HH:mm");
     }
+
 }

@@ -303,7 +303,7 @@ public class DateTimeUtilsTests {
 
     @Test
     public void humanizeData_should_returnDateFormattedIn_DateTimeUtils_Zone() {
-        DateTimeUtils.zone = ZoneOffset.ofHoursMinutes(3, 0);
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(3, 0));
 
         OffsetDateTime utc = OffsetDateTime.of(LocalDateTime.of(2018, 3, 10, 13, 0, 0, 0),
             ZoneOffset.ofHoursMinutes(0, 0));
@@ -315,7 +315,7 @@ public class DateTimeUtilsTests {
         Assert.assertEquals("10/03/2018 22:00", DateTimeUtils.humanizeDate(minus6Zone));
         Assert.assertEquals("26/09/2018 15:06", DateTimeUtils.humanizeDate(utcParsedString));
 
-        DateTimeUtils.zone = ZoneOffset.systemDefault();
+        DateTimeUtils.setZone(ZoneOffset.systemDefault());
     }
 
     @Test

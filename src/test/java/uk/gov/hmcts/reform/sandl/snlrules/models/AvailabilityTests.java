@@ -20,12 +20,12 @@ public class AvailabilityTests {
 
     @BeforeClass
     public static void setup() {
-        DateTimeUtils.zone = ZoneOffset.ofHoursMinutes(3, 0);
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(3, 0));
     }
 
     @AfterClass
     public static void teradown() {
-        DateTimeUtils.zone = ZoneOffset.systemDefault();
+        DateTimeUtils.setZone(ZoneOffset.systemDefault());
     }
 
     @Test
