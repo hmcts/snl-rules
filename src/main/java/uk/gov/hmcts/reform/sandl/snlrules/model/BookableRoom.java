@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
-import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.OffsetDateTime;
+
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.humanizeDate;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.readableDuration;
 
 @Getter
 @Setter
@@ -35,8 +37,7 @@ public class BookableRoom extends Fact implements Serializable {
 
     @Override
     public String toDescription() {
-        String readableDuration = DateTimeUtils.readableDuration(this.duration);
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + readableDuration)
+        return ("Start: " + humanizeDate(start) + ", duration: " + readableDuration(this.duration))
             .replace("null", "N/A");
     }
 }

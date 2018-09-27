@@ -2,12 +2,16 @@ package uk.gov.hmcts.reform.sandl.snlrules.rules.sessions;
 
 import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.drools.core.base.RuleNameStartsWithAgendaFilter;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.runtime.KieSession;
 import org.mockito.runners.MockitoJUnitRunner;
+import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
+import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
+import uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper;
 import uk.gov.hmcts.reform.sandl.snlrules.services.DroolsService;
 
 import java.time.Duration;
@@ -213,5 +217,37 @@ public class SessionDoesNotHaveAJudgeTests {
         setDateInRules(rules, 2018, 4, 5);
         rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 0, 0, 1);
+    }
+
+    @Test
+    public void problemSeverityShouldChangeWhenTimePassesCheckPoints_whenSessionDoesNotHaveAjudge() {
+        setDateInRules(rules, 2018, 4, 1);
+
+        rules.insert(new Session(sessionId, null, roomId,
+            OffsetDateTime.of(2018, 4, 30, 9, 0, 0, 0,
+                ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
+        assertThat(getInsertedProblems(droolsService)).isEmpty();
+
+        setDateInRules(rules, 2018, 4, 2);
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
+        Problem problem = (Problem) RulesTestHelper.getInsertedProblems(droolsService).get(0).getNewFact();
+        Assert.assertEquals(ProblemSeverities.Warning, problem.getSeverity());
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 16);
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
+        problem = (Problem) RulesTestHelper.getInsertedProblems(droolsService).get(0).getNewFact();
+        Assert.assertEquals(ProblemSeverities.Urgent, problem.getSeverity());
+
+        droolsService.clearFactModifications();
+        setDateInRules(rules, 2018, 4, 29);
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
+        problem = (Problem) RulesTestHelper.getInsertedProblems(droolsService).get(0).getNewFact();
+        Assert.assertEquals(ProblemSeverities.Critical, problem.getSeverity());
     }
 }
