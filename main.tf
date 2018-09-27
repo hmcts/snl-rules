@@ -3,6 +3,11 @@ resource "random_string" "password" {
   special     = false
   min_lower   = 2
   min_numeric = 2
+
+keepers = {
+    # Generate new password whenever we have a new NIC
+    rulesengine-nic01-id = "${azurerm_network_interface.rulesengine-nic01.id}"
+  }
 }
 
 resource "azurerm_resource_group" "rulesengine-rg" {
@@ -14,8 +19,8 @@ resource "azurerm_resource_group" "rulesengine-rg" {
   }
 }
 
-resource "azurerm_network_interface" "rulesengine-nic1" {
-  name                      = "${var.name}-nic1"
+resource "azurerm_network_interface" "rulesengine-nic01" {
+  name                      = "${var.name}-nic01"
   location                  = "${var.location}"
   resource_group_name       = "${azurerm_resource_group.rulesengine-rg.name}"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
@@ -32,14 +37,14 @@ resource "azurerm_network_interface" "rulesengine-nic1" {
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm01" {
-  name                  = "${var.name}-01"
+  name                  = "${var.name}-vm01"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
-  network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
+  network_interface_ids = ["${random_string.password.rulesengine-nic01-id}"]
   vm_size               = "Standard_E2s_v3"
 
   storage_os_disk {
-    name              = "${var.name}-01-storage"
+    name              = "${var.name}-vm01-storage"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -53,7 +58,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
   }
 
   os_profile {
-    computer_name  = "${var.name}-01"
+    computer_name  = "${var.name}-vm01"
     admin_username = "${var.username}"
     admin_password = "${random_string.password.result}"
   }
