@@ -6,7 +6,7 @@ resource "random_string" "password" {
 
 keepers = {
     # Generate new password whenever we have a new NIC
-    rulesengine-nic01-id = "${azurerm_network_interface.rulesengine-nic01.id}"
+    rulesengine-nic1-id = "${azurerm_network_interface.rulesengine-nic1.id}"
   }
 }
 
@@ -19,8 +19,8 @@ resource "azurerm_resource_group" "rulesengine-rg" {
   }
 }
 
-resource "azurerm_network_interface" "rulesengine-nic01" {
-  name                      = "${var.name}-nic01"
+resource "azurerm_network_interface" "rulesengine-nic1" {
+  name                      = "${var.name}-nic1"
   location                  = "${var.location}"
   resource_group_name       = "${azurerm_resource_group.rulesengine-rg.name}"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
@@ -40,7 +40,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
   name                  = "${var.name}-vm01"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
-  network_interface_ids = ["${random_string.password.rulesengine-nic01-id}"]
+  network_interface_ids = ["${random_string.password.keepers.rulesengine-nic1-id}"]
   vm_size               = "Standard_E2s_v3"
 
   storage_os_disk {
