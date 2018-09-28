@@ -25,13 +25,7 @@ public final class DateTimeUtils {
     public static boolean between(OffsetDateTime dateTimeToCheck,
                                   int currentYear, int currentMonth, int currentDay,
                                   int greaterOrEqualsDays, int lessDays) {
-        OffsetDateTime dateToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
-
-        OffsetDateTime currentDate = OffsetDateTime.of(
-            currentYear, currentMonth, currentDay,
-            0, 0, 0, 0, ZoneOffset.UTC);
-
-        long days = ChronoUnit.DAYS.between(currentDate, dateToCheck);
+        long days = calculateDaysBetweenDates(dateTimeToCheck, currentYear, currentMonth, currentDay);
 
         return greaterOrEqualsDays <= days && days < lessDays;
     }
@@ -46,6 +40,18 @@ public final class DateTimeUtils {
 
         OffsetDateTime daysToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
         return !daysStart.isAfter(daysToCheck) && !daysEnd.isBefore(daysToCheck);
+    }
+
+    public static long calculateDaysBetweenDates(
+        OffsetDateTime dateTimeToCheck, int currentYear, int currentMonth, int currentDay) {
+
+        OffsetDateTime dateToCheck = dateTimeToCheck.truncatedTo(ChronoUnit.DAYS);
+
+        OffsetDateTime currentDate = OffsetDateTime.of(
+            currentYear, currentMonth, currentDay,
+            0, 0, 0, 0, ZoneOffset.UTC);
+
+        return ChronoUnit.DAYS.between(currentDate, dateToCheck);
     }
 
     public static boolean olderThan(OffsetDateTime dateTimeToCheck,

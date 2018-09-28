@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.sandl.snlrules.rules.sessions;
 
-import org.drools.core.base.RuleNameEqualsAgendaFilter;
 import org.drools.core.base.RuleNameStartsWithAgendaFilter;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,13 +26,6 @@ import static uk.gov.hmcts.reform.sandl.snlrules.rules.RulesTestHelper.setDateIn
 public class SessionDoesNotHaveAJudgeTests {
 
     private static final String rulesDefinition = "Sessions";
-
-    private static final String SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START
-        = "Session does not have a judge 4 weeks or less before start";
-    private static final String SESSION_DOES_NOT_HAVE_A_JUDGE_2_WEEKS_OR_LESS_BEFORE_START
-        = "Session does not have a judge 2 weeks or less before start";
-    private static final String SESSION_DOES_NOT_HAVE_A_JUDGE_1_DAY_OR_LESS_BEFORE_START
-        = "Session does not have a judge 1 day or less before start";
 
     private static final String SESSION_DOES_NOT_HAVE_A_JUDGE
         = "Session does not have a judge";
@@ -62,7 +54,7 @@ public class SessionDoesNotHaveAJudgeTests {
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
 
         assertProblems(droolsService, 0, 0, 0);
     }
@@ -77,13 +69,13 @@ public class SessionDoesNotHaveAJudgeTests {
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
 
         assertProblems(droolsService, 1, 0, 0);
 
         droolsService.clearFactModifications();
         setDateInRules(rules, 2018, 4, 30);
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 0, 0, 1);
     }
 
@@ -97,18 +89,18 @@ public class SessionDoesNotHaveAJudgeTests {
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertThat(getInsertedProblems(droolsService)).isEmpty();
 
         setDateInRules(rules, 2018, 4, 1);
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
 
         assertProblems(droolsService, 1, 0, 0);
 
         droolsService.clearFactModifications();
         setDateInRules(rules, 2018, 4, 30);
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_4_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 0, 0, 1);
     }
 
@@ -122,18 +114,18 @@ public class SessionDoesNotHaveAJudgeTests {
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_2_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertThat(getInsertedProblems(droolsService)).isEmpty();
 
         setDateInRules(rules, 2018, 4, 1);
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_2_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
 
         assertProblems(droolsService, 1, 0, 0);
 
         droolsService.clearFactModifications();
         setDateInRules(rules, 2018, 4, 16);
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_2_WEEKS_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 0, 0, 1);
     }
 
@@ -147,17 +139,17 @@ public class SessionDoesNotHaveAJudgeTests {
             Duration.ofMinutes(60), "FTRACK"));
 
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_1_DAY_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertThat(getInsertedProblems(droolsService)).isEmpty();
 
         setDateInRules(rules, 2018, 4, 2);
         droolsService.clearFactModifications();
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_1_DAY_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 1, 0, 0);
 
         droolsService.clearFactModifications();
         setDateInRules(rules, 2018, 4, 4);
-        rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE_1_DAY_OR_LESS_BEFORE_START));
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_JUDGE));
         assertProblems(droolsService, 0, 0, 1);
     }
 
