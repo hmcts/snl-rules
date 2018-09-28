@@ -331,4 +331,34 @@ public class DateTimeUtilsTests {
         Assert.assertEquals("131:15", DateTimeUtils.readableDuration(days));
     }
 
+    @Test
+    public void calculateDaysBetweenDates_returnsNegativeNumber_whenStartDateIsAfterCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,27);
+
+        Assert.assertEquals(-1, days);
+    }
+
+    @Test
+    public void calculateDaysBetweenDates_returnsPositiveNumber_whenStartDateIsBeforeCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,25);
+
+        Assert.assertEquals(1, days);
+    }
+
+    @Test
+    public void calculateDaysBetweenDates_returnsPositiveNumber_whenStartDateIsTheSameDayAsCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,26);
+
+        Assert.assertEquals(0, days);
+    }
+
 }
