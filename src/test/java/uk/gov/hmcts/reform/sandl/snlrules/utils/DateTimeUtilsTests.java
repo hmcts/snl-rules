@@ -336,7 +336,7 @@ public class DateTimeUtilsTests {
         DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
 
         OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
-        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,27);
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 27);
 
         Assert.assertEquals(-1, days);
     }
@@ -346,7 +346,7 @@ public class DateTimeUtilsTests {
         DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
 
         OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
-        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,25);
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 25);
 
         Assert.assertEquals(1, days);
     }
@@ -356,7 +356,7 @@ public class DateTimeUtilsTests {
         DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
 
         OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
-        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9 ,26);
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 26);
 
         Assert.assertEquals(0, days);
     }
