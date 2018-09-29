@@ -66,19 +66,6 @@ rule "Session does not have a room X days or less before start"
                                   new ProblemReference($s)));
 end
 
-//rule "Session does not have a room 4 weeks or less before start"
-//    when
-//        Year($year: value)
-//        Month($month: value)
-//        Day($day: value)
-//        $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
-//    then
-//        insertLogical(new Problem(ProblemTypes.Resource_missing,
-//                                  ProblemSeverities.Warning,
-//                                  "Session does not have a room 4 weeks or less before start",
-//                                  new ProblemReference($s)));
-//end
-
 rule "Double booking of judge (includes any overlapping)"
     when
         Year($year: value)
