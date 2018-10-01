@@ -50,16 +50,19 @@ rule "Session does not have a judge X days or less before start"
                                   new ProblemReference($s)));
 end
 
-rule "Session does not have a room 4 weeks or less before start"
+rule "Session does not have a room X days or less before start"
     when
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 28))
+        $s : Session(roomId == null && DateTimeUtils.between(start, $year, $month, $day, 0, 29))
     then
         insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warning,
-                                  "Session does not have a room 4 weeks or less before start",
+                                  ProblemSeveritiesUtils
+                                      .calculateForMissingResource($s.getStart(), $year, $month, $day),
+                                  String.format("Session of type %s on %s does not yet have a room assigned",
+                                                                    $s.getSessionType(),
+                                                                    DateTimeUtils.humanizeDate($s.getStart())),
                                   new ProblemReference($s)));
 end
 
