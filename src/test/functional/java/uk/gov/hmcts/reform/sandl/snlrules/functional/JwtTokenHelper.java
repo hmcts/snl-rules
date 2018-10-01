@@ -2,6 +2,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.functional;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationService;
 
@@ -11,6 +12,9 @@ import java.util.Date;
 
 public class JwtTokenHelper {
 
+    @Value("${management.security.rules.jwtSecret}")
+    private static String jwtSecret;
+
     private JwtTokenHelper() {
     }
 
@@ -18,7 +22,7 @@ public class JwtTokenHelper {
         HttpHeaders headers = new HttpHeaders();
         headers.add(S2SAuthenticationService.HEADER_NAME,
             S2SAuthenticationService.HEADER_CONTENT_PREFIX
-                + createToken("nieWiedzialaJak", 15000, "snl-events")
+                + createToken(jwtSecret, 15000, "snl-events")
         );
         return headers;
     }
