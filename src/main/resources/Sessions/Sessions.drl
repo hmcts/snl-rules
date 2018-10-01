@@ -60,7 +60,7 @@ rule "Session does not have a room X days or less before start"
         insertLogical(new Problem(ProblemTypes.Resource_missing,
                                   ProblemSeveritiesUtils
                                       .calculateForMissingResource($s.getStart(), $year, $month, $day),
-                                  String.format("Session of type %s on %s does not yet have a judge assigned",
+                                  String.format("Session of type %s on %s does not yet have a room assigned",
                                                                     $s.getSessionType(),
                                                                     DateTimeUtils.humanizeDate($s.getStart())),
                                   new ProblemReference($s)));
