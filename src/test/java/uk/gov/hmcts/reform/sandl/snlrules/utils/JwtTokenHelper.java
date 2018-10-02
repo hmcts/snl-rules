@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.sandl.snlrules;
+package uk.gov.hmcts.reform.sandl.snlrules.utils;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,14 +11,11 @@ import java.util.Date;
 
 public class JwtTokenHelper {
 
-    private JwtTokenHelper() {
-    }
-
-    public static HttpHeaders createRulesAuthenticationHeader() {
+    public static HttpHeaders createRulesAuthenticationHeader(String jwtSecret) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(S2SAuthenticationService.HEADER_NAME,
             S2SAuthenticationService.HEADER_CONTENT_PREFIX
-                + createToken("nieWiedzialaJak", 5000, "snl-events")
+                + createToken(jwtSecret, 15000, "snl-events")
         );
         return headers;
     }
