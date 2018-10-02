@@ -10,6 +10,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class JwtTokenHelper {
+    private JwtTokenHelper() {
+    }
 
     public static HttpHeaders createRulesAuthenticationHeader(String jwtSecret) {
         HttpHeaders headers = new HttpHeaders();
