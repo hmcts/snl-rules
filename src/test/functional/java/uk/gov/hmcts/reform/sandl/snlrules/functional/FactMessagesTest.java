@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.sandl.snlrules.functional;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class FactMessagesTest {
     }
 
     @Test
+    @Ignore
     public void session_insert_generates_problem() {
 
         String sessionId = "486ecc4c-61e6-4f79-bd5d-1eb71d999316";
