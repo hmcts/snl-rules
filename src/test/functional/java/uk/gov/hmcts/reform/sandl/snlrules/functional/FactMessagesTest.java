@@ -3,7 +3,6 @@ package uk.gov.hmcts.reform.sandl.snlrules.functional;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
