@@ -51,7 +51,7 @@ rule "Listing request target schedule to date is 4 weeks or nearer from today an
          && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Urgent,
                                   "Listing request target schedule to date is 4 weeks or nearer from today "
                                  + "and it has not been listed yet",
                                  new ProblemReference($hearingPart)));
@@ -67,7 +67,7 @@ rule "Session is overlisted and 1 day or less before start"
         Session(this == $s && $hpSumMinutes > duration.toMinutes && DateTimeUtils.between(start, $year, $month, $day, 0, 2))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Critical,
                                   "Session is overlisted and 1 day or less before start",
                                   new ProblemReference($s)));
 end
@@ -82,7 +82,7 @@ rule "Session is overlisted greater or equal 50 percent and 1 to 3 days before s
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 1.5 && DateTimeUtils.between(start, $year, $month, $day, 2, 4))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Urgent,
                                   "Session is overlisted greater or equal 50 percent and 1 to 3 days before start",
                                   new ProblemReference($s)));
 end
@@ -97,7 +97,7 @@ rule "Session is overlisted greater or equal 100 percent and 3 to 7 days before 
         Session(this == $s && $hpSumMinutes >= duration.toMinutes * 2 && DateTimeUtils.between(start, $year, $month, $day, 4, 7))
     then
         insertLogical(new Problem(ProblemTypes.Session_utilisation_overlisted,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Urgent,
                                   "Session is overlisted greater or equal 100 percent and 3 to 7 days before start",
                                   new ProblemReference($s)));
 end
