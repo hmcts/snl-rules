@@ -28,7 +28,7 @@ module "snl-rules" {
     # REDIS_PASSWORD               = "${module.redis-cache.access_key}"
     # RECIPE_BACKEND_URL = "http://snl-recipe-backend-${var.env}.service.${data.terraform_remote_state.core_apps_compute.ase_name[0]}.internal"
 
-    SNL_FRONTEND_JWT_SECRET = "${data.azurerm_key_vault_secret.frontend_jwt_secret.value}"
+    SNL_S2S_JWT_SECRET = "${data.azurerm_key_vault_secret.s2s_jwt_secret.value}"
   }
 }
 
@@ -43,8 +43,4 @@ data "azurerm_key_vault_secret" "s2s_jwt_secret" {
   vault_uri = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
 }
 
-data "azurerm_key_vault_secret" "frontend_jwt_secret" {
-  name      = "frontend-jwt-secret"
-  vault_uri = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
-}
 #endregion
