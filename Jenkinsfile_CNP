@@ -6,7 +6,7 @@ def product = "snl"
 def component = "rules"
 
 List<LinkedHashMap<String, Object>> secrets = [
-    secret('ccd-caseworker-autotest-email', 'SNL_S2S_JWT_SECRET'),
+    secret('s2s_jwt_secret', 'SNL_S2S_JWT_SECRET'),
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
