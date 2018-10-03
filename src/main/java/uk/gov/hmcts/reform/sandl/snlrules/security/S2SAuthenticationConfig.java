@@ -16,7 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 @NoArgsConstructor
 @Getter
 @Setter
-class S2SAuthenticationConfig {
+public class S2SAuthenticationConfig {
     JwtCredentials rules;
     boolean enabled;
 
