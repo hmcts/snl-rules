@@ -8,8 +8,12 @@ management:
   security:
     enabled: ${MANAGEMENT_SECURITY_ENABLED:true}
     rules:
-      jwtSecret: "nieWiedzialaJak"
+      jwtSecret: "${SNL_S2S_JWT_SECRET:sialaBabaMak}"
       jwtExpirationInMs: 5000
+
+azure:
+  application-insights:
+    instrumentation-key: ${APPINSIGHTS_INSTRUMENTATIONKEY:dummy}
 
 #If you use a database then uncomment below lines and update db properties accordingly leaving tomcat connection settings unchanged.
 spring:

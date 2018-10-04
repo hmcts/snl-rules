@@ -21,35 +21,35 @@ import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.readableDur
 public class HearingPart extends Fact {
 
     private String sessionId;
-    private String caseType;
-    private String hearingType;
+    private String caseTypeCode;
+    private String hearingTypeCode;
     private Duration duration;
     private OffsetDateTime scheduleStart;
     private OffsetDateTime scheduleEnd;
     private OffsetDateTime createdAt;
 
-    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration) {
+    public HearingPart(String id, String sessionId, String caseTypeCode, String hearingTypeCode, Duration duration) {
         this.id = id;
         this.sessionId = sessionId;
-        this.caseType = caseType;
-        this.hearingType = hearingType;
+        this.caseTypeCode = caseTypeCode;
+        this.hearingTypeCode = hearingTypeCode;
         this.duration = duration;
     }
 
-    public HearingPart(String id, String sessionId, String caseType, String hearingType, Duration duration,
+    public HearingPart(String id, String sessionId, String caseTypeCode, String hearingTypeCode, Duration duration,
                        OffsetDateTime createdAt) {
         this.id = id;
         this.sessionId = sessionId;
-        this.caseType = caseType;
-        this.hearingType = hearingType;
+        this.caseTypeCode = caseTypeCode;
+        this.hearingTypeCode = hearingTypeCode;
         this.duration = duration;
         this.createdAt = createdAt;
     }
 
     @Override
     public String toDescription() {
-        return ("Duration: " + readableDuration(this.duration) + ", Case type: " + caseType + ", Hearing type: "
-            + hearingType + ", Scheduled start: "
+        return ("Duration: " + readableDuration(this.duration) + ", Case type code: " + caseTypeCode
+            + ", Hearing type code: " + hearingTypeCode + ", Scheduled start: "
             + humanizeDate(scheduleStart) + ", Scheduled end: " + humanizeDate(scheduleEnd)
             + ", Created at: " + createdAt).replace("null", "N/A");
     }
