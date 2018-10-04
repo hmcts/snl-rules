@@ -37,7 +37,6 @@ public class FactMessagesTest {
     @Test
     public void session_insert_generates_problem() {
 
-        System.out.println("JWTSECRET:" + jwtSecret);
         String sessionId = "486ecc4c-61e6-4f79-bd5d-1eb71d999316";
         String judgeId = "14c8c596-c3aa-4691-87f6-2293f07faf05";
 
