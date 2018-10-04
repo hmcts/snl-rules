@@ -76,7 +76,7 @@ rule "Double booking of judge (includes any overlapping)"
         $s2 : Session(this != $s && id <= $s.id && judgeId != null && $s.judgeId != null && judgeId == $s.judgeId && isOverlapping($s))
     then
         insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Urgent,
                                   "Double booking of judge",
                                   new ProblemReference($s),
                                   new ProblemReference($s2),
@@ -94,7 +94,7 @@ rule "Double booking of room (includes any overlapping) 2 weeks before start"
                         && DateTimeUtils.between(start, $year, $month, $day, 0, 14))
     then
         insertLogical(new Problem(ProblemTypes.Resource_contention,
-                                  ProblemSeverities.Warning,
+                                  ProblemSeverities.Urgent,
                                   "Double booking of room",
                                   new ProblemReference($s),
                                   new ProblemReference($s2),
