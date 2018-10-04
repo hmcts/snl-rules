@@ -9,3 +9,11 @@ output "sharedResourceGroup" {
 output "shared_vault_uri" {
   value = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
 }
+
+output "vaultUri" {
+  value = "${data.azurerm_key_vault.snl-shared-vault.vault_uri}"
+}
+
+output "vaultName" {
+  value = "${local.vaultName}"
+}
