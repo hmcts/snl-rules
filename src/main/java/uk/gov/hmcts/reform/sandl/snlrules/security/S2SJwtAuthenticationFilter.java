@@ -54,6 +54,10 @@ public class S2SJwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean shouldDoTokenCheck(String urlPath) {
+        if (s2sAuth.isDisabled()) {
+            return false;
+        }
+
         for (String element : this.jwtFreeEndpoints) {
             if (urlPath.equalsIgnoreCase(element)) {
                 return false;
