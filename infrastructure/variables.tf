@@ -55,11 +55,6 @@ variable "asp_name" {
   default = ""
 }
 
-variable "product_group_object_id" {
-  default = "c9ab670f-8f92-4170-ba08-796ccab27751"
-  description = "dcd_snl_kv"
-}
-
 variable "common_tags" {
   type = "map"
 }
