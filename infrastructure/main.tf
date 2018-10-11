@@ -8,6 +8,10 @@ locals {
   // Shared Resources
   vaultName = "${var.raw_product}-${local.envInUse}"
   sharedResourceGroup = "${var.raw_product}-shared-${local.envInUse}"
+  sharedAspName = "${var.raw_product}-${local.envInUse}"
+  sharedAspRg = "${var.raw_product}-shared-infrastructure-${local.envInUse}"
+  asp_name = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspName}"
+  asp_rg = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspRg}"
 }
 module "snl-rules" {
   source               = "git@github.com:hmcts/moj-module-webapp"
@@ -20,6 +24,8 @@ module "snl-rules" {
   additional_host_name = "${var.external_host_name}"
   capacity             = "1"
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
+  asp_rg               = "${local.asp_rg}"
+  asp_name             = "${local.asp_name}"
   common_tags          = "${var.common_tags}"
 
   app_settings = {
