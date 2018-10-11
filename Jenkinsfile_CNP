@@ -20,7 +20,18 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 
 withPipeline("java", product, component) {
   loadVaultSecrets(secrets)
-//  enablePerformanceTest()
+  //  enablePerformanceTest()
+
+  onMaster {
+      enableSlackNotifications('#snl-master-builds')
+  }
+  onDemo {
+      enableSlackNotifications('#snl-demo-builds')
+  }
+  onPR {
+      enableSlackNotifications('#snl-pr-builds')
+  }
+
   after('checkout') {
     echo 'sln-rules checked out'
   }
