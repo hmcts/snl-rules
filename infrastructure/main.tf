@@ -7,7 +7,7 @@ locals {
 
   // Shared Resources
   vaultName = "${var.raw_product}-${local.envInUse}"
-  sharedResourceGroup = "${var.raw_product}-shared-${local.envInUse}"
+  sharedResourceGroup = "${var.raw_product}-shared-infrastructure-${local.envInUse}"
   sharedAspName = "${var.raw_product}-${local.envInUse}"
   sharedAspRg = "${var.raw_product}-shared-infrastructure-${local.envInUse}"
   asp_name = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspName}"
