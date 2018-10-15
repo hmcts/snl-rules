@@ -12,38 +12,38 @@ resource "random_string" "passwd" {
 }
 
 resource "azurerm_resource_group" "rulesengine-rg" {
-  name     = "${locals.resource_group}"
+  name     = "${local.resource_group}"
   location = "${var.location}"
 }
 
 resource "azurerm_network_security_group" "rulesengine-nsg" {
-  name                = "${locals.resource_group}-nsg"
+  name                = "${local.resource_group}-nsg"
   location            = "${var.location}"
-  resource_group_name = "${locals.resource_group}"
+  resource_group_name = "${local.resource_group}"
 }
 
 resource "azurerm_network_interface" "rulesengine-nic" {
-  name                      = "${locals.resource_group}-nic"
+  name                      = "${local.resource_group}-nic"
   location                  = "${var.location}"
-  resource_group_name       = "${locals.resource_group}"
+  resource_group_name       = "${local.resource_group}"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg.id}"
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${locals.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${locals.vnet_name}/subnets/${var.vnet_subnet}"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${local.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}/subnets/${var.vnet_subnet}"
     private_ip_address_allocation = "static"
   }
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm" {
-  name                  = "${locals.resource_group}-vm"
+  name                  = "${local.resource_group}-vm"
   location              = "${var.location}"
-  resource_group_name   = "${locals.resource_group}"
+  resource_group_name   = "${local.resource_group}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic.id}"]
   vm_size               = "${var.vm_size}"
 
   storage_os_disk {
-    name              = "${locals.resource_group}-vm-storage"
+    name              = "${local.resource_group}-vm-storage"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -57,7 +57,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
   }
 
   os_profile {
-    computer_name  = "${locals.resource_group}-vm"
+    computer_name  = "${local.resource_group}-vm"
     admin_username = "${var.username}"
     admin_password = "${random_string.passwd.result}"
   }
