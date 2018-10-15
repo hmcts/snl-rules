@@ -2,27 +2,37 @@ variable "location" {
   default = "UK South"
 }
 
-variable "resource_group" {}
+variable "product" {
+  type        = "string"
+  default     = "snl"
+  description = "Product name"
+}
+
+variable "component" {
+  type        = "string"
+  default     = "rules"
+  description = "Component name"
+}
+
+variable "env" {
+  type        = "string"
+  description = "(Required) The environment in which to deploy the application infrastructure."
+}
+
 variable "subscription_id" {}
 
-variable "name" {
-  default     = "iaas-vnet-sandbox-rulesengine"
-}
-
-variable "virtual_network_name" {
-  default     = "iaas-vnet-sandbox"
-}
-
-variable "virtual_network_resource_group" {
-  default     = "iaas-infra-sandbox"
-}
-
-variable "virtual_network_subnet" {
-  default     = "snl-rulesengine"
+variable "vnet_subnet" {
+  type        = "string"
+  default     = "snl-rules-engine"
+  description = "Name of the subnet in which to deploy the VM."
 }
 
 variable "username" {
   default     = "snladmin"
+  description = "Name of the admin user for the VM."
 }
 
-
+variable "vm_size" {
+  default = "Standard_E2s_v3"
+  description = "Size of the VM to be created."
+}

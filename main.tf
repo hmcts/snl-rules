@@ -1,3 +1,9 @@
+locals {
+  resource_group = "${var.product}-${var.component}-${var.env}"
+  vnet_name = "core-infra-vnet-${var.env}"
+  vnet_resource_group = "core-infra-${var.env}"
+}
+
 resource "random_string" "passwd" {
   length      = 16
   special     = false
@@ -6,40 +12,38 @@ resource "random_string" "passwd" {
 }
 
 resource "azurerm_resource_group" "rulesengine-rg" {
-  name                      = "${var.resource_group}"
-  location                  = "${var.location}"
-
-  tags {
-    environment = "rulesengine"
-  }
+  name     = "${locals.resource_group}"
+  location = "${var.location}"
 }
 
-resource "azurerm_network_interface" "rulesengine-nic1" {
-  name                      = "${var.name}-nic1"
+resource "azurerm_network_security_group" "rulesengine-nsg" {
+  name                = "${locals.resource_group}-nsg"
+  location            = "${var.location}"
+  resource_group_name = "${locals.resource_group}"
+}
+
+resource "azurerm_network_interface" "rulesengine-nic" {
+  name                      = "${locals.resource_group}-nic"
   location                  = "${var.location}"
-  resource_group_name       = "${azurerm_resource_group.rulesengine-rg.name}"
-  network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg1.id}"
+  resource_group_name       = "${locals.resource_group}"
+  network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg.id}"
 
   ip_configuration {
     name                          = "IPConfiguration"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${var.virtual_network_resource_group}/providers/Microsoft.Network/virtualNetworks/${var.virtual_network_name}/subnets/${var.virtual_network_subnet}"
-    private_ip_address_allocation = "dynamic"
-  }
-
-  tags {
-    environment = "rulesengine"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${locals.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${locals.vnet_name}/subnets/${var.vnet_subnet}"
+    private_ip_address_allocation = "static"
   }
 }
 
-resource "azurerm_virtual_machine" "rulesengine-vm01" {
-  name                  = "${var.name}-vm01"
+resource "azurerm_virtual_machine" "rulesengine-vm" {
+  name                  = "${locals.resource_group}-vm"
   location              = "${var.location}"
-  resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
-  network_interface_ids = ["${azurerm_network_interface.rulesengine-nic1.id}"]
-  vm_size               = "Standard_E2s_v3"
+  resource_group_name   = "${locals.resource_group}"
+  network_interface_ids = ["${azurerm_network_interface.rulesengine-nic.id}"]
+  vm_size               = "${var.vm_size}"
 
   storage_os_disk {
-    name              = "${var.name}-vm01-storage"
+    name              = "${locals.resource_group}-vm-storage"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -53,7 +57,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
   }
 
   os_profile {
-    computer_name  = "${var.name}-vm01"
+    computer_name  = "${locals.resource_group}-vm"
     admin_username = "${var.username}"
     admin_password = "${random_string.passwd.result}"
   }
@@ -64,14 +68,4 @@ resource "azurerm_virtual_machine" "rulesengine-vm01" {
 
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true
-
-  tags {
-    environment = "rulesengine"
-  }
-}
-
-resource "azurerm_network_security_group" "rulesengine-nsg1" {
-  name                = "${var.name}-nsg"
-  location            = "${var.location}"
-  resource_group_name = "${azurerm_resource_group.rulesengine-rg.name}"
 }

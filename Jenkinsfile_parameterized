@@ -6,7 +6,7 @@ properties([
     string(name: 'PRODUCT_NAME', defaultValue: 'snl', description: ''),
     string(name: 'APP', defaultValue: 'rules', description: ''),
     string(name: 'TYPE', defaultValue: 'java', description: ''),
-    string(name: 'ENVIRONMENT', defaultValue: 'saat', description: 'Environment where code should be build and deployed'),
+    string(name: 'ENVIRONMENT', defaultValue: 'sandbox', description: 'Environment where code should be built and deployed'),
     choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod', description: 'Azure subscriptions available to build in'),
     booleanParam(name: 'PLAN_ONLY', defaultValue: false, description: 'set to true for skipping terraform apply')
   ])
@@ -34,10 +34,9 @@ node {
   }
 
   withSubscription(subscription) {
-    env.TF_VAR_env = params.ENVIRONMENT
     env.TF_VAR_product = params.PRODUCT
-    env.TF_VAR_product_name = params.PRODUCT
-    env.TF_VAR_resource_group = "snl-rules-iaas-vnet-sandbox"
+    env.TF_VAR_component = params.APP
+    env.TF_VAR_env = params.ENVIRONMENT
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
     env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
