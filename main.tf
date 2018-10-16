@@ -19,13 +19,13 @@ resource "azurerm_resource_group" "rulesengine-rg" {
 resource "azurerm_network_security_group" "rulesengine-nsg" {
   name                = "${local.resource_group}-nsg"
   location            = "${var.location}"
-  resource_group_name = "${local.resource_group}"
+  resource_group_name = "${azurerm_resource_group.rulesengine-rg.name}"
 }
 
 resource "azurerm_network_interface" "rulesengine-nic" {
   name                      = "${local.resource_group}-nic"
   location                  = "${var.location}"
-  resource_group_name       = "${local.resource_group}"
+  resource_group_name       = "${azurerm_resource_group.rulesengine-rg.name}"
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg.id}"
 
   ip_configuration {
@@ -38,7 +38,7 @@ resource "azurerm_network_interface" "rulesengine-nic" {
 resource "azurerm_virtual_machine" "rulesengine-vm" {
   name                  = "${local.resource_group}-vm"
   location              = "${var.location}"
-  resource_group_name   = "${local.resource_group}"
+  resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic.id}"]
   vm_size               = "${var.vm_size}"
 
