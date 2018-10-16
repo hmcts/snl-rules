@@ -39,7 +39,7 @@ node {
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
     env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
-    env.TF_VAR_consul = az "vmss nic list --resource-group '${product}-${component}-${env}' --vmss-name consul-server --query '[0].ipConfigurations[0].privateIpAddress')"
+    env.TF_VAR_consul = az "vmss nic list --resource-group '${product}-${component}-${env}' --vmss-name consul-server --query '[0].ipConfigurations[0].privateIpAddress'"
     env.TF_VAR_FR_vaultname = "${vaultName}"
 
     stage("spinInfra") {
