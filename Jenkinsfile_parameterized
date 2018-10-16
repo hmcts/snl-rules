@@ -13,7 +13,7 @@ properties([
 ])
 
 product = params.PRODUCT_NAME
-appName = params.APP
+component = params.APP
 subscription = params.SUBSCRIPTION
 environment = params.ENVIRONMENT
 planOnly = params.PLAN_ONLY
@@ -21,7 +21,7 @@ vaultName = "infra-vault-nonprod"
 
 echo "vaultName: '${vaultName}'"
 
-echo "Building '${product}-${appName}' in '${environment}'"
+echo "Building '${product}-${component}' in '${environment}'"
 
 node {
   env.PATH = "$env.PATH:/usr/local/bin"
@@ -34,7 +34,7 @@ node {
 
   withSubscription(subscription) {
     env.TF_VAR_product = "${product}"
-    env.TF_VAR_component = "${appName}"
+    env.TF_VAR_component = "${component}"
     env.TF_VAR_env = "${environment}"
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
