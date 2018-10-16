@@ -2,6 +2,6 @@
 "ID": "serviceId",
 "Name": "serviceName",
 "Tags": [],
-"Address": "aseIlb",
+"Address": "serviceIp",
 "Port": 443
 }

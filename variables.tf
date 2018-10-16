@@ -20,6 +20,7 @@ variable "env" {
 }
 
 variable "subscription_id" {}
+variable "consul" {}
 
 variable "vnet_subnet" {
   type        = "string"
