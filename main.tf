@@ -1,7 +1,8 @@
 locals {
-  resource_group = "${var.product}-${var.component}-${var.env}"
-  vnet_name = "core-infra-vnet-${var.env}"
+  resource_group      = "${var.product}-${var.component}-${var.env}"
+  vnet_name           = "core-infra-vnet-${var.env}"
   vnet_resource_group = "core-infra-${var.env}"
+  vm_name             = "${local.resource_group}-vm"
 }
 
 resource "random_string" "passwd" {
@@ -36,14 +37,14 @@ resource "azurerm_network_interface" "rulesengine-nic" {
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm" {
-  name                  = "${local.resource_group}-vm"
+  name                  = "${local.vm_name}"
   location              = "${var.location}"
   resource_group_name   = "${azurerm_resource_group.rulesengine-rg.name}"
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic.id}"]
   vm_size               = "${var.vm_size}"
 
   storage_os_disk {
-    name              = "${local.resource_group}-vm-storage"
+    name              = "${local.vm_name}-storage"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
@@ -57,7 +58,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
   }
 
   os_profile {
-    computer_name  = "${local.resource_group}-vm"
+    computer_name  = "${local.vm_name}"
     admin_username = "${var.username}"
     admin_password = "${random_string.passwd.result}"
   }
@@ -68,4 +69,9 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
 
   delete_os_disk_on_termination = true
   delete_data_disks_on_termination = true
+
+  # Register a DNS entry for the VM
+  provisioner "local-exec" {
+    command = "bash -e ${path.module}/createDns.sh '${local.vm_name}' '${azurerm_resource_group.rulesengine-rg.name}' '${path.module}' '${azurerm_network_interface.rulesengine-nic.private_ip_address}' '${var.subscription_id}'"
+  }
 }
