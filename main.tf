@@ -29,9 +29,9 @@ resource "azurerm_network_interface" "rulesengine-nic" {
   network_security_group_id = "${azurerm_network_security_group.rulesengine-nsg.id}"
 
   ip_configuration {
-    name                          = "IPConfiguration"
+    name                          = "${local.resource_group}-ipconfig"
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${local.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}/subnets/${var.vnet_subnet}"
-    private_ip_address_allocation = "static"
+    private_ip_address_allocation = "Dynamic"
   }
 }
 
