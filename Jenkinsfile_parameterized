@@ -12,7 +12,7 @@ properties([
   ])
 ])
 
-productName = params.PRODUCT_NAME
+product = params.PRODUCT_NAME
 appName = params.APP
 subscription = params.SUBSCRIPTION
 environment = params.ENVIRONMENT
@@ -21,8 +21,7 @@ vaultName = "infra-vault-nonprod"
 
 echo "vaultName: '${vaultName}'"
 
-echo "Building '${productName}-${appName}' in '${environment}'"
-
+echo "Building '${product}-${appName}' in '${environment}'"
 
 node {
   env.PATH = "$env.PATH:/usr/local/bin"
@@ -34,7 +33,7 @@ node {
   }
 
   withSubscription(subscription) {
-    env.TF_VAR_product = "${productName}"
+    env.TF_VAR_product = "${product}"
     env.TF_VAR_component = "${appName}"
     env.TF_VAR_env = "${environment}"
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
@@ -45,7 +44,7 @@ node {
     stage("spinInfra") {
       env.TF_VAR_netnum = findFreeSubnet(params.SUBSCRIPTION, params.ENVIRONMENT)[1]
       sh "pwd"
-      spinInfra(productName, environment, planOnly, subscription)
+      spinInfra(product, component, environment, planOnly, subscription)
     }
   }
 }
