@@ -5,17 +5,20 @@ properties([
   parameters([
     string(name: 'PRODUCT_NAME', defaultValue: 'snl', description: ''),
     string(name: 'APP', defaultValue: 'rules', description: ''),
-    string(name: 'TYPE', defaultValue: 'java', description: ''),
     string(name: 'ENVIRONMENT', defaultValue: 'sandbox', description: 'Environment where code should be built and deployed'),
     choice(name: 'SUBSCRIPTION', choices: 'sandbox\nnonprod\nprod', description: 'Azure subscriptions available to build in'),
+    choice(name: 'VM_SIZE', choices: 'Standard_E2s_v3\nStandard_E4s_v3', description: 'Size of the VM to be created e.g. Standard_E2s_v3'),
+    string(name: 'RULES_ENGINE_SUBNET_NAME', defaultValue: 'snl-rules-engine', description: ''),
     booleanParam(name: 'PLAN_ONLY', defaultValue: false, description: 'set to true for skipping terraform apply')
   ])
 ])
 
 product = params.PRODUCT_NAME
 component = params.APP
-subscription = params.SUBSCRIPTION
 environment = params.ENVIRONMENT
+subscription = params.SUBSCRIPTION
+vm_size = params.VM_SIZE
+rules_engine_subnet = params.RULES_ENGINE_SUBNET_NAME
 planOnly = params.PLAN_ONLY
 vaultName = "infra-vault-nonprod"
 
@@ -36,6 +39,8 @@ node {
     env.TF_VAR_product = "${product}"
     env.TF_VAR_component = "${component}"
     env.TF_VAR_env = "${environment}"
+    env.TF_VAR_vm_size = "${vm_size}"
+    env.TF_VAR_rules_engine_subnet = "${rules_engine_subnet}"
     env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
     env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
     env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"

@@ -31,7 +31,7 @@ resource "azurerm_network_interface" "rulesengine-nic" {
 
   ip_configuration {
     name                          = "${local.resource_group}-ipconfig"
-    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${local.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}/subnets/${var.vnet_subnet}"
+    subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${local.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}/subnets/${var.rules_engine_subnet}"
     private_ip_address_allocation = "Dynamic"
   }
 }

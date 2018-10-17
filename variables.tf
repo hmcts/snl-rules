@@ -3,13 +3,11 @@ variable "location" {
 }
 
 variable "product" {
-  type        = "string"
   default     = "snl"
   description = "Product name"
 }
 
 variable "component" {
-  type        = "string"
   default     = "rules"
   description = "Component name"
 }
@@ -22,8 +20,7 @@ variable "env" {
 variable "subscription_id" {}
 variable "consul" {}
 
-variable "vnet_subnet" {
-  type        = "string"
+variable "rules_engine_subnet" {
   default     = "snl-rules-engine"
   description = "Name of the subnet in which to deploy the VM."
 }
