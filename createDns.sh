@@ -24,4 +24,4 @@ register_dns () {
   curl -T "$tmp_dir/consul.json" "http://${consul}:8500/v1/agent/service/register"
 }
 
-register_dns $domain $uri ip
+register_dns $domain $uri $ip
