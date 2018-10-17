@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
@@ -86,5 +87,17 @@ public class S2SJwtAuthenticationFilterTest {
         filter.doFilterInternal(request, response, filterChain);
 
         verify(response).sendError(eq(HttpServletResponse.SC_UNAUTHORIZED), anyString());
+    }
+
+    @Test
+    public void doFilterInternal_respondsWithOk_whenSecurityIsDisabled() throws ServletException, IOException {
+        when(s2SAuthenticationService.isDisabled()).thenReturn(true);
+        when(request.getRequestURI())
+            .thenReturn("/needingJwtUrl");
+
+        filter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain).doFilter(any(), any());
+        verify(response, Mockito.times(0)).sendError(anyInt());
     }
 }

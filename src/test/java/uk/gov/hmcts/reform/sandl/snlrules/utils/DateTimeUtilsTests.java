@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.exception.DateComparisonException;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
@@ -298,4 +300,65 @@ public class DateTimeUtilsTests {
 
         Assert.assertEquals(DateTimeUtils.min(max, min2, min1), min2);
     }
+
+    @Test
+    public void humanizeData_should_returnDateFormattedIn_DateTimeUtils_Zone() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(3, 0));
+
+        OffsetDateTime utc = OffsetDateTime.of(LocalDateTime.of(2018, 3, 10, 13, 0, 0, 0),
+            ZoneOffset.ofHoursMinutes(0, 0));
+        OffsetDateTime minus6Zone = OffsetDateTime.of(LocalDateTime.of(2018, 3, 10, 13, 0, 0, 0),
+            ZoneOffset.ofHoursMinutes(-6, 0));
+        OffsetDateTime utcParsedString = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+
+        Assert.assertEquals("10/03/2018 16:00", DateTimeUtils.humanizeDate(utc));
+        Assert.assertEquals("10/03/2018 22:00", DateTimeUtils.humanizeDate(minus6Zone));
+        Assert.assertEquals("26/09/2018 15:06", DateTimeUtils.humanizeDate(utcParsedString));
+
+        DateTimeUtils.setZone(ZoneOffset.systemDefault());
+    }
+
+    @Test
+    public void readableDuration_should_returnProperlyFormattedString() {
+        Duration hoursAndMinutes = Duration.ofHours(11).plusMinutes(15);
+        Duration onlyMinutes = Duration.ofHours(0).plusMinutes(30);
+        Duration onlyHours = Duration.ofHours(1).plusMinutes(0);
+        Duration days = Duration.ofHours(131).plusMinutes(15);
+
+        Assert.assertEquals("11:15", DateTimeUtils.readableDuration(hoursAndMinutes));
+        Assert.assertEquals("00:30", DateTimeUtils.readableDuration(onlyMinutes));
+        Assert.assertEquals("01:00", DateTimeUtils.readableDuration(onlyHours));
+        Assert.assertEquals("131:15", DateTimeUtils.readableDuration(days));
+    }
+
+    @Test
+    public void calculateDaysBetweenDates_returnsNegativeNumber_whenStartDateIsAfterCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 27);
+
+        Assert.assertEquals(-1, days);
+    }
+
+    @Test
+    public void calculateDaysBetweenDates_returnsPositiveNumber_whenStartDateIsBeforeCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 25);
+
+        Assert.assertEquals(1, days);
+    }
+
+    @Test
+    public void calculateDaysBetweenDates_returnsPositiveNumber_whenStartDateIsTheSameDayAsCurrent() {
+        DateTimeUtils.setZone(ZoneOffset.ofHoursMinutes(0, 0));
+
+        OffsetDateTime utcParsedDate = OffsetDateTime.parse("2018-09-26T12:06:00.000Z");
+        long days = DateTimeUtils.calculateDaysBetweenDates(utcParsedDate, 2018, 9, 26);
+
+        Assert.assertEquals(0, days);
+    }
+
 }

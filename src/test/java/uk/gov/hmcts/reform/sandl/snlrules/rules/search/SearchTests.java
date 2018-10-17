@@ -373,8 +373,8 @@ public class SearchTests {
         assertThat(found).isTrue();
     }
 
-    private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String caseType) {
-        return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes), caseType);
+    private Session newSession(String id, String judgeId, String roomId, String start, int minutes, String sessType) {
+        return new Session(id, judgeId, roomId, offsetDateTimeOf(start), Duration.ofMinutes(minutes), sessType);
     }
 
     private Availability newAvailability(String id, String judgeId, String roomId, String start, int minutes) {

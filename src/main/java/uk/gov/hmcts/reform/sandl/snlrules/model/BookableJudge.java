@@ -5,11 +5,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.codec.digest.DigestUtils;
-import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.OffsetDateTime;
+
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.humanizeDate;
+import static uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils.readableDuration;
 
 @Getter
 @Setter
@@ -35,7 +37,7 @@ public class BookableJudge extends Fact implements Serializable {
 
     @Override
     public String toDescription() {
-        return ("Start: " + DateTimeUtils.humanizeDate(start) + ", duration: " + duration)
+        return ("Start: " + humanizeDate(start) + ", duration: " + readableDuration(this.duration))
             .replace("null", "N/A");
     }
 }
