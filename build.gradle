@@ -192,6 +192,3 @@ task integrationTests(type: Test, description: 'Runs the integration tests.', gr
   }
 }
 
-bootRun {
-  jvmArgs = ["-Xms12g", "-Xmx12g"]
-}
