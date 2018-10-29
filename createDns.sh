@@ -18,12 +18,11 @@ pwd
 echo "-----------------------"
 #get ip of consul
 
-def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
 echo "Setting Azure CLI to run on $subscription subscription account"
-az 'login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-az 'account set --subscription $AZURE_SUBSCRIPTION_ID'
+$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID)
+$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az account set --subscription $AZURE_SUBSCRIPTION_ID)
 
-consul = az 'vmss nic list --resource-group $rg --vmss-name consul-server --query "[0].ipConfigurations[0].privateIpAddress"'
+consul=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az vmss nic list --resource-group $rg --vmss-name consul-server --query "[0].ipConfigurations[0].privateIpAddress")
 
 consul=$(echo "$consul" | sed -e 's/^"//' -e 's/"$//')
 
