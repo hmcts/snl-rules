@@ -18,6 +18,7 @@ variable "env" {
 }
 
 variable "subscription_id" {}
+variable "consul" {}
 
 variable "rules_engine_subnet" {
   default     = "snl-rules-engine"
