@@ -8,25 +8,28 @@ subscription=$5
 
 echo "-----------------------"
 
-echo $domain
-echo $rg
-echo $uri
+echo "domain = $domain"
+echo "rg = $rg"
+echo "uri = $uri"
+echo "ip = $ip"
+echo "subscription = $subscription"
+
 pwd
 echo "-----------------------"
 #get ip of consul
-consul=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az vmss nic list --resource-group $rg --vmss-name consul-server --query "[0].ipConfigurations[0].privateIpAddress")
+
+def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
+echo "Setting Azure CLI to run on $subscription subscription account"
+az 'login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+az 'account set --subscription $AZURE_SUBSCRIPTION_ID'
+
+consul = az 'vmss nic list --resource-group $rg --vmss-name consul-server --query "[0].ipConfigurations[0].privateIpAddress"'
 
 consul=$(echo "$consul" | sed -e 's/^"//' -e 's/"$//')
 
-echo $consul
+echo "consul = $consul"
 
 echo "-----------------------"
-
-
-echo "domain = $domain"
-echo "uri = $uri"
-echo "ip = $ip"
-echo "consul = $consul"
 
 tmp_dir=$(mktemp -d)
 cp "${uri}/consul.json" "$tmp_dir"
