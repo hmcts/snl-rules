@@ -26,8 +26,9 @@ echo "Building '${product}-${component}' in '${environment}'"
 node {
   def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
 
-  stage("checkout") {
-    stageCheckout('git@github.com:hmcts/snl-rules.git')
+  stage('Checkout') {
+    deleteDir()
+    checkout scm
   }
 
   withSubscription(subscription) {
@@ -39,8 +40,6 @@ node {
     env.TF_VAR_consul = az "vmss nic list --resource-group 'core-infra-${environment}' --vmss-name consul-server --query '[0].ipConfigurations[0].privateIpAddress'"
 
     stage("spinInfra") {
-      env.TF_VAR_netnum = findFreeSubnet(params.SUBSCRIPTION, params.ENVIRONMENT)[1]
-      sh "pwd"
       spinInfra(product, component, environment, planOnly, subscription)
     }
   }
