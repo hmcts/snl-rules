@@ -20,17 +20,10 @@ subscription = params.SUBSCRIPTION
 vm_size = params.VM_SIZE
 rules_engine_subnet = params.RULES_ENGINE_SUBNET_NAME
 planOnly = params.PLAN_ONLY
-vaultName = "infra-vault-nonprod"
-
-echo "vaultName: '${vaultName}'"
 
 echo "Building '${product}-${component}' in '${environment}'"
 
 node {
-  env.PATH = "$env.PATH:/usr/local/bin"
-  def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
-
-
   stage("checkout") {
     stageCheckout('git@github.com:hmcts/snl-rules.git')
   }
@@ -41,11 +34,6 @@ node {
     env.TF_VAR_env = "${environment}"
     env.TF_VAR_vm_size = "${vm_size}"
     env.TF_VAR_rules_engine_subnet = "${rules_engine_subnet}"
-    env.TF_VAR_subscription_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-SUBSCRIPTION --query value -o tsv"
-    env.TF_VAR_FR_azure_client_id = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-ID --query value -o tsv"
-    env.TF_VAR_FR_azure_client_secret = az "keyvault secret show --vault-name '${vaultName}' --name AZURE-CLIENT-SECRET --query value -o tsv"
-    env.TF_VAR_consul = az "vmss nic list --resource-group 'core-infra-${environment}' --vmss-name consul-server --query '[0].ipConfigurations[0].privateIpAddress'"
-    env.TF_VAR_FR_vaultname = "${vaultName}"
 
     stage("spinInfra") {
       env.TF_VAR_netnum = findFreeSubnet(params.SUBSCRIPTION, params.ENVIRONMENT)[1]
