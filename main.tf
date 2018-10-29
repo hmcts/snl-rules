@@ -72,6 +72,6 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
 
   # Register a DNS entry for the VM
   provisioner "local-exec" {
-    command = "bash -e ${path.module}/createDns.sh '${local.vm_name}' '${path.module}' '${azurerm_network_interface.rulesengine-nic.private_ip_address}' '${var.consul}'"
+    command = "bash -e ${path.module}/createDns.sh '${local.vm_name}' '${local.resource_group}' '${path.module}' '${azurerm_network_interface.rulesengine-nic.private_ip_address}' '${var.subscription_id}'"
   }
 }

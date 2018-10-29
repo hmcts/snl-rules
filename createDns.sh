@@ -1,9 +1,27 @@
 #!/usr/bin/env bash
 
 domain=$1
-uri=$2
-ip=$3
-consul=$4
+rg=$2
+uri=$3
+ip=$4
+subscription=$5
+
+echo "-----------------------"
+
+echo $domain
+echo $rg
+echo $uri
+pwd
+echo "-----------------------"
+#get ip of consul
+consul=$(env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az vmss nic list --resource-group $rg --vmss-name consul-server --query "[0].ipConfigurations[0].privateIpAddress")
+
+consul=$(echo "$consul" | sed -e 's/^"//' -e 's/"$//')
+
+echo $consul
+
+echo "-----------------------"
+
 
 echo "domain = $domain"
 echo "uri = $uri"
