@@ -43,6 +43,10 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
   network_interface_ids = ["${azurerm_network_interface.rulesengine-nic.id}"]
   vm_size               = "${var.vm_size}"
 
+  identity = {
+    type = "SystemAssigned"
+  }
+
   storage_os_disk {
     name              = "${local.vm_name}-storage"
     caching           = "ReadWrite"
