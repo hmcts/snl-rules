@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
@@ -51,7 +50,6 @@ public class DataExportController {
 
         listFacts(builder, droolsService, Problem.class, "PROBLEM");
         listFacts(builder, droolsService, Room.class, "ROOM");
-        listFacts(builder, droolsService, Availability.class, "AVAILABILITY");
         listFacts(builder, droolsService, Judge.class, "JUDGE");
         listFacts(builder, droolsService, Session.class, "SESSION");
         listFacts(builder, droolsService, HearingPart.class, "HEARING PART");
@@ -80,7 +78,6 @@ public class DataExportController {
 
         countFacts(builder, droolsService, Problem.class, "PROBLEM");
         countFacts(builder, droolsService, Room.class, "ROOM");
-        countFacts(builder, droolsService, Availability.class, "AVAILABILITY");
         countFacts(builder, droolsService, Judge.class, "JUDGE");
         countFacts(builder, droolsService, Session.class, "SESSION");
         countFacts(builder, droolsService, HearingPart.class, "HEARING PART");

@@ -36,34 +36,6 @@
 			"response": []
 		},
 		{
-			"name": "insert-availability",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"type\": \"insert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 3600}\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8091/msg",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8091",
-					"path": [
-						"msg"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "insert-judge",
 			"request": {
 				"method": "POST",
@@ -138,34 +110,6 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"type\": \"upsert-judge\",\n\t\"data\": \"{\\\"id\\\": \\\"j1\\\",\\\"name\\\": \\\"John Smith\\\"}\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8091/msg",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8091",
-					"path": [
-						"msg"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "upsert-availability",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"type\": \"upsert-availability\",\n\t\"data\": \"{\\\"id\\\":\\\"a1\\\",\\\"judgeId\\\":\\\"j1\\\",\\\"start\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"duration\\\": 7600}\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8091/msg",
