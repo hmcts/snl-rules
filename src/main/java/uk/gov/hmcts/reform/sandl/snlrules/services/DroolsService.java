@@ -12,8 +12,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.drools.FactsChangedEventListener;
 import uk.gov.hmcts.reform.sandl.snlrules.drools.RulesMatchEventListener;
 import uk.gov.hmcts.reform.sandl.snlrules.model.reload.ReloadStatus;
 
-import java.time.OffsetDateTime;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import javax.ws.rs.WebApplicationException;
