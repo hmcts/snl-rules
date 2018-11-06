@@ -6,8 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
-import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.model.HearingPart;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Problem;
@@ -53,8 +51,6 @@ public class DataExportController {
         listFacts(builder, droolsService, Judge.class, "JUDGE");
         listFacts(builder, droolsService, Session.class, "SESSION");
         listFacts(builder, droolsService, HearingPart.class, "HEARING PART");
-        listFacts(builder, droolsService, BookableJudge.class, "BOOKABLE JUDGE");
-        listFacts(builder, droolsService, BookableRoom.class, "BOOKABLE ROOM");
         listFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
         listFacts(builder, droolsService, Year.class, "YEAR");
         listFacts(builder, droolsService, Month.class, "MONTH");
@@ -81,8 +77,6 @@ public class DataExportController {
         countFacts(builder, droolsService, Judge.class, "JUDGE");
         countFacts(builder, droolsService, Session.class, "SESSION");
         countFacts(builder, droolsService, HearingPart.class, "HEARING PART");
-        countFacts(builder, droolsService, BookableJudge.class, "BOOKABLE JUDGE");
-        countFacts(builder, droolsService, BookableRoom.class, "BOOKABLE ROOM");
         countFacts(builder, droolsService, SessionType.class, "SESSION TYPE");
         countFacts(builder, droolsService, Year.class, "YEAR");
         countFacts(builder, droolsService, Month.class, "MONTH");
