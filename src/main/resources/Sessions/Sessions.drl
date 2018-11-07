@@ -9,7 +9,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemTypes;
 import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
-import uk.gov.hmcts.reform.sandl.snlrules.model.Availability;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
@@ -20,19 +19,6 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List
 import uk.gov.hmcts.reform.sandl.snlrules.utils.ProblemSeveritiesUtils;
-
-rule "Session Time For the Judge not Available"
-    when
-        $s : Session(judgeId != null)
-        $j : Judge(id == $s.judgeId)
-        not Availability(judgeId == $s.judgeId && ($s.start.compareTo(start) >= 0 && $s.end.compareTo(end) <= 0))
-    then
-        insertLogical(new Problem(ProblemTypes.Resource_missing,
-                                  ProblemSeverities.Warning,
-                                  "Session Time For the Judge not Available",
-                                  new ProblemReference($s),
-                                  new ProblemReference($j)));
-end
 
 rule "Session does not have a judge X days or less before start"
     when
