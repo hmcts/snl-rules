@@ -14,12 +14,13 @@ locals {
   asp_rg = "${(var.env == "preview" || var.env == "spreview") ? "null" : local.sharedAspRg}"
 }
 module "snl-rules" {
-  source               = "git@github.com:hmcts/moj-module-webapp"
+  source               = "git@github.com:hmcts/cnp-module-webapp"
   product              = "${var.product}-${var.component}"
   location             = "${var.location}"
   env                  = "${var.env}"
   ilbIp                = "${var.ilbIp}"
   is_frontend          = false
+  https_only           = "true"
   subscription         = "${var.subscription}"
   additional_host_name = "${var.external_host_name}"
   capacity             = "1"
