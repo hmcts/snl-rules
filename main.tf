@@ -15,12 +15,20 @@ resource "random_string" "passwd" {
 resource "azurerm_resource_group" "rulesengine-rg" {
   name     = "${local.resource_group}"
   location = "${var.location}"
+
+  tags = “${merge(var.common_tags,
+    map(“lastUpdated”, “${timestamp()}“)
+  )}”
 }
 
 resource "azurerm_network_security_group" "rulesengine-nsg" {
   name                = "${local.resource_group}-nsg"
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.rulesengine-rg.name}"
+
+  tags = “${merge(var.common_tags,
+    map(“lastUpdated”, “${timestamp()}“)
+  )}”
 }
 
 resource "azurerm_network_interface" "rulesengine-nic" {
@@ -34,6 +42,10 @@ resource "azurerm_network_interface" "rulesengine-nic" {
     subnet_id                     = "/subscriptions/${var.subscription_id}/resourceGroups/${local.vnet_resource_group}/providers/Microsoft.Network/virtualNetworks/${local.vnet_name}/subnets/${var.rules_engine_subnet}"
     private_ip_address_allocation = "Dynamic"
   }
+
+  tags = “${merge(var.common_tags,
+    map(“lastUpdated”, “${timestamp()}“)
+  )}”
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm" {
@@ -78,4 +90,8 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
   provisioner "local-exec" {
     command = "bash -e ${path.module}/createDns.sh '${local.vm_name}' '${path.module}' '${azurerm_network_interface.rulesengine-nic.private_ip_address}' '${var.consul}'"
   }
+
+  tags = “${merge(var.common_tags,
+    map(“lastUpdated”, “${timestamp()}“)
+  )}”
 }

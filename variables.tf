@@ -34,3 +34,7 @@ variable "vm_size" {
   default = "Standard_E2s_v3"
   description = "Size of the VM to be created."
 }
+
+variable "common_tags" {
+  type = "map"
+}
