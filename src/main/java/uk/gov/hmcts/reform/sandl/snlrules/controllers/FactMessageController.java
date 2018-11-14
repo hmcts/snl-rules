@@ -25,7 +25,7 @@ public class FactMessageController {
     @Autowired
     private DroolsServiceFactory droolsServiceFactory;
 
-    @PostMapping(value = "/msg")
+    @PostMapping(path = "/msg")
     public ResponseEntity<List<FactModification>> handleMessage(
         @RequestParam(value = "rulesDefinition", required = false) String rulesDefinition,
         @RequestBody FactMessage factMessage) {
