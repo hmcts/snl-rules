@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="LOG_PATH" value="./logs" />
     <!-- <include resource="org/springframework/boot/logging/logback/file-appender.xml" /> -->
     <!-- Overriding spring-boot default message pattern -->
     <appender name="STDOUT"
@@ -16,7 +17,7 @@
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
         <!-- daily rollover -->
-        <fileNamePattern>snl-rules.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <fileNamePattern>${LOG_PATH}/snl-rules.%d{yyyy-MM-dd}.log</fileNamePattern>
 
       </rollingPolicy>
       <encoder>

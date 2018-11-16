@@ -19,6 +19,7 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.now.Hour;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Minute;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Month;
 import uk.gov.hmcts.reform.sandl.snlrules.model.now.Year;
+import uk.gov.hmcts.reform.sandl.snlrules.model.reload.ReloadStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class FactMessageHandlerFactory {
         this.availableFacts.put("hour", Hour.class);
         this.availableFacts.put("minute", Minute.class);
         this.availableFacts.put("sessionType", SessionType.class);
+        this.availableFacts.put("reloadStatus", ReloadStatus.class);
     }
 
     public FactCommand create(String type) {
