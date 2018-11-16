@@ -16,9 +16,9 @@ resource "azurerm_resource_group" "rulesengine-rg" {
   name     = "${local.resource_group}"
   location = "${var.location}"
 
-  tags = “${merge(var.common_tags,
-    map(“lastUpdated”, “${timestamp()}“)
-  )}”
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+  )}"
 }
 
 resource "azurerm_network_security_group" "rulesengine-nsg" {
@@ -26,9 +26,9 @@ resource "azurerm_network_security_group" "rulesengine-nsg" {
   location            = "${var.location}"
   resource_group_name = "${azurerm_resource_group.rulesengine-rg.name}"
 
-  tags = “${merge(var.common_tags,
-    map(“lastUpdated”, “${timestamp()}“)
-  )}”
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+  )}"
 }
 
 resource "azurerm_network_interface" "rulesengine-nic" {
@@ -43,9 +43,9 @@ resource "azurerm_network_interface" "rulesengine-nic" {
     private_ip_address_allocation = "Dynamic"
   }
 
-  tags = “${merge(var.common_tags,
-    map(“lastUpdated”, “${timestamp()}“)
-  )}”
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+  )}"
 }
 
 resource "azurerm_virtual_machine" "rulesengine-vm" {
@@ -91,7 +91,7 @@ resource "azurerm_virtual_machine" "rulesengine-vm" {
     command = "bash -e ${path.module}/createDns.sh '${local.vm_name}' '${path.module}' '${azurerm_network_interface.rulesengine-nic.private_ip_address}' '${var.consul}'"
   }
 
-  tags = “${merge(var.common_tags,
-    map(“lastUpdated”, “${timestamp()}“)
-  )}”
+  tags = "${merge(var.common_tags,
+    map("lastUpdated", "${timestamp()}")
+  )}"
 }
