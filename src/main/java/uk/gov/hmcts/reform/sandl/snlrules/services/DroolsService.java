@@ -33,7 +33,7 @@ public class DroolsService {
         rulesSession = kieContainer.newKieSession(rulesDefinition);
 
         if (rulesSession == null) {
-            throw new RuntimeException(
+            throw new IllegalArgumentException(
                 String.format("Drools engine with rules %s cannot be created.", rulesDefinition));
         }
 
