@@ -1,13 +1,13 @@
 {
 	"info": {
-		"_postman_id": "03827576-f336-4800-9ffd-aa3012c5b1b7",
-		"name": "hmcts-snl",
+		"_postman_id": "d8ca0870-d23f-4493-9261-d1e8647cb38b",
+		"name": "hmcts-snl-rules",
 		"description": "Sample calls for the service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "current-state",
+			"name": "export-html",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -16,14 +16,75 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8091/exporthtml?rulesDefinition=Sessions",
+					"raw": "http://localhost:8091/export/html?rulesDefinition=Sessions",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8091",
 					"path": [
-						"exporthtml"
+						"export",
+						"html"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "export-counts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8091/export/counts?rulesDefinition=Sessions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"export",
+						"counts"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reload-status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8091/reload/status?rulesDefinition=Sessions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"reload",
+						"status"
 					],
 					"query": [
 						{
@@ -385,6 +446,40 @@
 						{
 							"key": "rulesDefinition",
 							"value": "Listings"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upsert-reloadStatus",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\": \"insert-reloadStatus\",\n\t\"data\": \"{\\\"id\\\":\\\"987593475943875\\\",\\\"startedAt\\\":\\\"2018-04-12T15:24:05.255+01:00\\\",\\\"finishedAt\\\":\\\"2018-04-12T15:24:05.255+01:00\\\"}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8091/msg?rulesDefinition=Sessions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"msg"
+					],
+					"query": [
+						{
+							"key": "rulesDefinition",
+							"value": "Sessions"
 						}
 					]
 				}
