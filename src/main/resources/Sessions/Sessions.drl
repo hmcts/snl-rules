@@ -10,8 +10,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.ProblemSeverities;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Session;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Judge;
 import uk.gov.hmcts.reform.sandl.snlrules.model.Room;
-import uk.gov.hmcts.reform.sandl.snlrules.model.BookableJudge;
-import uk.gov.hmcts.reform.sandl.snlrules.model.BookableRoom;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 import java.time.Duration;
