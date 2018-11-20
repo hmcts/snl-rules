@@ -2,18 +2,18 @@
 
 @Library("Infrastructure")
 
-def product = "snl"
-def component = "rules"
-def environment = "${env.ENVIRONMENT_NAME}"
-def planOnly = false
-def subscription = "${env.SUBSCRIPTION_NAME}"
-def vm_size = "Standard_E2s_v3"
-def rules_engine_subnet = "snl-rules-engine"
+product = "snl"
+component = "rules"
+environment = env.ENVIRONMENT_NAME
+planOnly = false
+subscription = env.SUBSCRIPTION_NAME
+vm_size = "Standard_E2s_v3"
+rules_engine_subnet = "snl-rules-engine"
 
 echo "Building '${product}-${component}' in '${environment}'"
 
 node {
-  def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
+  def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-${env.SUBSCRIPTION_NAME} az $cmd", returnStdout: true).trim() }
 
   stage('Checkout') {
     deleteDir()
