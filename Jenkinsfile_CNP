@@ -10,19 +10,6 @@ def subscription = env.SUBSCRIPTION_NAME
 def vm_size = "Standard_E2s_v3"
 def rules_engine_subnet = "snl-rules-engine"
 
-List<LinkedHashMap<String, Object>> secrets = [
-    secret('s2s-jwt-secret', 'SNL_S2S_JWT_SECRET'),
-]
-
-static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
-  [$class     : 'AzureKeyVaultSecret',
-   secretType : 'Secret',
-   name       : secretName,
-   version    : '',
-   envVariable: envVar
-  ]
-}
-
 echo "Building '${product}-${component}' in '${environment}'"
 
 node {
@@ -34,7 +21,6 @@ node {
   }
 
   withSubscription(subscription) {
-    loadVaultSecrets(secrets)
     //  enablePerformanceTest()
 
     onMaster {
