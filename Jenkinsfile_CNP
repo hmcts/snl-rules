@@ -4,9 +4,9 @@
 
 def product = "snl"
 def component = "rules"
-def environment = env.ENVIRONMENT_NAME
+environment = env.ENVIRONMENT_NAME
 def planOnly = false
-def subscription = env.SUBSCRIPTION_NAME
+subscription = env.SUBSCRIPTION_NAME
 def vm_size = "Standard_E2s_v3"
 def rules_engine_subnet = "snl-rules-engine"
 
