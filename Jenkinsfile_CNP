@@ -4,41 +4,66 @@
 
 def product = "snl"
 def component = "rules"
+def environment = env.ENVIRONMENT_NAME
+def planOnly = false
+def subscription = env.SUBSCRIPTION_NAME
+def vm_size = "Standard_E2s_v3"
+def rules_engine_subnet = "snl-rules-engine"
 
 List<LinkedHashMap<String, Object>> secrets = [
     secret('s2s-jwt-secret', 'SNL_S2S_JWT_SECRET'),
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
-    [ $class: 'AzureKeyVaultSecret',
-      secretType: 'Secret',
-      name: secretName,
-      version: '',
-      envVariable: envVar
-    ]
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   version    : '',
+   envVariable: envVar
+  ]
 }
 
-withPipeline("java", product, component) {
-  loadVaultSecrets(secrets)
-  //  enablePerformanceTest()
+echo "Building '${product}-${component}' in '${environment}'"
 
-  onMaster {
+node {
+  def az = { cmd -> return sh(script: "env AZURE_CONFIG_DIR=/opt/jenkins/.azure-$subscription az $cmd", returnStdout: true).trim() }
+
+  stage('Checkout') {
+    deleteDir()
+    checkout scm
+  }
+
+  withSubscription(subscription) {
+    loadVaultSecrets(secrets)
+    //  enablePerformanceTest()
+
+    onMaster {
       enableSlackNotifications('#snl-master-builds')
-  }
-  onDemo {
+    }
+    onDemo {
       enableSlackNotifications('#snl-demo-builds')
-  }
-  onPR {
+    }
+    onPR {
       enableSlackNotifications('#snl-pr-builds')
-  }
+    }
 
-  after('checkout') {
-    echo 'sln-rules checked out'
-  }
+    after('checkout') {
+      echo 'sln-rules checked out'
+    }
 
-  before('buildinfra:prod') {
-    error 'This is PoC project for Scheduling and Listing therefore the prod environment will not be built'
+    before('buildinfra:prod') {
+      error 'This is PoC project for Scheduling and Listing therefore the prod environment will not be built'
+    }
+
+    env.TF_VAR_product = "${product}"
+    env.TF_VAR_component = "${component}"
+    env.TF_VAR_env = "${environment}"
+    env.TF_VAR_vm_size = "${vm_size}"
+    env.TF_VAR_rules_engine_subnet = "${rules_engine_subnet}"
+    env.TF_VAR_consul = az "vmss nic list --resource-group 'core-infra-${environment}' --vmss-name consul-server --query '[0].ipConfigurations[0].privateIpAddress'"
+
+    stage("spinInfra") {
+      spinInfra(product, component, environment, planOnly, subscription)
+    }
   }
 }
-
-
