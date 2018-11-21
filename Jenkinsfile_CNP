@@ -21,18 +21,6 @@ node {
   }
 
   withSubscription(subscription) {
-    //  enablePerformanceTest()
-
-    onMaster {
-      enableSlackNotifications('#snl-master-builds')
-    }
-    onDemo {
-      enableSlackNotifications('#snl-demo-builds')
-    }
-    onPR {
-      enableSlackNotifications('#snl-pr-builds')
-    }
-
     after('checkout') {
       echo 'sln-rules checked out'
     }
