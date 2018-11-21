@@ -7,13 +7,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.gov.hmcts.reform.sandl.snlrules.security.S2SAuthenticationConfig;
 import uk.gov.hmcts.reform.sandl.snlrules.utils.JwtTokenHelper;
-
-import javax.ws.rs.core.Response;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -64,7 +63,7 @@ public class FactMessagesTest {
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
-            .statusCode(anyOf(is(Response.Status.NOT_FOUND.getStatusCode()), is(Response.Status.OK.getStatusCode())));
+            .statusCode(anyOf(is(HttpStatus.NOT_FOUND.value()), is(HttpStatus.OK.value())));
 
         // this should trigger "Session Time For the Judge not Available" rule
         JsonPath retrievedFactList = given()
@@ -74,7 +73,7 @@ public class FactMessagesTest {
             .when()
             .post("/msg?rulesDefinition=Sessions")
             .then()
-            .statusCode(Response.Status.OK.getStatusCode())
+            .statusCode(HttpStatus.OK.value())
             .and()
             .extract().jsonPath();
 
