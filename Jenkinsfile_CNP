@@ -21,14 +21,6 @@ node {
   }
 
   withSubscription(subscription) {
-    after('checkout') {
-      echo 'sln-rules checked out'
-    }
-
-    before('buildinfra:prod') {
-      error 'This is PoC project for Scheduling and Listing therefore the prod environment will not be built'
-    }
-
     env.TF_VAR_product = "${product}"
     env.TF_VAR_component = "${component}"
     env.TF_VAR_env = "${environment}"
