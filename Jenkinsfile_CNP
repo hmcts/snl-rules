@@ -4,9 +4,9 @@
 
 product = "snl"
 component = "rules"
-environment = env.ENVIRONMENT_NAME
+environment = "preview"
 planOnly = false
-subscription = env.SUBSCRIPTION_NAME
+subscription = "nonprod"
 vm_size = "Standard_E2s_v3"
 rules_engine_subnet = "snl-rules-engine"
 
