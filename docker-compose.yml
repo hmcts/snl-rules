@@ -19,4 +19,4 @@ services:
       - REFORM_TEAM
       - REFORM_ENVIRONMENT
     ports:
-      - $SERVER_PORT:$SERVER_PORT
+      - 8091:8091
