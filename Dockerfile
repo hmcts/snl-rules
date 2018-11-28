@@ -1,6 +1,8 @@
 FROM openjdk:8-jre
 
-COPY build/install/snl-rules /opt/app/
+ENV APP snl-rules.jar
+
+COPY build/libs/$APP /opt/app/
 
 WORKDIR /opt/app
 
@@ -8,4 +10,3 @@ HEALTHCHECK --interval=10s --timeout=10s --retries=10 CMD http_proxy="" curl --s
 
 EXPOSE 8091
 
-ENTRYPOINT ["/opt/app/bin/snl-rules"]
