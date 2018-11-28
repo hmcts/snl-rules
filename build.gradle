@@ -3,10 +3,10 @@ plugins {
   id 'checkstyle'
   id 'pmd'
   id 'jacoco'
-  id 'io.spring.dependency-management' version '1.0.4.RELEASE'
-  id 'org.springframework.boot' version '1.5.10.RELEASE'
-  id 'org.owasp.dependencycheck' version '3.1.1'
-  id 'com.github.ben-manes.versions' version '0.17.0'
+  id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+  id 'org.springframework.boot' version '1.5.17.RELEASE'
+  id 'org.owasp.dependencycheck' version '3.3.4'
+  id 'com.github.ben-manes.versions' version '0.20.0'
   id 'net.ltgt.apt' version '0.10'
   id 'org.sonarqube' version '2.6.1'
 }
@@ -78,6 +78,10 @@ dependencyCheck {
   // range of 0-10 fails the build, anything greater and it doesn't fail the build
   failBuildOnCVSS = System.getProperty('dependencyCheck.failBuild') == 'true' ? 0 : 11
   suppressionFile = 'dependency-check-suppressions.xml'
+  analyzers {
+    // Disable scanning of .NET related binaries
+    assemblyEnabled = false
+  }
 }
 
 repositories {
@@ -89,11 +93,10 @@ repositories {
 def versions = [
   logback: '1.2.3',
   reformLogging: '1.5.0',
-  springBoot: springBoot.class.package.implementationVersion,
-  springHystrix: '1.4.2.RELEASE',
-  springfoxSwagger: '2.8.0',
-  kieApi: '7.7.0.Final',
-  droolsRuntime: '7.7.0.Final'
+  springBoot: '1.5.17.RELEASE',
+  springHystrix: '1.4.6.RELEASE',
+  springfoxSwagger: '2.9.2',
+  drools: '7.14.0.Final'
 ]
 
 dependencies {
@@ -117,18 +120,10 @@ dependencies {
   compile group: 'uk.gov.hmcts.reform', name: 'java-logging-httpcomponents', version: versions.reformLogging
   compile group: 'uk.gov.hmcts.reform', name: 'http-proxy-spring-boot-autoconfigure', version: '1.1.0'
   compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: versions.springHystrix
-  compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix-dashboard', version: versions.springHystrix
 
   compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.5'
 
-
-  compile "org.kie:kie-api:${versions.droolsRuntime}"
-  compile "org.drools:drools-core:${versions.droolsRuntime}"
-  compile "org.drools:drools-decisiontables:${versions.kieApi}"
-  compile "org.kie.server:kie-server-api:${versions.kieApi}"
-  compile "org.kie.server:kie-server-client:${versions.kieApi}"
-  compile "org.jbpm:jbpm-test:${versions.kieApi}"
-  compile "org.drools:drools-compiler:${versions.kieApi}"
+  compile "org.drools:drools-compiler:${versions.drools}"
 
   compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
 

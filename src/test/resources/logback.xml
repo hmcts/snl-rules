@@ -12,8 +12,8 @@
         </encoder>
     </appender>
 
-    <logger name="uk.gov.hmcts.reform.sandl" level="DEBUG" />
-    <root level="DEBUG">
+    <logger name="uk.gov.hmcts.reform.sandl" level="INFO" />
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
