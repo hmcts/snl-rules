@@ -19,10 +19,11 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
 }
 
 withPipeline(type, product, component) {
-    echo env.CHANGE_TITLE
+  loadVaultSecrets(secrets)
+
+  echo env.CHANGE_TITLE
     if (env.CHANGE_TITLE && !env.CHANGE_TITLE.contains('[PREVIEW]')
       && env.CHANGE_TITLE.contains('[AKS]')) {
-      loadVaultSecrets(secrets)
       setVaultName('snl')
       enableDockerBuild()
       enableDeployToAKS()
