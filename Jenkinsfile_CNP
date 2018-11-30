@@ -2,6 +2,7 @@
 
 @Library("Infrastructure")
 
+def type = "java"
 def product = "snl"
 def component = "rules"
 
@@ -18,27 +19,36 @@ static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
     ]
 }
 
-withPipeline("java", product, component) {
-  loadVaultSecrets(secrets)
-  //  enablePerformanceTest()
+withPipeline(type, product, component) {
+    onMaster {
+        enableSlackNotifications('#snl-master-builds')
+    }
+    onDemo {
+        enableSlackNotifications('#snl-demo-builds')
+    }
+    onPR {
+        enableSlackNotifications('#snl-pr-builds')
+    }
 
-  onMaster {
-      enableSlackNotifications('#snl-master-builds')
-  }
-  onDemo {
-      enableSlackNotifications('#snl-demo-builds')
-  }
-  onPR {
-      enableSlackNotifications('#snl-pr-builds')
-  }
+    after('checkout') {
+      echo 'sln-rules checked out'
+    }
 
-  after('checkout') {
-    echo 'sln-rules checked out'
-  }
+    before('buildinfra:prod') {
+      error 'This is PoC project for Scheduling and Listing therefore the prod environment will not be built'
+    }
 
-  before('buildinfra:prod') {
-    error 'This is PoC project for Scheduling and Listing therefore the prod environment will not be built'
-  }
+    setVaultName('snl')
+
+    loadVaultSecrets(secrets)
+    //  enablePerformanceTest()
+
+    echo env.CHANGE_TITLE
+    if (env.CHANGE_TITLE && !env.CHANGE_TITLE.contains('[PREVIEW]')
+            && env.CHANGE_TITLE.contains('[AKS]')) {
+        enableDockerBuild()
+        enableDeployToAKS()
+    }
 }
 
 
