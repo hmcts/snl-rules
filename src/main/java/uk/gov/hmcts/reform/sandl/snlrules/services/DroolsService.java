@@ -14,7 +14,6 @@ import uk.gov.hmcts.reform.sandl.snlrules.model.reload.ReloadStatus;
 
 import java.util.Comparator;
 import java.util.List;
-import javax.ws.rs.WebApplicationException;
 
 public class DroolsService {
     private static final Logger logger = LoggerFactory.getLogger(DroolsService.class);
@@ -34,7 +33,7 @@ public class DroolsService {
         rulesSession = kieContainer.newKieSession(rulesDefinition);
 
         if (rulesSession == null) {
-            throw new WebApplicationException(
+            throw new IllegalArgumentException(
                 String.format("Drools engine with rules %s cannot be created.", rulesDefinition));
         }
 
