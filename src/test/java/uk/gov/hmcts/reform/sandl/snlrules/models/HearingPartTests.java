@@ -33,9 +33,9 @@ public class HearingPartTests {
         HearingPart testObject =
             new HearingPart("id", "sId", "ct", "ht",
                 Duration.ofHours(1).plusMinutes(2),
-                OffsetDateTime.parse("2018-09-26T13:00:00.000Z"));
+                OffsetDateTime.parse("2018-09-26T13:00:00.000Z"),
+                OffsetDateTime.parse("2018-09-26T16:00:00.000Z"));
         testObject.setScheduleStart(OffsetDateTime.parse("2018-09-26T14:00:00.000Z"));
-        testObject.setScheduleEnd(OffsetDateTime.parse("2018-09-26T16:00:00.000Z"));
 
         String expected = "Duration: 01:02, Case type code: ct, Hearing type code: ht,"
             + " Scheduled start: 26/09/2018 17:00, Scheduled end: 26/09/2018 19:00"
@@ -49,8 +49,8 @@ public class HearingPartTests {
         HearingPart testObject =
             new HearingPart("id", "sId", "ct", "ht",
                 Duration.ofHours(1).plusMinutes(2),
-                OffsetDateTime.parse("2018-09-26T13:00:00.000Z"));
-        testObject.setScheduleEnd(OffsetDateTime.parse("2018-09-26T16:00:00.000Z"));
+                OffsetDateTime.parse("2018-09-26T13:00:00.000Z"),
+                OffsetDateTime.parse("2018-09-26T16:00:00.000Z"));
 
         String expected = "Duration: 01:02, Case type code: ct, Hearing type code: ht,"
             + " Scheduled start: N/A, Scheduled end: 26/09/2018 19:00"

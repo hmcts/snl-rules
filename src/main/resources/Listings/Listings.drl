@@ -16,9 +16,14 @@ import uk.gov.hmcts.reform.sandl.snlrules.utils.DateTimeUtils;
 
 rule "Listing request target schedule has not been adhered to when listed"
     when
-        $hearingPart: HearingPart(scheduleEnd != null && scheduleStart != null)
-        $session: Session(id == $hearingPart.sessionId &&
-         !DateTimeUtils.between(start, $hearingPart.scheduleStart, $hearingPart.scheduleEnd))
+        Year($year: value)
+        Month($month: value)
+        Day($day: value)
+        $hearingPart: HearingPart(scheduleEnd != null && scheduleStart != null
+            && DateTimeUtils.isAfter(scheduleEnd, $year, $month, $day))
+        $session: Session(id == $hearingPart.sessionId
+            && !DateTimeUtils.between(start, $hearingPart.scheduleStart, $hearingPart.scheduleEnd)
+            && DateTimeUtils.isAfter(start, $year, $month, $day))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
                                   ProblemSeverities.Warning,
@@ -32,8 +37,9 @@ rule "Listing request is more than 60 days old, and it has not been listed yet"
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $hearingPart: HearingPart(sessionId == null && createdAt != null &&
-        DateTimeUtils.olderThan(createdAt, $year, $month, $day, 60))
+        $hearingPart: HearingPart(sessionId == null && createdAt != null
+                                    && DateTimeUtils.olderThan(createdAt, $year, $month, $day, 60)
+                                    && DateTimeUtils.isAfter(scheduleEnd, $year, $month, $day))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
                                   ProblemSeverities.Warning,
@@ -123,7 +129,7 @@ rule "The session type is not suitable for this listing request"
         Month($month: value)
         Day($day: value)
         $session : Session(DateTimeUtils.isAfter(start, $year, $month, $day))
-        $hearingPart : HearingPart(sessionId == $session.id)
+        $hearingPart : HearingPart(sessionId == $session.id && DateTimeUtils.isAfter(scheduleEnd, $year, $month, $day))
         $sessionType : SessionType(code == $session.sessionType
           && (
                (this.hasHearingTypes() && this.hasCaseTypes()

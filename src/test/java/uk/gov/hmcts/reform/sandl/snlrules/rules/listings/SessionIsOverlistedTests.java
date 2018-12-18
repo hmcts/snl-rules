@@ -112,6 +112,11 @@ public class SessionIsOverlistedTests {
         assertThat(getInsertedProblems(droolsService,
             ProblemTypes.Session_utilisation_overlisted).size())
             .isEqualTo(1);
+    }
+
+    @Test
+    public void should_be_no_problem_when_session_is_overlisted_in_the_past() {
+        should_be_problem_when_session_is_overlisted_1_day_or_less_before_start();
 
         droolsService.clearFactModifications();
         setDateInRules(rules, 2018, 05, 25);

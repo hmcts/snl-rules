@@ -60,6 +60,21 @@ public class SessionDoesNotHaveARoomTests {
     }
 
     @Test
+    public void should_be_no_problem_when_session_does_not_have_a_room_but_is_in_the_past() {
+        setDateInRules(rules, 2018, 5, 23);
+
+        rules.insert(new Session(sessionId, judgeId, null,
+            OffsetDateTime.of(2018, 5, 22, 9, 0, 0, 0,
+                ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameStartsWithAgendaFilter(SESSION_DOES_NOT_HAVE_A_ROOM));
+
+        assertProblems(droolsService, 0, 0, 0);
+    }
+
+    @Test
     public void should_be_problem_when_session_does_not_have_a_room_4_weeks_or_nearer_before_start() {
         setDateInRules(rules, 2018, 4, 1);
 

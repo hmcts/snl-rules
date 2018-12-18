@@ -54,7 +54,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "no_association-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "other_2-track-ct", "other-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -69,7 +70,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "fast-track-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "fast_2-track-ct", "fast_3-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -84,7 +86,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "fast-track-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "fast_2-track-ct", "other-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -99,7 +102,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "other-track-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "fast-track-ct", "other_3-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -114,7 +118,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "fast-track-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "multi-track-cs", "other-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -132,7 +137,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "onlyCT-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "multi-track-cs", "multi-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -150,7 +156,8 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
             Duration.ofMinutes(60), "onlyHT-st"));
 
         rules.insert(new HearingPart(hearingPartId, sessionId, "other_2-track-cs", "other_2-track-ht",
-            Duration.ofMinutes(60)));
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 10, 4, 9, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(SESSION_TYPE_IS_NOT_SUITABLE_FOR_THIS_LISTING_REQUEST));
@@ -162,7 +169,7 @@ public class SessionTypeIsNotSuitableForListingRequestTests {
     }
 
     @Test
-    public void should_be_problem_when_sessionType_does_not_match_both_caseType_and_hearingType_in_the_past() {
+    public void should_be_no_problem_when_sessionType_does_not_match_both_cType_and_hType_but_is_in_the_past() {
         should_be_problem_when_sessionType_does_not_match_both_caseType_and_hearingType();
         setDateInRules(rules,2018, 9, 5);
 
