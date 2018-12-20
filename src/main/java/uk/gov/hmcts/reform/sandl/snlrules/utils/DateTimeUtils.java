@@ -76,7 +76,7 @@ public final class DateTimeUtils {
         OffsetDateTime currentDate = OffsetDateTime.of(currentYear, currentMonth, currentDay,
             0, 0, 0, 0, ZoneOffset.UTC);
 
-        return date.isAfter(currentDate);
+        return date != null && date.isAfter(currentDate);
     }
 
     public static String humanizeDate(OffsetDateTime dateTime) {

@@ -60,6 +60,26 @@ public class DoubleBookingOfJudgeIncOverlappingTests {
     }
 
     @Test
+    public void should_be_no_problem_when_judge_is_double_booked__is_in_the_past() {
+        setDateInRules(rules, 2018, 04, 11);
+
+        rules.insert(new Session(sessionId1, judgeId1, roomId1,
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Session(sessionId2, judgeId1, roomId2,
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Judge(judgeId1, "John Harris"));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_JUDGE_INCLUDES_ANY_OVERLAPPING));
+
+        assertProblems(droolsService,0, 0, 0);
+    }
+
+    @Test
     public void should_be_no_problem_when_same_time_but_different_judge() {
         rules.insert(new Session(sessionId1, judgeId1, roomId1,
             OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),

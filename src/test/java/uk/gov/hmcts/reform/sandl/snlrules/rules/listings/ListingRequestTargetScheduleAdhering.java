@@ -50,7 +50,7 @@ public class ListingRequestTargetScheduleAdhering {
         setDateInRules(rules,2018, 05, 31);
 
         rules.insert(new Session(SESSION_ID, null, null,
-            OffsetDateTime.of(2018, 5, 24, 9, 0, 0, 0, ZoneOffset.UTC),
+            OffsetDateTime.of(2018, 6, 2, 9, 0, 0, 0, ZoneOffset.UTC),
             Duration.ofMinutes(60), sessionTypeFastTrack));
 
         OffsetDateTime scheduleStart = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -59,6 +59,31 @@ public class ListingRequestTargetScheduleAdhering {
 
         rules.insert(new HearingPart(LISTING_REQUEST_ID, SESSION_ID, hearingTypeFastTrack, Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_TARGET_SCHEDULE_NOT_ADHERED));
+
+        assertProblems(droolsService, 0, 0, 0);
+    }
+
+    @Test
+    public void should_be_no_problem_when_listing_request_target_schedule_is_not_adhered_but_is_in_the_past() {
+        setDateInRules(rules,2018, 06, 16);
+
+        rules.insert(new Session(SESSION_ID, null, null,
+            OffsetDateTime.of(2018, 8, 24, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(60), sessionTypeFastTrack));
+
+        OffsetDateTime scheduleStart = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime createdAt = OffsetDateTime.of(2018, 01, 15, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        val hearingPart = new HearingPart(LISTING_REQUEST_ID, SESSION_ID, sessionTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60));
+        hearingPart.setScheduleStart(scheduleStart);
+        hearingPart.setScheduleEnd(scheduleEnd);
+        hearingPart.setCreatedAt(createdAt);
+        rules.insert(hearingPart);
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_TARGET_SCHEDULE_NOT_ADHERED));

@@ -52,7 +52,23 @@ public class ListingRequestIsNotListedTests {
 
         rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
             Duration.ofMinutes(60),
-            OffsetDateTime.of(2018, 05, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
+            OffsetDateTime.of(2018, 05, 1, 0, 0, 0, 0, ZoneOffset.UTC),
+            OffsetDateTime.of(2018, 06, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_OLDER_THAN_60_DAYS_NOT_LISTED));
+
+        assertProblems(droolsService, 0, 0, 0);
+    }
+
+    @Test
+    public void should_be_no_problem_when_listing_request_is_in_the_past() {
+        setDateInRules(rules,2018, 06, 2);
+
+        rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60),
+            OffsetDateTime.of(2018, 01, 1, 0, 0, 0, 0, ZoneOffset.UTC),
+            OffsetDateTime.of(2018, 06, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_OLDER_THAN_60_DAYS_NOT_LISTED));
@@ -66,7 +82,8 @@ public class ListingRequestIsNotListedTests {
 
         rules.insert(new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
             Duration.ofMinutes(60),
-            OffsetDateTime.of(2018, 01, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
+            OffsetDateTime.of(2018, 01, 1, 0, 0, 0, 0, ZoneOffset.UTC),
+            OffsetDateTime.of(2018, 06, 1, 0, 0, 0, 0, ZoneOffset.UTC)));
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_OLDER_THAN_60_DAYS_NOT_LISTED));
@@ -136,6 +153,27 @@ public class ListingRequestIsNotListedTests {
 
         rules.insert(new HearingPart(listingRequestId, caseTypeFastTrack, hearingTypeFastTrack, Duration.ofMinutes(60),
             scheduleStart, scheduleEnd, createdAt));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY));
+
+        assertProblems(droolsService, 0, 0, 0);
+    }
+
+    @Test
+    public void should_be_no_problem_when_listing_request_is_4_weeks_or_nearer_and_not_listed_but_is_in_the_past() {
+        setDateInRules(rules,2018, 06, 16);
+
+        OffsetDateTime scheduleStart = OffsetDateTime.of(2018, 06, 1, 9, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime scheduleEnd = OffsetDateTime.of(2018, 06, 15, 0, 0, 0, 0, ZoneOffset.UTC);
+        OffsetDateTime createdAt = OffsetDateTime.of(2018, 06, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+
+        val hearingPart = new HearingPart(listingRequestId, null, caseTypeFastTrack, hearingTypeFastTrack,
+            Duration.ofMinutes(60));
+        hearingPart.setScheduleStart(scheduleStart);
+        hearingPart.setScheduleEnd(scheduleEnd);
+        hearingPart.setCreatedAt(createdAt);
+        rules.insert(hearingPart);
 
         droolsService.clearFactModifications();
         rules.fireAllRules(new RuleNameEqualsAgendaFilter(LISTING_REQUEST_NOT_LISTED_4_WEEKS_OR_NEARER_FROM_TODAY));

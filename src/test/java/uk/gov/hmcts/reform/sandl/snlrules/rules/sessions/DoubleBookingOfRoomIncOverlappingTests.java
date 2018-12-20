@@ -98,6 +98,26 @@ public class DoubleBookingOfRoomIncOverlappingTests {
     }
 
     @Test
+    public void should_be_no_problem_when_room_is_double_booked_but_is_in_the_past() {
+        setDateInRules(rules, 2018, 4, 11);
+
+        rules.insert(new Session(sessionId1, judgeId1, roomId1,
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Session(sessionId2, judgeId2, roomId1,
+            OffsetDateTime.of(2018, 4, 10, 9, 0, 0, 0, ZoneOffset.UTC),
+            Duration.ofMinutes(60), "FTRACK"));
+
+        rules.insert(new Room(roomId1, "Room A"));
+
+        droolsService.clearFactModifications();
+        rules.fireAllRules(new RuleNameEqualsAgendaFilter(DOUBLE_BOOKING_OF_ROOM_INCLUDES_ANY_OVERLAPPING));
+
+        assertProblems(droolsService,0, 0, 0);
+    }
+
+    @Test
     public void should_be_problem_when_room_is_double_booked_same_time_and_less_than_2_weeks_before() {
         setDateInRules(rules, 2018, 4, 5);
 
