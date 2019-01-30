@@ -53,7 +53,7 @@ rule "Listing request target schedule to date is 4 weeks or nearer from today an
         Year($year: value)
         Month($month: value)
         Day($day: value)
-        $hearingPart: HearingPart(sessionId == null && scheduleEnd != null && scheduleStart != null
+        $hearingPart: HearingPart(sessionId == null && scheduleEnd != null
          && DateTimeUtils.between(scheduleEnd, $year, $month, $day, 0, 28))
     then
         insertLogical(new Problem(ProblemTypes.Listing_policy_violation,
