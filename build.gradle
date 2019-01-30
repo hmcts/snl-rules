@@ -122,6 +122,8 @@ dependencies {
   compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version: versions.springHystrix
 
   compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.5'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+  compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.8'
 
   compile "org.drools:drools-compiler:${versions.drools}"
 
