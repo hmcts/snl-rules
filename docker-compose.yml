@@ -20,3 +20,10 @@ services:
       - REFORM_ENVIRONMENT
     ports:
       - 8091:8091
+    networks:
+      - snl-network
+networks:
+  snl-network:
+    driver: bridge
+    name: snl-network
+
